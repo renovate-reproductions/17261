@@ -39,17 +39,15 @@
                 />
               </div>
               <div class="action-buttons">
-                <a
+                <button
+                  type="button"
                   class="row-btn"
-                  href="#"
                   appStopClick
-                  appBlurClick
-                  role="button"
                   appA11yTitle="{{ 'generateUsername' | i18n }}"
                   (click)="generateUsername()"
                 >
                   <i class="bwi bwi-lg bwi-generate" aria-hidden="true"></i>
-                </a>
+                </button>
               </div>
             </div>
             <div class="box-content-row box-content-row-flex" appBoxRow>
@@ -70,7 +68,6 @@
                   type="button"
                   #checkPasswordBtn
                   class="row-btn btn"
-                  appBlurClick
                   appA11yTitle="{{ 'checkPassword' | i18n }}"
                   (click)="checkPassword()"
                   [appApiAction]="checkPasswordPromise"
@@ -87,12 +84,10 @@
                     aria-hidden="true"
                   ></i>
                 </button>
-                <a
+                <button
+                  type="button"
                   class="row-btn"
-                  href="#"
                   appStopClick
-                  appBlurClick
-                  role="button"
                   appA11yTitle="{{ 'toggleVisibility' | i18n }}"
                   [attr.aria-pressed]="showPassword"
                   (click)="togglePassword()"
@@ -102,18 +97,16 @@
                     aria-hidden="true"
                     [ngClass]="{ 'bwi-eye': !showPassword, 'bwi-eye-slash': showPassword }"
                   ></i>
-                </a>
-                <a
+                </button>
+                <button
+                  type="button"
                   class="row-btn"
-                  href="#"
                   appStopClick
-                  appBlurClick
-                  role="button"
                   appA11yTitle="{{ 'generatePassword' | i18n }}"
                   (click)="generatePassword()"
                 >
                   <i class="bwi bwi-lg bwi-generate" aria-hidden="true"></i>
-                </a>
+                </button>
               </div>
             </div>
             <div class="box-content-row" appBoxRow>
@@ -153,12 +146,10 @@
                 />
               </div>
               <div class="action-buttons">
-                <a
+                <button
+                  type="button"
                   class="row-btn"
-                  href="#"
                   appStopClick
-                  appBlurClick
-                  role="button"
                   appA11yTitle="{{ 'toggleVisibility' | i18n }}"
                   [attr.aria-pressed]="showCardNumber"
                   (click)="toggleCardNumber()"
@@ -168,7 +159,7 @@
                     aria-hidden="true"
                     [ngClass]="{ 'bwi-eye': !showCardNumber, 'bwi-eye-slash': showCardNumber }"
                   ></i>
-                </a>
+                </button>
               </div>
             </div>
             <div class="box-content-row" appBoxRow>
@@ -208,12 +199,10 @@
                 />
               </div>
               <div class="action-buttons">
-                <a
+                <button
+                  type="button"
                   class="row-btn"
-                  href="#"
                   appStopClick
-                  appBlurClick
-                  role="button"
                   appA11yTitle="{{ 'toggleVisibility' | i18n }}"
                   [attr.aria-pressed]="showCardCode"
                   (click)="toggleCardCode()"
@@ -223,7 +212,7 @@
                     aria-hidden="true"
                     [ngClass]="{ 'bwi-eye': !showCardCode, 'bwi-eye-slash': showCardCode }"
                   ></i>
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -406,9 +395,14 @@
               appBoxRow
               *ngFor="let u of cipher.login.uris; let i = index; trackBy: trackByFunction"
             >
-              <a href="#" appStopClick (click)="removeUri(u)" appA11yTitle="{{ 'remove' | i18n }}">
-                <i class="bwi bwi-minus-circle bwi-lg" aria-hidden="true" role="button"></i>
-              </a>
+              <button
+                type="button"
+                appStopClick
+                (click)="removeUri(u)"
+                appA11yTitle="{{ 'remove' | i18n }}"
+              >
+                <i class="bwi bwi-minus-circle bwi-lg" aria-hidden="true"></i>
+              </button>
               <div class="row-main">
                 <label for="loginUri{{ i }}">{{ "uriPosition" | i18n: i + 1 }}</label>
                 <input
@@ -435,31 +429,25 @@
                 </select>
               </div>
               <div class="action-buttons">
-                <a
+                <button
+                  type="button"
                   class="row-btn"
-                  href="#"
                   appStopClick
-                  appBlurClick
-                  role="button"
                   appA11yTitle="{{ 'toggleOptions' | i18n }}"
                   (click)="toggleUriOptions(u)"
+                  [attr.aria-expanded]="
+                    !(u.showOptions === false || (u.showOptions == null && u.match == null))
+                  "
                 >
                   <i class="bwi bwi-lg bwi-cog" aria-hidden="true"></i>
-                </a>
+                </button>
               </div>
             </div>
           </ng-container>
-          <a
-            href="#"
-            appStopClick
-            appBlurClick
-            (click)="addUri()"
-            class="box-content-row"
-            role="button"
-          >
+          <button type="button" appStopClick (click)="addUri()" class="box-content-row">
             <i class="bwi bwi-plus-circle bwi-fw bwi-lg" aria-hidden="true"></i>
             {{ "newUri" | i18n }}
-          </a>
+          </button>
         </div>
       </div>
       <div class="box">
@@ -477,9 +465,13 @@
           <div class="box-content-row box-content-row-checkbox" appBoxRow *ngIf="canUseReprompt">
             <label for="passwordPrompt"
               >{{ "passwordPrompt" | i18n }}
-              <a href="#" appA11yTitle="{{ 'learnMore' | i18n }}" (click)="openHelpReprompt()">
+              <button
+                type="button"
+                appA11yTitle="{{ 'learnMore' | i18n }}"
+                (click)="openHelpReprompt()"
+              >
                 <i class="bwi bwi-question-circle" aria-hidden="true"></i>
-              </a>
+              </button>
             </label>
             <input
               id="passwordPrompt"
@@ -489,30 +481,26 @@
               (change)="repromptChanged()"
             />
           </div>
-          <a
+          <button
+            type="button"
             class="box-content-row box-content-row-flex text-default"
-            href="#"
             appStopClick
-            appBlurClick
             (click)="attachments()"
             *ngIf="editMode && !cloneMode"
-            role="button"
           >
             <div class="row-main">{{ "attachments" | i18n }}</div>
             <i class="bwi bwi-angle-right row-sub-icon" aria-hidden="true"></i>
-          </a>
-          <a
+          </button>
+          <button
+            type="button"
             class="box-content-row box-content-row-flex text-default"
-            href="#"
             appStopClick
-            appBlurClick
             (click)="editCollections()"
             *ngIf="editMode && !cloneMode && cipher.organizationId"
-            role="button"
           >
             <div class="row-main">{{ "collections" | i18n }}</div>
             <i class="bwi bwi-angle-right row-sub-icon" aria-hidden="true"></i>
-          </a>
+          </button>
         </div>
       </div>
       <div class="box">
@@ -577,7 +565,6 @@
   </div>
   <div class="footer">
     <button
-      appBlurClick
       type="submit"
       class="primary"
       appA11yTitle="{{ 'save' | i18n }}"
@@ -590,12 +577,11 @@
         aria-hidden="true"
       ></i>
     </button>
-    <button appBlurClick type="button" (click)="cancel()">
+    <button type="button" (click)="cancel()">
       {{ "cancel" | i18n }}
     </button>
     <div class="right">
       <button
-        appBlurClick
         type="button"
         (click)="share()"
         appA11yTitle="{{ 'moveToOrganization' | i18n }}"
@@ -605,7 +591,6 @@
       </button>
       <button
         #deleteBtn
-        appBlurClick
         type="button"
         (click)="delete()"
         class="danger"

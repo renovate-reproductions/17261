@@ -30,12 +30,10 @@
             />
           </div>
           <div class="action-buttons">
-            <a
+            <button
+              type="button"
               class="row-btn"
-              href="#"
               appStopClick
-              appBlurClick
-              role="button"
               appA11yTitle="{{ 'toggleVisibility' | i18n }}"
               [attr.aria-pressed]="showPassword"
               (click)="togglePassword()"
@@ -45,7 +43,7 @@
                 aria-hidden="true"
                 [ngClass]="{ 'bwi-eye': !showPassword, 'bwi-eye-slash': showPassword }"
               ></i>
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -59,17 +57,16 @@
           type="button"
           class="btn block"
           [ngClass]="{ 'primary font-weight-bold': hideInput }"
-          appBlurClick
           (click)="unlockBiometric()"
         >
           {{ biometricText | i18n }}
         </button>
       </div>
       <div class="buttons-row">
-        <button type="submit" class="btn primary block" appBlurClick *ngIf="!hideInput">
+        <button type="submit" class="btn primary block" *ngIf="!hideInput">
           <i class="bwi bwi-unlock" aria-hidden="true"></i> <b>{{ "unlock" | i18n }}</b>
         </button>
-        <button type="button" class="btn block" appBlurClick (click)="logOut()">
+        <button type="button" class="btn block" (click)="logOut()">
           {{ "logOut" | i18n }}
         </button>
       </div>
