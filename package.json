@@ -24,7 +24,7 @@
     "@angular/compiler-cli": "^12.2.13",
     "@ngtools/webpack": "^12.2.13",
     "@nodert-win10-rs4/windows.security.credentials.ui": "^0.4.4",
-    "@types/chrome": "^0.0.139",
+    "@types/chrome": "^0.0.188",
     "@types/duo_web_sdk": "^2.7.1",
     "@types/firefox-webext-browser": "^82.0.0",
     "@types/jest": "^27.5.0",
