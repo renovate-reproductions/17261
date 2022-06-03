@@ -10,4 +10,4 @@ import { SharedModule } from "../modules/shared.module";
   declarations: [NavbarComponent, FooterComponent, FrontendLayoutComponent],
   exports: [NavbarComponent, FooterComponent],
 })
-export class LayoutsModule { }
+export class LayoutsModule {}

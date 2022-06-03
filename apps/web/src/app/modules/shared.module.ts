@@ -131,11 +131,7 @@ registerLocaleData(localeZhTw, "zh-TW");
     ButtonModule,
     MenuModule,
   ],
-  declarations: [
-    OrganizationPlansComponent,
-    PaymentComponent,
-    PasswordStrengthComponent
-  ],
+  declarations: [OrganizationPlansComponent, PaymentComponent, PasswordStrengthComponent],
   exports: [
     CommonModule,
     DragDropModule,
@@ -153,7 +149,7 @@ registerLocaleData(localeZhTw, "zh-TW");
     MenuModule,
     OrganizationPlansComponent,
     PaymentComponent,
-    PasswordStrengthComponent
+    PasswordStrengthComponent,
   ],
   providers: [DatePipe],
   bootstrap: [],

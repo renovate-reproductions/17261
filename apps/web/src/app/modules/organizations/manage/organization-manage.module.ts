@@ -20,7 +20,7 @@ import { ResetPasswordComponent } from "./reset-password.component";
 import { UserAddEditComponent } from "./user-add-edit.component";
 import { UserConfirmComponent } from "./user-confirm.component";
 import { UserGroupsComponent } from "./user-groups.component";
-import { PoliciesComponent } from './policies.component';
+import { PoliciesComponent } from "./policies.component";
 
 @NgModule({
   imports: [SharedModule, ScrollingModule],
