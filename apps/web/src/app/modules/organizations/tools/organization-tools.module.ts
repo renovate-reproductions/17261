@@ -25,4 +25,4 @@ import { WeakPasswordsReportComponent } from "./weak-passwords-report.component"
     WeakPasswordsReportComponent,
   ],
 })
-export class OrganizationToolsModule { }
+export class OrganizationToolsModule {}
