@@ -11,7 +11,8 @@ import { CollectionsComponent } from "./collections.component";
 
 @NgModule({
   imports: [VaultModule, OrganizationVaultRoutingModule],
-  declarations: [OrganizationVaultComponent,
+  declarations: [
+    OrganizationVaultComponent,
     AddEditComponent,
     AttachmentsComponent,
     CiphersComponent,

@@ -21,9 +21,16 @@ import { UserAddEditComponent } from "./user-add-edit.component";
 import { UserConfirmComponent } from "./user-confirm.component";
 import { UserGroupsComponent } from "./user-groups.component";
 import { PoliciesComponent } from "./policies.component";
+import { OrganizationPoliciesModule } from "../policies/organization-policies.module";
+import { OrganizationManageRoutingModule } from "./organization-manage-routing.module";
 
 @NgModule({
-  imports: [SharedModule, ScrollingModule],
+  imports: [
+    OrganizationManageRoutingModule,
+    OrganizationPoliciesModule,
+    SharedModule,
+    ScrollingModule,
+  ],
   declarations: [
     EntityUsersComponent,
     BulkConfirmComponent,

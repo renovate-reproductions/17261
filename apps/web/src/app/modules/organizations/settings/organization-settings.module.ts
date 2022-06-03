@@ -14,9 +14,10 @@ import { ImageSubscriptionHiddenComponent } from "./image-subscription-hidden.co
 import { SettingsComponent } from "./settings.component";
 import { SubscriptionComponent } from "./subscription.component";
 import { TwoFactorSetupComponent } from "./two-factor-setup.component";
+import { OrganizationSettingsRoutingModule } from "./organization-settings-routing.module";
 
 @NgModule({
-  imports: [CommonModule, SharedModule],
+  imports: [OrganizationSettingsRoutingModule, SharedModule],
   declarations: [
     AccountComponent,
     AdjustSubscription,
@@ -31,4 +32,4 @@ import { TwoFactorSetupComponent } from "./two-factor-setup.component";
     TwoFactorSetupComponent,
   ],
 })
-export class OrganizationSettingsModule { }
+export class OrganizationSettingsModule {}

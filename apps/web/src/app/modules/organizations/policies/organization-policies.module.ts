@@ -14,7 +14,7 @@ import { SingleOrgPolicyComponent } from "./single-org.component";
 import { TwoFactorAuthenticationPolicyComponent } from "./two-factor-authentication.component";
 
 @NgModule({
-  imports: [CommonModule, SharedModule],
+  imports: [SharedModule],
   declarations: [
     DisableSendPolicyComponent,
     MasterPasswordPolicyComponent,
@@ -27,4 +27,4 @@ import { TwoFactorAuthenticationPolicyComponent } from "./two-factor-authenticat
     TwoFactorAuthenticationPolicyComponent,
   ],
 })
-export class OrganizationPoliciesModule { }
+export class OrganizationPoliciesModule {}

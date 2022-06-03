@@ -1,4 +1,3 @@
-import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 
 import { SharedModule } from "../../../modules/shared.module";
@@ -11,9 +10,10 @@ import { ReusedPasswordsReportComponent } from "./reused-passwords-report.compon
 import { ToolsComponent } from "./tools.component";
 import { UnsecuredWebsitesReportComponent } from "./unsecured-websites-report.component";
 import { WeakPasswordsReportComponent } from "./weak-passwords-report.component";
+import { OrganizationToolsRoutingModule } from "./organization-tools-routing.module";
 
 @NgModule({
-  imports: [CommonModule, SharedModule],
+  imports: [OrganizationToolsRoutingModule, SharedModule],
   declarations: [
     ExportComponent,
     ExposedPasswordsReportComponent,
@@ -25,4 +25,4 @@ import { WeakPasswordsReportComponent } from "./weak-passwords-report.component"
     WeakPasswordsReportComponent,
   ],
 })
-export class OrganizationToolsModule { }
+export class OrganizationToolsModule {}
