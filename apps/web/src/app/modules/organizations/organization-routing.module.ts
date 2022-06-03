@@ -4,28 +4,28 @@ import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "jslib-angular/guards/auth.guard";
 import { Permissions } from "jslib-common/enums/permissions";
 
-import { PermissionsGuard } from "./guards/permissions.guard";
-import { OrganizationLayoutComponent } from "./layouts/organization-layout.component";
-import { CollectionsComponent } from "../modules/organizations/manage/collections.component";
-import { EventsComponent } from "../modules/organizations/manage/events.component";
-import { GroupsComponent } from "../modules/organizations/manage/groups.component";
-import { ManageComponent } from "../modules/organizations/manage/manage.component";
-import { PeopleComponent } from "../modules/organizations/manage/people.component";
-import { PoliciesComponent } from "../modules/organizations/manage/policies.component";
-import { NavigationPermissionsService } from "./services/navigation-permissions.service";
-import { AccountComponent } from "../modules/organizations/settings/account.component";
-import { BillingComponent } from "../modules/organizations/settings/billing.component";
-import { SubscriptionComponent } from "../modules/organizations/settings/subscription.component";
-import { SettingsComponent } from "../modules/organizations/settings/settings.component";
-import { TwoFactorSetupComponent } from "../modules/organizations/settings/two-factor-setup.component";
-import { ExportComponent } from "../modules/organizations/tools/export.component";
-import { ExposedPasswordsReportComponent } from "../modules/organizations/tools/exposed-passwords-report.component";
-import { ImportComponent } from "../modules/organizations/tools/import.component";
-import { InactiveTwoFactorReportComponent } from "../modules/organizations/tools/inactive-two-factor-report.component";
-import { ReusedPasswordsReportComponent } from "../modules/organizations/tools/reused-passwords-report.component";
-import { ToolsComponent } from "../modules/organizations/tools/tools.component";
-import { UnsecuredWebsitesReportComponent } from "../modules/organizations/tools/unsecured-websites-report.component";
-import { WeakPasswordsReportComponent } from "../modules/organizations/tools/weak-passwords-report.component";
+import { PermissionsGuard } from "../../organizations/guards/permissions.guard";
+import { OrganizationLayoutComponent } from "../../organizations/layouts/organization-layout.component";
+import { CollectionsComponent } from "./manage/collections.component";
+import { EventsComponent } from "./manage/events.component";
+import { GroupsComponent } from "./manage/groups.component";
+import { ManageComponent } from "./manage/manage.component";
+import { PeopleComponent } from "./manage/people.component";
+import { PoliciesComponent } from "./manage/policies.component";
+import { NavigationPermissionsService } from "../../organizations/services/navigation-permissions.service";
+import { AccountComponent } from "./settings/account.component";
+import { BillingComponent } from "./settings/billing.component";
+import { SubscriptionComponent } from "./settings/subscription.component";
+import { SettingsComponent } from "./settings/settings.component";
+import { TwoFactorSetupComponent } from "./settings/two-factor-setup.component";
+import { ExportComponent } from "./tools/export.component";
+import { ExposedPasswordsReportComponent } from "./tools/exposed-passwords-report.component";
+import { ImportComponent } from "./tools/import.component";
+import { InactiveTwoFactorReportComponent } from "./tools/inactive-two-factor-report.component";
+import { ReusedPasswordsReportComponent } from "./tools/reused-passwords-report.component";
+import { ToolsComponent } from "./tools/tools.component";
+import { UnsecuredWebsitesReportComponent } from "./tools/unsecured-websites-report.component";
+import { WeakPasswordsReportComponent } from "./tools/weak-passwords-report.component";
 
 const routes: Routes = [
   {
@@ -40,7 +40,7 @@ const routes: Routes = [
       {
         path: "vault",
         loadChildren: async () =>
-          (await import("../modules/vault/modules/organization-vault/organization-vault.module"))
+          (await import("../vault/modules/organization-vault/organization-vault.module"))
             .OrganizationVaultModule,
       },
       {
