@@ -5,22 +5,24 @@ import { ModalService } from "jslib-angular/services/modal.service";
 import { CipherService } from "jslib-common/abstractions/cipher.service";
 import { MessagingService } from "jslib-common/abstractions/messaging.service";
 import { OrganizationService } from "jslib-common/abstractions/organization.service";
+import { PasswordGenerationService } from "jslib-common/abstractions/passwordGeneration.service";
 import { PasswordRepromptService } from "jslib-common/abstractions/passwordReprompt.service";
 import { StateService } from "jslib-common/abstractions/state.service";
 import { Cipher } from "jslib-common/models/domain/cipher";
 import { CipherView } from "jslib-common/models/view/cipherView";
 
-import { ReusedPasswordsReportComponent as BaseReusedPasswordsReportComponent } from "../../reports/reused-passwords-report.component";
+import { WeakPasswordsReportComponent as BaseWeakPasswordsReportComponent } from "../../../reports/weak-passwords-report.component";
 
 @Component({
-  selector: "app-reused-passwords-report",
-  templateUrl: "../../reports/reused-passwords-report.component.html",
+  selector: "app-weak-passwords-report",
+  templateUrl: "../../../reports/weak-passwords-report.component.html",
 })
-export class ReusedPasswordsReportComponent extends BaseReusedPasswordsReportComponent {
+export class WeakPasswordsReportComponent extends BaseWeakPasswordsReportComponent {
   manageableCiphers: Cipher[];
 
   constructor(
     cipherService: CipherService,
+    passwordGenerationService: PasswordGenerationService,
     modalService: ModalService,
     messagingService: MessagingService,
     stateService: StateService,
@@ -28,7 +30,14 @@ export class ReusedPasswordsReportComponent extends BaseReusedPasswordsReportCom
     private organizationService: OrganizationService,
     passwordRepromptService: PasswordRepromptService
   ) {
-    super(cipherService, modalService, messagingService, stateService, passwordRepromptService);
+    super(
+      cipherService,
+      passwordGenerationService,
+      modalService,
+      messagingService,
+      stateService,
+      passwordRepromptService
+    );
   }
 
   async ngOnInit() {

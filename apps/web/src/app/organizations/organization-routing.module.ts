@@ -18,14 +18,14 @@ import { OrganizationBillingComponent } from "./settings/organization-billing.co
 import { OrganizationSubscriptionComponent } from "./settings/organization-subscription.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { TwoFactorSetupComponent } from "./settings/two-factor-setup.component";
-import { ExportComponent } from "./tools/export.component";
-import { ExposedPasswordsReportComponent } from "./tools/exposed-passwords-report.component";
-import { ImportComponent } from "./tools/import.component";
-import { InactiveTwoFactorReportComponent } from "./tools/inactive-two-factor-report.component";
-import { ReusedPasswordsReportComponent } from "./tools/reused-passwords-report.component";
-import { ToolsComponent } from "./tools/tools.component";
-import { UnsecuredWebsitesReportComponent } from "./tools/unsecured-websites-report.component";
-import { WeakPasswordsReportComponent } from "./tools/weak-passwords-report.component";
+import { ExportComponent } from "../modules/organizations/tools/export.component";
+import { ExposedPasswordsReportComponent } from "../modules/organizations/tools/exposed-passwords-report.component";
+import { ImportComponent } from "../modules/organizations/tools/import.component";
+import { InactiveTwoFactorReportComponent } from "../modules/organizations/tools/inactive-two-factor-report.component";
+import { ReusedPasswordsReportComponent } from "../modules/organizations/tools/reused-passwords-report.component";
+import { ToolsComponent } from "../modules/organizations/tools/tools.component";
+import { UnsecuredWebsitesReportComponent } from "../modules/organizations/tools/unsecured-websites-report.component";
+import { WeakPasswordsReportComponent } from "../modules/organizations/tools/weak-passwords-report.component";
 
 const routes: Routes = [
   {

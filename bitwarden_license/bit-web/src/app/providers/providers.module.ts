@@ -1,6 +1,7 @@
 import { ComponentFactoryResolver, NgModule } from "@angular/core";
 
 import { ModalService } from "jslib-angular/services/modal.service";
+
 import { LayoutsModule } from "src/app/layouts/layouts.module";
 import { SharedModule } from "src/app/modules/shared.module";
 

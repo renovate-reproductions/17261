@@ -11,11 +11,11 @@ import { PlatformUtilsService } from "jslib-common/abstractions/platformUtils.se
 import { PolicyService } from "jslib-common/abstractions/policy.service";
 import { UserVerificationService } from "jslib-common/abstractions/userVerification.service";
 
-import { ExportComponent as BaseExportComponent } from "../../tools/export.component";
+import { ExportComponent as BaseExportComponent } from "../../../tools/export.component";
 
 @Component({
   selector: "app-org-export",
-  templateUrl: "../../tools/export.component.html",
+  templateUrl: "../../../tools/export.component.html",
 })
 export class ExportComponent extends BaseExportComponent {
   constructor(

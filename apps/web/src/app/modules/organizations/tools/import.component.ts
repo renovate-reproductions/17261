@@ -8,11 +8,11 @@ import { OrganizationService } from "jslib-common/abstractions/organization.serv
 import { PlatformUtilsService } from "jslib-common/abstractions/platformUtils.service";
 import { PolicyService } from "jslib-common/abstractions/policy.service";
 
-import { ImportComponent as BaseImportComponent } from "../../tools/import.component";
+import { ImportComponent as BaseImportComponent } from "../../../tools/import.component";
 
 @Component({
   selector: "app-org-import",
-  templateUrl: "../../tools/import.component.html",
+  templateUrl: "../../../tools/import.component.html",
 })
 export class ImportComponent extends BaseImportComponent {
   organizationName: string;

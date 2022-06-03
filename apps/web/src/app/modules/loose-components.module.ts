@@ -47,14 +47,6 @@ import { SettingsComponent as OrgSettingComponent } from "../organizations/setti
 import { TwoFactorSetupComponent as OrgTwoFactorSetupComponent } from "../organizations/settings/two-factor-setup.component";
 import { AcceptFamilySponsorshipComponent } from "../organizations/sponsorships/accept-family-sponsorship.component";
 import { FamiliesForEnterpriseSetupComponent } from "../organizations/sponsorships/families-for-enterprise-setup.component";
-import { ExportComponent as OrgExportComponent } from "../organizations/tools/export.component";
-import { ExposedPasswordsReportComponent as OrgExposedPasswordsReportComponent } from "../organizations/tools/exposed-passwords-report.component";
-import { ImportComponent as OrgImportComponent } from "../organizations/tools/import.component";
-import { InactiveTwoFactorReportComponent as OrgInactiveTwoFactorReportComponent } from "../organizations/tools/inactive-two-factor-report.component";
-import { ReusedPasswordsReportComponent as OrgReusedPasswordsReportComponent } from "../organizations/tools/reused-passwords-report.component";
-import { ToolsComponent as OrgToolsComponent } from "../organizations/tools/tools.component";
-import { UnsecuredWebsitesReportComponent as OrgUnsecuredWebsitesReportComponent } from "../organizations/tools/unsecured-websites-report.component";
-import { WeakPasswordsReportComponent as OrgWeakPasswordsReportComponent } from "../organizations/tools/weak-passwords-report.component";
 import { AddEditComponent as OrgAddEditComponent } from "../organizations/vault/add-edit.component";
 import { AttachmentsComponent as OrgAttachmentsComponent } from "../organizations/vault/attachments.component";
 import { CiphersComponent as OrgCiphersComponent } from "../organizations/vault/ciphers.component";
@@ -211,17 +203,9 @@ import { LayoutsModule } from "../layouts/layouts.module";
     OrgAttachmentsComponent,
     OrgCiphersComponent,
     OrgCollectionsComponent,
-    OrgExportComponent,
-    OrgExposedPasswordsReportComponent,
-    OrgImportComponent,
-    OrgInactiveTwoFactorReportComponent,
-    OrgReusedPasswordsReportComponent,
     OrgSettingComponent,
-    OrgToolsComponent,
     OrgTwoFactorSetupComponent,
     OrgSubscriptionHiddenComponent,
-    OrgUnsecuredWebsitesReportComponent,
-    OrgWeakPasswordsReportComponent,
     GeneratorComponent,
     PasswordGeneratorHistoryComponent,
     PasswordGeneratorPolicyComponent,
@@ -347,16 +331,8 @@ import { LayoutsModule } from "../layouts/layouts.module";
     OrgAttachmentsComponent,
     OrgCiphersComponent,
     OrgCollectionsComponent,
-    OrgExportComponent,
-    OrgExposedPasswordsReportComponent,
-    OrgImportComponent,
-    OrgInactiveTwoFactorReportComponent,
-    OrgReusedPasswordsReportComponent,
     OrgSettingComponent,
-    OrgToolsComponent,
     OrgTwoFactorSetupComponent,
-    OrgUnsecuredWebsitesReportComponent,
-    OrgWeakPasswordsReportComponent,
     GeneratorComponent,
     PasswordGeneratorHistoryComponent,
     PasswordGeneratorPolicyComponent,
