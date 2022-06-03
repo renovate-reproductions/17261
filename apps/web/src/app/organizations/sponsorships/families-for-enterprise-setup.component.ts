@@ -15,7 +15,7 @@ import { ProductType } from "jslib-common/enums/productType";
 import { Organization } from "jslib-common/models/domain/organization";
 import { OrganizationSponsorshipRedeemRequest } from "jslib-common/models/request/organization/organizationSponsorshipRedeemRequest";
 
-import { DeleteOrganizationComponent } from "src/app/organizations/settings/delete-organization.component";
+import { DeleteOrganizationComponent } from "src/app/modules/organizations/settings/delete-organization.component";
 import { OrganizationPlansComponent } from "src/app/settings/organization-plans.component";
 
 @Component({

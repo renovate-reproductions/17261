@@ -13,9 +13,9 @@ import { OrganizationKeysRequest } from "jslib-common/models/request/organizatio
 import { OrganizationUpdateRequest } from "jslib-common/models/request/organizationUpdateRequest";
 import { OrganizationResponse } from "jslib-common/models/response/organizationResponse";
 
-import { ApiKeyComponent } from "../../settings/api-key.component";
-import { PurgeVaultComponent } from "../../settings/purge-vault.component";
-import { TaxInfoComponent } from "../../settings/tax-info.component";
+import { ApiKeyComponent } from "../../../settings/api-key.component";
+import { PurgeVaultComponent } from "../../../settings/purge-vault.component";
+import { TaxInfoComponent } from "../../../settings/tax-info.component";
 
 import { DeleteOrganizationComponent } from "./delete-organization.component";
 

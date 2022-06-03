@@ -34,17 +34,6 @@ import { ResetPasswordPolicyComponent } from "../organizations/policies/reset-pa
 import { SendOptionsPolicyComponent } from "../organizations/policies/send-options.component";
 import { SingleOrgPolicyComponent } from "../organizations/policies/single-org.component";
 import { TwoFactorAuthenticationPolicyComponent } from "../organizations/policies/two-factor-authentication.component";
-import { AccountComponent as OrgAccountComponent } from "../organizations/settings/account.component";
-import { AdjustSubscription } from "../organizations/settings/adjust-subscription.component";
-import { BillingSyncApiKeyComponent } from "../organizations/settings/billing-sync-api-key.component";
-import { ChangePlanComponent } from "../organizations/settings/change-plan.component";
-import { DeleteOrganizationComponent } from "../organizations/settings/delete-organization.component";
-import { DownloadLicenseComponent } from "../organizations/settings/download-license.component";
-import { ImageSubscriptionHiddenComponent as OrgSubscriptionHiddenComponent } from "../organizations/settings/image-subscription-hidden.component";
-import { OrganizationBillingComponent } from "../organizations/settings/organization-billing.component";
-import { OrganizationSubscriptionComponent } from "../organizations/settings/organization-subscription.component";
-import { SettingsComponent as OrgSettingComponent } from "../organizations/settings/settings.component";
-import { TwoFactorSetupComponent as OrgTwoFactorSetupComponent } from "../organizations/settings/two-factor-setup.component";
 import { AcceptFamilySponsorshipComponent } from "../organizations/sponsorships/accept-family-sponsorship.component";
 import { FamiliesForEnterpriseSetupComponent } from "../organizations/sponsorships/families-for-enterprise-setup.component";
 import { AddEditComponent as OrgAddEditComponent } from "../organizations/vault/add-edit.component";
@@ -152,10 +141,8 @@ import { LayoutsModule } from "../layouts/layouts.module";
     AddEditCustomFieldsComponent,
     AdjustPaymentComponent,
     AdjustStorageComponent,
-    AdjustSubscription,
     ApiKeyComponent,
     AttachmentsComponent,
-    BillingSyncApiKeyComponent,
     BillingSyncKeyComponent,
     BreachReportComponent,
     BulkActionsComponent,
@@ -166,16 +153,13 @@ import { LayoutsModule } from "../layouts/layouts.module";
     ChangeEmailComponent,
     ChangeKdfComponent,
     ChangePasswordComponent,
-    ChangePlanComponent,
     CiphersComponent,
     CollectionsComponent,
     CreateOrganizationComponent,
     DeauthorizeSessionsComponent,
     DeleteAccountComponent,
-    DeleteOrganizationComponent,
     DisableSendPolicyComponent,
     DomainRulesComponent,
-    DownloadLicenseComponent,
     EmergencyAccessAddEditComponent,
     EmergencyAccessAttachmentsComponent,
     EmergencyAccessComponent,
@@ -195,17 +179,11 @@ import { LayoutsModule } from "../layouts/layouts.module";
     MasterPasswordPolicyComponent,
     NestedCheckboxComponent,
     OrganizationSwitcherComponent,
-    OrgAccountComponent,
     OrgAddEditComponent,
-    OrganizationBillingComponent,
     OrganizationLayoutComponent,
-    OrganizationSubscriptionComponent,
     OrgAttachmentsComponent,
     OrgCiphersComponent,
     OrgCollectionsComponent,
-    OrgSettingComponent,
-    OrgTwoFactorSetupComponent,
-    OrgSubscriptionHiddenComponent,
     GeneratorComponent,
     PasswordGeneratorHistoryComponent,
     PasswordGeneratorPolicyComponent,
@@ -282,7 +260,6 @@ import { LayoutsModule } from "../layouts/layouts.module";
     AddEditCustomFieldsComponent,
     AdjustPaymentComponent,
     AdjustStorageComponent,
-    AdjustSubscription,
     ApiKeyComponent,
     AttachmentsComponent,
     BreachReportComponent,
@@ -294,16 +271,13 @@ import { LayoutsModule } from "../layouts/layouts.module";
     ChangeEmailComponent,
     ChangeKdfComponent,
     ChangePasswordComponent,
-    ChangePlanComponent,
     CiphersComponent,
     CollectionsComponent,
     CreateOrganizationComponent,
     DeauthorizeSessionsComponent,
     DeleteAccountComponent,
-    DeleteOrganizationComponent,
     DisableSendPolicyComponent,
     DomainRulesComponent,
-    DownloadLicenseComponent,
     EmergencyAccessAddEditComponent,
     EmergencyAccessAttachmentsComponent,
     EmergencyAccessComponent,
@@ -323,16 +297,11 @@ import { LayoutsModule } from "../layouts/layouts.module";
     MasterPasswordPolicyComponent,
     NestedCheckboxComponent,
     OrganizationSwitcherComponent,
-    OrgAccountComponent,
     OrgAddEditComponent,
-    OrganizationBillingComponent,
     OrganizationLayoutComponent,
-    OrganizationSubscriptionComponent,
     OrgAttachmentsComponent,
     OrgCiphersComponent,
     OrgCollectionsComponent,
-    OrgSettingComponent,
-    OrgTwoFactorSetupComponent,
     GeneratorComponent,
     PasswordGeneratorHistoryComponent,
     PasswordGeneratorPolicyComponent,

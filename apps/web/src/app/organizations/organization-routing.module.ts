@@ -13,11 +13,11 @@ import { ManageComponent } from "../modules/organizations/manage/manage.componen
 import { PeopleComponent } from "../modules/organizations/manage/people.component";
 import { PoliciesComponent } from "../modules/organizations/manage/policies.component";
 import { NavigationPermissionsService } from "./services/navigation-permissions.service";
-import { AccountComponent } from "./settings/account.component";
-import { OrganizationBillingComponent } from "./settings/organization-billing.component";
-import { OrganizationSubscriptionComponent } from "./settings/organization-subscription.component";
-import { SettingsComponent } from "./settings/settings.component";
-import { TwoFactorSetupComponent } from "./settings/two-factor-setup.component";
+import { AccountComponent } from "../modules/organizations/settings/account.component";
+import { BillingComponent } from "../modules/organizations/settings/billing.component";
+import { SubscriptionComponent } from "../modules/organizations/settings/subscription.component";
+import { SettingsComponent } from "../modules/organizations/settings/settings.component";
+import { TwoFactorSetupComponent } from "../modules/organizations/settings/two-factor-setup.component";
 import { ExportComponent } from "../modules/organizations/tools/export.component";
 import { ExposedPasswordsReportComponent } from "../modules/organizations/tools/exposed-passwords-report.component";
 import { ImportComponent } from "../modules/organizations/tools/import.component";
@@ -200,13 +200,13 @@ const routes: Routes = [
           },
           {
             path: "billing",
-            component: OrganizationBillingComponent,
+            component: BillingComponent,
             canActivate: [PermissionsGuard],
             data: { titleId: "billing", permissions: [Permissions.ManageBilling] },
           },
           {
             path: "subscription",
-            component: OrganizationSubscriptionComponent,
+            component: SubscriptionComponent,
             data: { titleId: "subscription" },
           },
         ],
