@@ -8,7 +8,7 @@ import { PlatformUtilsService } from "jslib-common/abstractions/platformUtils.se
 import { EventResponse } from "jslib-common/models/response/eventResponse";
 import { ListResponse } from "jslib-common/models/response/listResponse";
 
-import { EventService } from "../../services/event.service";
+import { EventService } from "../../../services/event.service";
 
 @Component({
   selector: "app-entity-events",

@@ -22,30 +22,9 @@ import { VerifyRecoverDeleteComponent } from "../accounts/verify-recover-delete.
 import { NestedCheckboxComponent } from "../components/nested-checkbox.component";
 import { OrganizationSwitcherComponent } from "../components/organization-switcher.component";
 import { PasswordRepromptComponent } from "../components/password-reprompt.component";
-import { PasswordStrengthComponent } from "../components/password-strength.component";
 import { PremiumBadgeComponent } from "../components/premium-badge.component";
-import { FooterComponent } from "../layouts/footer.component";
-import { FrontendLayoutComponent } from "../layouts/frontend-layout.component";
-import { NavbarComponent } from "../layouts/navbar.component";
 import { UserLayoutComponent } from "../layouts/user-layout.component";
 import { OrganizationLayoutComponent } from "../organizations/layouts/organization-layout.component";
-import { BulkConfirmComponent as OrgBulkConfirmComponent } from "../organizations/manage/bulk/bulk-confirm.component";
-import { BulkRemoveComponent as OrgBulkRemoveComponent } from "../organizations/manage/bulk/bulk-remove.component";
-import { BulkStatusComponent as OrgBulkStatusComponent } from "../organizations/manage/bulk/bulk-status.component";
-import { CollectionAddEditComponent as OrgCollectionAddEditComponent } from "../organizations/manage/collection-add-edit.component";
-import { CollectionsComponent as OrgManageCollectionsComponent } from "../organizations/manage/collections.component";
-import { EntityEventsComponent as OrgEntityEventsComponent } from "../organizations/manage/entity-events.component";
-import { EventsComponent as OrgEventsComponent } from "../organizations/manage/events.component";
-import { GroupAddEditComponent as OrgGroupAddEditComponent } from "../organizations/manage/group-add-edit.component";
-import { GroupsComponent as OrgGroupsComponent } from "../organizations/manage/groups.component";
-import { ManageComponent as OrgManageComponent } from "../organizations/manage/manage.component";
-import { PeopleComponent as OrgPeopleComponent } from "../organizations/manage/people.component";
-import { PoliciesComponent as OrgPoliciesComponent } from "../organizations/manage/policies.component";
-import { PolicyEditComponent as OrgPolicyEditComponent } from "../organizations/manage/policy-edit.component";
-import { ResetPasswordComponent as OrgResetPasswordComponent } from "../organizations/manage/reset-password.component";
-import { UserAddEditComponent as OrgUserAddEditComponent } from "../organizations/manage/user-add-edit.component";
-import { UserConfirmComponent as OrgUserConfirmComponent } from "../organizations/manage/user-confirm.component";
-import { UserGroupsComponent as OrgUserGroupsComponent } from "../organizations/manage/user-groups.component";
 import { DisableSendPolicyComponent } from "../organizations/policies/disable-send.component";
 import { MasterPasswordPolicyComponent } from "../organizations/policies/master-password.component";
 import { PasswordGeneratorPolicyComponent } from "../organizations/policies/password-generator.component";
@@ -114,9 +93,7 @@ import { EmergencyAccessTakeoverComponent } from "../settings/emergency-access-t
 import { EmergencyAccessViewComponent } from "../settings/emergency-access-view.component";
 import { EmergencyAccessComponent } from "../settings/emergency-access.component";
 import { EmergencyAddEditComponent } from "../settings/emergency-add-edit.component";
-import { OrganizationPlansComponent } from "../settings/organization-plans.component";
 import { PaymentMethodComponent } from "../settings/payment-method.component";
-import { PaymentComponent } from "../settings/payment.component";
 import { PreferencesComponent } from "../settings/preferences.component";
 import { PremiumComponent } from "../settings/premium.component";
 import { ProfileComponent } from "../settings/profile.component";
@@ -164,11 +141,12 @@ import { PipesModule } from "./pipes/pipes.module";
 import { SharedModule } from "./shared.module";
 import { VaultFilterModule } from "./vault-filter/vault-filter.module";
 import { OrganizationBadgeModule } from "./vault/modules/organization-badge/organization-badge.module";
+import { LayoutsModule } from "../layouts/layouts.module";
 
 // Please do not add to this list of declarations - we should refactor these into modules when doing so makes sense until there are none left.
 // If you are building new functionality, please create or extend a feature module instead.
 @NgModule({
-  imports: [SharedModule, VaultFilterModule, OrganizationBadgeModule, PipesModule],
+  imports: [SharedModule, VaultFilterModule, OrganizationBadgeModule, PipesModule, LayoutsModule],
   declarations: [
     PremiumBadgeComponent,
     AcceptEmergencyComponent,
@@ -217,60 +195,37 @@ import { OrganizationBadgeModule } from "./vault/modules/organization-badge/orga
     ExposedPasswordsReportComponent,
     FamiliesForEnterpriseSetupComponent,
     FolderAddEditComponent,
-    FooterComponent,
-    FrontendLayoutComponent,
     HintComponent,
     ImportComponent,
     InactiveTwoFactorReportComponent,
     LockComponent,
     LoginComponent,
     MasterPasswordPolicyComponent,
-    NavbarComponent,
     NestedCheckboxComponent,
     OrganizationSwitcherComponent,
     OrgAccountComponent,
     OrgAddEditComponent,
     OrganizationBillingComponent,
     OrganizationLayoutComponent,
-    OrganizationPlansComponent,
     OrganizationSubscriptionComponent,
     OrgAttachmentsComponent,
-    OrgBulkConfirmComponent,
-    OrgBulkRemoveComponent,
-    OrgBulkStatusComponent,
     OrgCiphersComponent,
-    OrgCollectionAddEditComponent,
     OrgCollectionsComponent,
-    OrgEntityEventsComponent,
-    OrgEventsComponent,
     OrgExportComponent,
     OrgExposedPasswordsReportComponent,
-    OrgGroupAddEditComponent,
-    OrgGroupsComponent,
     OrgImportComponent,
     OrgInactiveTwoFactorReportComponent,
-    OrgManageCollectionsComponent,
-    OrgManageComponent,
-    OrgPeopleComponent,
-    OrgPoliciesComponent,
-    OrgPolicyEditComponent,
-    OrgResetPasswordComponent,
     OrgReusedPasswordsReportComponent,
     OrgSettingComponent,
     OrgToolsComponent,
     OrgTwoFactorSetupComponent,
     OrgSubscriptionHiddenComponent,
     OrgUnsecuredWebsitesReportComponent,
-    OrgUserAddEditComponent,
-    OrgUserConfirmComponent,
-    OrgUserGroupsComponent,
     OrgWeakPasswordsReportComponent,
     GeneratorComponent,
     PasswordGeneratorHistoryComponent,
     PasswordGeneratorPolicyComponent,
     PasswordRepromptComponent,
-    PasswordStrengthComponent,
-    PaymentComponent,
     PaymentMethodComponent,
     PersonalOwnershipPolicyComponent,
     PreferencesComponent,
@@ -376,59 +331,36 @@ import { OrganizationBadgeModule } from "./vault/modules/organization-badge/orga
     ExposedPasswordsReportComponent,
     FamiliesForEnterpriseSetupComponent,
     FolderAddEditComponent,
-    FooterComponent,
-    FrontendLayoutComponent,
     HintComponent,
     ImportComponent,
     InactiveTwoFactorReportComponent,
     LockComponent,
     LoginComponent,
     MasterPasswordPolicyComponent,
-    NavbarComponent,
     NestedCheckboxComponent,
     OrganizationSwitcherComponent,
     OrgAccountComponent,
     OrgAddEditComponent,
     OrganizationBillingComponent,
     OrganizationLayoutComponent,
-    OrganizationPlansComponent,
     OrganizationSubscriptionComponent,
     OrgAttachmentsComponent,
-    OrgBulkConfirmComponent,
-    OrgBulkRemoveComponent,
-    OrgBulkStatusComponent,
     OrgCiphersComponent,
-    OrgCollectionAddEditComponent,
     OrgCollectionsComponent,
-    OrgEntityEventsComponent,
-    OrgEventsComponent,
     OrgExportComponent,
     OrgExposedPasswordsReportComponent,
-    OrgGroupAddEditComponent,
-    OrgGroupsComponent,
     OrgImportComponent,
     OrgInactiveTwoFactorReportComponent,
-    OrgManageCollectionsComponent,
-    OrgManageComponent,
-    OrgPeopleComponent,
-    OrgPoliciesComponent,
-    OrgPolicyEditComponent,
-    OrgResetPasswordComponent,
     OrgReusedPasswordsReportComponent,
     OrgSettingComponent,
     OrgToolsComponent,
     OrgTwoFactorSetupComponent,
     OrgUnsecuredWebsitesReportComponent,
-    OrgUserAddEditComponent,
-    OrgUserConfirmComponent,
-    OrgUserGroupsComponent,
     OrgWeakPasswordsReportComponent,
     GeneratorComponent,
     PasswordGeneratorHistoryComponent,
     PasswordGeneratorPolicyComponent,
     PasswordRepromptComponent,
-    PasswordStrengthComponent,
-    PaymentComponent,
     PaymentMethodComponent,
     PersonalOwnershipPolicyComponent,
     PreferencesComponent,

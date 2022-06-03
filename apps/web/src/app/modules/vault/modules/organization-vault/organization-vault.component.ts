@@ -24,7 +24,7 @@ import { CipherType } from "jslib-common/enums/cipherType";
 import { Organization } from "jslib-common/models/domain/organization";
 import { CipherView } from "jslib-common/models/view/cipherView";
 
-import { EntityEventsComponent } from "../../../../organizations/manage/entity-events.component";
+import { EntityEventsComponent } from "../../../organizations/manage/entity-events.component";
 import { AddEditComponent } from "../../../../organizations/vault/add-edit.component";
 import { AttachmentsComponent } from "../../../../organizations/vault/attachments.component";
 import { CiphersComponent } from "../../../../organizations/vault/ciphers.component";

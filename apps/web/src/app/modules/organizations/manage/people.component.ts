@@ -26,7 +26,7 @@ import { ListResponse } from "jslib-common/models/response/listResponse";
 import { OrganizationUserBulkResponse } from "jslib-common/models/response/organizationUserBulkResponse";
 import { OrganizationUserUserDetailsResponse } from "jslib-common/models/response/organizationUserResponse";
 
-import { BasePeopleComponent } from "../../common/base.people.component";
+import { BasePeopleComponent } from "../../../common/base.people.component";
 
 import { BulkConfirmComponent } from "./bulk/bulk-confirm.component";
 import { BulkRemoveComponent } from "./bulk/bulk-remove.component";

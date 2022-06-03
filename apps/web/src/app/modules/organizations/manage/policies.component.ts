@@ -9,8 +9,8 @@ import { PolicyType } from "jslib-common/enums/policyType";
 import { Organization } from "jslib-common/models/domain/organization";
 import { PolicyResponse } from "jslib-common/models/response/policyResponse";
 
-import { PolicyListService } from "../../services/policy-list.service";
-import { BasePolicy } from "../policies/base-policy.component";
+import { PolicyListService } from "../../../services/policy-list.service";
+import { BasePolicy } from "../../../organizations/policies/base-policy.component";
 
 import { PolicyEditComponent } from "./policy-edit.component";
 

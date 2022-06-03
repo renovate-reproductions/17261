@@ -12,8 +12,8 @@ import { ProviderService } from "jslib-common/abstractions/provider.service";
 import { Organization } from "jslib-common/models/domain/organization";
 import { EventResponse } from "jslib-common/models/response/eventResponse";
 
-import { BaseEventsComponent } from "../../common/base.events.component";
-import { EventService } from "../../services/event.service";
+import { BaseEventsComponent } from "../../../common/base.events.component";
+import { EventService } from "../../../services/event.service";
 
 @Component({
   selector: "app-org-events",

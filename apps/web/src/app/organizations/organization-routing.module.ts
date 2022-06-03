@@ -6,12 +6,12 @@ import { Permissions } from "jslib-common/enums/permissions";
 
 import { PermissionsGuard } from "./guards/permissions.guard";
 import { OrganizationLayoutComponent } from "./layouts/organization-layout.component";
-import { CollectionsComponent } from "./manage/collections.component";
-import { EventsComponent } from "./manage/events.component";
-import { GroupsComponent } from "./manage/groups.component";
-import { ManageComponent } from "./manage/manage.component";
-import { PeopleComponent } from "./manage/people.component";
-import { PoliciesComponent } from "./manage/policies.component";
+import { CollectionsComponent } from "../modules/organizations/manage/collections.component";
+import { EventsComponent } from "../modules/organizations/manage/events.component";
+import { GroupsComponent } from "../modules/organizations/manage/groups.component";
+import { ManageComponent } from "../modules/organizations/manage/manage.component";
+import { PeopleComponent } from "../modules/organizations/manage/people.component";
+import { PoliciesComponent } from "../modules/organizations/manage/policies.component";
 import { NavigationPermissionsService } from "./services/navigation-permissions.service";
 import { AccountComponent } from "./settings/account.component";
 import { OrganizationBillingComponent } from "./settings/organization-billing.component";

@@ -17,7 +17,7 @@ import { PolicyType } from "jslib-common/enums/policyType";
 import { PolicyRequest } from "jslib-common/models/request/policyRequest";
 import { PolicyResponse } from "jslib-common/models/response/policyResponse";
 
-import { BasePolicy, BasePolicyComponent } from "../policies/base-policy.component";
+import { BasePolicy, BasePolicyComponent } from "../../../organizations/policies/base-policy.component";
 
 @Component({
   selector: "app-policy-edit",

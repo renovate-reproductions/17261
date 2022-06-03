@@ -20,7 +20,7 @@ import { ListResponse } from "jslib-common/models/response/listResponse";
 import { OrganizationUserUserDetailsResponse } from "jslib-common/models/response/organizationUserResponse";
 import { ProviderUserUserDetailsResponse } from "jslib-common/models/response/provider/providerUserResponse";
 
-import { UserConfirmComponent } from "../organizations/manage/user-confirm.component";
+import { UserConfirmComponent } from "../modules/organizations/manage/user-confirm.component";
 
 type StatusType = OrganizationUserStatusType | ProviderUserStatusType;
 
