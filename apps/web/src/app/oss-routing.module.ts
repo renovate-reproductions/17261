@@ -24,8 +24,8 @@ import { VerifyRecoverDeleteComponent } from "./accounts/verify-recover-delete.c
 import { HomeGuard } from "./guards/home.guard";
 import { FrontendLayoutComponent } from "./layouts/frontend-layout.component";
 import { UserLayoutComponent } from "./layouts/user-layout.component";
-import { AcceptFamilySponsorshipComponent } from "./organizations/sponsorships/accept-family-sponsorship.component";
-import { FamiliesForEnterpriseSetupComponent } from "./organizations/sponsorships/families-for-enterprise-setup.component";
+import { AcceptFamilySponsorshipComponent } from "./sponsorships/accept-family-sponsorship.component";
+import { FamiliesForEnterpriseSetupComponent } from "./sponsorships/families-for-enterprise-setup.component";
 import { AccessComponent } from "./send/access.component";
 import { SendComponent } from "./send/send.component";
 import { AccountComponent } from "./settings/account.component";
