@@ -6,7 +6,7 @@ import { Permissions } from "jslib-common/enums/permissions";
 
 import { ManageComponent } from "src/app/modules/organizations/manage/manage.component";
 import { PermissionsGuard } from "src/app/modules/organizations/permissions.guard";
-import { OrganizationLayoutComponent } from "src/app/organizations/layouts/organization-layout.component";
+import { OrganizationLayoutComponent } from "src/app/modules/organizations/layouts/organization-layout.component";
 import { NavigationPermissionsService } from "src/app/modules/organizations/navigation-permissions.service";
 
 import { SsoComponent } from "./manage/sso.component";

@@ -20,11 +20,9 @@ import { UpdateTempPasswordComponent } from "../accounts/update-temp-password.co
 import { VerifyEmailTokenComponent } from "../accounts/verify-email-token.component";
 import { VerifyRecoverDeleteComponent } from "../accounts/verify-recover-delete.component";
 import { NestedCheckboxComponent } from "../components/nested-checkbox.component";
-import { OrganizationSwitcherComponent } from "../components/organization-switcher.component";
 import { PasswordRepromptComponent } from "../components/password-reprompt.component";
 import { PremiumBadgeComponent } from "../components/premium-badge.component";
 import { UserLayoutComponent } from "../layouts/user-layout.component";
-import { OrganizationLayoutComponent } from "../organizations/layouts/organization-layout.component";
 import { AcceptFamilySponsorshipComponent } from "../organizations/sponsorships/accept-family-sponsorship.component";
 import { FamiliesForEnterpriseSetupComponent } from "../organizations/sponsorships/families-for-enterprise-setup.component";
 import { ProvidersComponent } from "../providers/providers.component";
@@ -163,8 +161,6 @@ import { LayoutsModule } from "../layouts/layouts.module";
     LockComponent,
     LoginComponent,
     NestedCheckboxComponent,
-    OrganizationSwitcherComponent,
-    OrganizationLayoutComponent,
     GeneratorComponent,
     PasswordGeneratorHistoryComponent,
     PasswordRepromptComponent,
@@ -268,8 +264,6 @@ import { LayoutsModule } from "../layouts/layouts.module";
     LockComponent,
     LoginComponent,
     NestedCheckboxComponent,
-    OrganizationSwitcherComponent,
-    OrganizationLayoutComponent,
     GeneratorComponent,
     PasswordGeneratorHistoryComponent,
     PasswordRepromptComponent,

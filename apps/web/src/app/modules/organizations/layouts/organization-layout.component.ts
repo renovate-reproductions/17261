@@ -5,7 +5,7 @@ import { BroadcasterService } from "jslib-common/abstractions/broadcaster.servic
 import { OrganizationService } from "jslib-common/abstractions/organization.service";
 import { Organization } from "jslib-common/models/domain/organization";
 
-import { NavigationPermissionsService } from "../../modules/organizations/navigation-permissions.service";
+import { NavigationPermissionsService } from "../navigation-permissions.service";
 
 const BroadcasterSubscriptionId = "OrganizationLayoutComponent";
 

@@ -4,7 +4,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "jslib-angular/guards/auth.guard";
 
 import { PermissionsGuard } from "./permissions.guard";
-import { OrganizationLayoutComponent } from "../../organizations/layouts/organization-layout.component";
+import { OrganizationLayoutComponent } from "./layouts/organization-layout.component";
 import { NavigationPermissionsService } from "./navigation-permissions.service";
 
 const routes: Routes = [
