@@ -7,8 +7,8 @@ import { PipesModule } from "./modules/pipes/pipes.module";
 import { SharedModule } from "./modules/shared.module";
 import { VaultFilterModule } from "./modules/vault-filter/vault-filter.module";
 import { OrganizationBadgeModule } from "./modules/vault/modules/organization-badge/organization-badge.module";
-import { OrganizationToolsModule } from "./modules/organizations/tools/organization-tools.module";
-import { OrganizationSettingsModule } from "./modules/organizations/settings/organization-settings.module";
+import {OrganizationToolsModule } from "./modules/organizations/tools/organization-tools.module";
+import {OrganizationSettingsModule } from "./modules/organizations/settings/organization-settings.module";
 
 @NgModule({
   imports: [
@@ -20,7 +20,7 @@ import { OrganizationSettingsModule } from "./modules/organizations/settings/org
     OrganizationManageModule,
     OrganizationUserModule,
     OrganizationToolsModule,
-    OrganizationSettingsModule,
+    OrganizationSettingsModule
   ],
   exports: [LooseComponentsModule, VaultFilterModule, OrganizationBadgeModule, PipesModule],
   bootstrap: [],

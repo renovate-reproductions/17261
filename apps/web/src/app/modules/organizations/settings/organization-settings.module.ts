@@ -31,4 +31,4 @@ import { TwoFactorSetupComponent } from "./two-factor-setup.component";
     TwoFactorSetupComponent,
   ],
 })
-export class OrganizationSettingsModule {}
+export class OrganizationSettingsModule { }

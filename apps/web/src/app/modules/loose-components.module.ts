@@ -36,10 +36,6 @@ import { SingleOrgPolicyComponent } from "../organizations/policies/single-org.c
 import { TwoFactorAuthenticationPolicyComponent } from "../organizations/policies/two-factor-authentication.component";
 import { AcceptFamilySponsorshipComponent } from "../organizations/sponsorships/accept-family-sponsorship.component";
 import { FamiliesForEnterpriseSetupComponent } from "../organizations/sponsorships/families-for-enterprise-setup.component";
-import { AddEditComponent as OrgAddEditComponent } from "../organizations/vault/add-edit.component";
-import { AttachmentsComponent as OrgAttachmentsComponent } from "../organizations/vault/attachments.component";
-import { CiphersComponent as OrgCiphersComponent } from "../organizations/vault/ciphers.component";
-import { CollectionsComponent as OrgCollectionsComponent } from "../organizations/vault/collections.component";
 import { ProvidersComponent } from "../providers/providers.component";
 import { BreachReportComponent } from "../reports/breach-report.component";
 import { ExposedPasswordsReportComponent } from "../reports/exposed-passwords-report.component";
@@ -179,11 +175,7 @@ import { LayoutsModule } from "../layouts/layouts.module";
     MasterPasswordPolicyComponent,
     NestedCheckboxComponent,
     OrganizationSwitcherComponent,
-    OrgAddEditComponent,
     OrganizationLayoutComponent,
-    OrgAttachmentsComponent,
-    OrgCiphersComponent,
-    OrgCollectionsComponent,
     GeneratorComponent,
     PasswordGeneratorHistoryComponent,
     PasswordGeneratorPolicyComponent,
@@ -297,11 +289,7 @@ import { LayoutsModule } from "../layouts/layouts.module";
     MasterPasswordPolicyComponent,
     NestedCheckboxComponent,
     OrganizationSwitcherComponent,
-    OrgAddEditComponent,
     OrganizationLayoutComponent,
-    OrgAttachmentsComponent,
-    OrgCiphersComponent,
-    OrgCollectionsComponent,
     GeneratorComponent,
     PasswordGeneratorHistoryComponent,
     PasswordGeneratorPolicyComponent,
