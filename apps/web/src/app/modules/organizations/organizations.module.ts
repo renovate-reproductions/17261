@@ -13,9 +13,6 @@ import { OrganizationsRoutingModule } from "./organizations-routing.module";
  */
 @NgModule({
   imports: [OrganizationsRoutingModule, SharedModule, LayoutsModule],
-  declarations: [
-    OrganizationLayoutComponent,
-    OrganizationSwitcherComponent,
-  ],
+  declarations: [OrganizationLayoutComponent, OrganizationSwitcherComponent],
 })
-export class OrganizationsModule { }
+export class OrganizationsModule {}
