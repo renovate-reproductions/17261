@@ -51,6 +51,5 @@ import { OrganizationManageRoutingModule } from "./organization-manage-routing.m
     UserGroupsComponent,
     PoliciesComponent,
   ],
-  exports: [EntityUsersComponent],
 })
 export class OrganizationManageModule {}

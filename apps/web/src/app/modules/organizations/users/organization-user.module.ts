@@ -9,6 +9,5 @@ import { EnrollMasterPasswordReset } from "./enroll-master-password-reset.compon
 @NgModule({
   imports: [SharedModule, ScrollingModule, LooseComponentsModule],
   declarations: [EnrollMasterPasswordReset],
-  exports: [EnrollMasterPasswordReset],
 })
 export class OrganizationUserModule {}
