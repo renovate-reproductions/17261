@@ -3,9 +3,9 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { Permissions } from "jslib-common/enums/permissions";
 
-import { PermissionsGuard } from "../../../organizations/guards/permissions.guard";
+import { PermissionsGuard } from "../permissions.guard";
 import { PoliciesComponent } from "./policies.component";
-import { NavigationPermissionsService } from "../../../organizations/services/navigation-permissions.service";
+import { NavigationPermissionsService } from "../navigation-permissions.service";
 
 import { CollectionsComponent } from "./collections.component";
 import { EventsComponent } from "./events.component";

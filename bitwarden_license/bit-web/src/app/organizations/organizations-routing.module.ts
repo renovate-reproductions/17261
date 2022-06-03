@@ -5,9 +5,9 @@ import { AuthGuard } from "jslib-angular/guards/auth.guard";
 import { Permissions } from "jslib-common/enums/permissions";
 
 import { ManageComponent } from "src/app/modules/organizations/manage/manage.component";
-import { PermissionsGuard } from "src/app/organizations/guards/permissions.guard";
+import { PermissionsGuard } from "src/app/modules/organizations/permissions.guard";
 import { OrganizationLayoutComponent } from "src/app/organizations/layouts/organization-layout.component";
-import { NavigationPermissionsService } from "src/app/organizations/services/navigation-permissions.service";
+import { NavigationPermissionsService } from "src/app/modules/organizations/navigation-permissions.service";
 
 import { SsoComponent } from "./manage/sso.component";
 

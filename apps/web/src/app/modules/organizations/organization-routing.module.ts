@@ -3,9 +3,9 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { AuthGuard } from "jslib-angular/guards/auth.guard";
 
-import { PermissionsGuard } from "../../organizations/guards/permissions.guard";
+import { PermissionsGuard } from "./permissions.guard";
 import { OrganizationLayoutComponent } from "../../organizations/layouts/organization-layout.component";
-import { NavigationPermissionsService } from "../../organizations/services/navigation-permissions.service";
+import { NavigationPermissionsService } from "./navigation-permissions.service";
 
 const routes: Routes = [
   {

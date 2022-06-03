@@ -12,7 +12,7 @@ import { Utils } from "jslib-common/misc/utils";
 import { Organization } from "jslib-common/models/domain/organization";
 import { Provider } from "jslib-common/models/domain/provider";
 
-import { NavigationPermissionsService as OrgNavigationPermissionsService } from "../organizations/services/navigation-permissions.service";
+import { NavigationPermissionsService as OrgNavigationPermissionsService } from "../modules/organizations/navigation-permissions.service";
 
 @Component({
   selector: "app-navbar",

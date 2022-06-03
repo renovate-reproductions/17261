@@ -3,8 +3,8 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { Permissions } from "jslib-common/enums/permissions";
 
-import { PermissionsGuard } from "../../../organizations/guards/permissions.guard";
-import { NavigationPermissionsService } from "../../../organizations/services/navigation-permissions.service";
+import { PermissionsGuard } from "../permissions.guard";
+import { NavigationPermissionsService } from "../navigation-permissions.service";
 
 import { ExportComponent } from "./export.component";
 import { ExposedPasswordsReportComponent } from "./exposed-passwords-report.component";

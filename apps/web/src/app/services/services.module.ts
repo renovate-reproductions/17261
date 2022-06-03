@@ -39,8 +39,8 @@ import { StateService } from "../../services/state.service";
 import { StateMigrationService } from "../../services/stateMigration.service";
 import { WebPlatformUtilsService } from "../../services/webPlatformUtils.service";
 import { HomeGuard } from "../guards/home.guard";
-import { PermissionsGuard as OrgPermissionsGuard } from "../organizations/guards/permissions.guard";
-import { NavigationPermissionsService as OrgPermissionsService } from "../organizations/services/navigation-permissions.service";
+import { PermissionsGuard as OrgPermissionsGuard } from "../modules/organizations/permissions.guard";
+import { NavigationPermissionsService as OrgPermissionsService } from "../modules/organizations/navigation-permissions.service";
 
 import { EventService } from "./event.service";
 import { InitService } from "./init.service";
