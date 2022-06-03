@@ -25,15 +25,15 @@ import { SyncService } from "jslib-common/abstractions/sync.service";
 import { TokenService } from "jslib-common/abstractions/token.service";
 import { VaultTimeoutService } from "jslib-common/abstractions/vaultTimeout.service";
 
-import { DisableSendPolicy } from "./organizations/policies/disable-send.component";
-import { MasterPasswordPolicy } from "./organizations/policies/master-password.component";
-import { PasswordGeneratorPolicy } from "./organizations/policies/password-generator.component";
-import { PersonalOwnershipPolicy } from "./organizations/policies/personal-ownership.component";
-import { RequireSsoPolicy } from "./organizations/policies/require-sso.component";
-import { ResetPasswordPolicy } from "./organizations/policies/reset-password.component";
-import { SendOptionsPolicy } from "./organizations/policies/send-options.component";
-import { SingleOrgPolicy } from "./organizations/policies/single-org.component";
-import { TwoFactorAuthenticationPolicy } from "./organizations/policies/two-factor-authentication.component";
+import { DisableSendPolicy } from "./modules/organizations/policies/disable-send.component";
+import { MasterPasswordPolicy } from "./modules/organizations/policies/master-password.component";
+import { PasswordGeneratorPolicy } from "./modules/organizations/policies/password-generator.component";
+import { PersonalOwnershipPolicy } from "./modules/organizations/policies/personal-ownership.component";
+import { RequireSsoPolicy } from "./modules/organizations/policies/require-sso.component";
+import { ResetPasswordPolicy } from "./modules/organizations/policies/reset-password.component";
+import { SendOptionsPolicy } from "./modules/organizations/policies/send-options.component";
+import { SingleOrgPolicy } from "./modules/organizations/policies/single-org.component";
+import { TwoFactorAuthenticationPolicy } from "./modules/organizations/policies/two-factor-authentication.component";
 import { PolicyListService } from "./services/policy-list.service";
 import { RouterService } from "./services/router.service";
 

@@ -9,6 +9,7 @@ import { VaultFilterModule } from "./modules/vault-filter/vault-filter.module";
 import { OrganizationBadgeModule } from "./modules/vault/modules/organization-badge/organization-badge.module";
 import {OrganizationToolsModule } from "./modules/organizations/tools/organization-tools.module";
 import {OrganizationSettingsModule } from "./modules/organizations/settings/organization-settings.module";
+import {OrganizationPoliciesModule } from "./modules/organizations/policies/organization-policies.module";
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import {OrganizationSettingsModule } from "./modules/organizations/settings/orga
     OrganizationManageModule,
     OrganizationUserModule,
     OrganizationToolsModule,
-    OrganizationSettingsModule
+    OrganizationSettingsModule,
+    OrganizationPoliciesModule
   ],
   exports: [LooseComponentsModule, VaultFilterModule, OrganizationBadgeModule, PipesModule],
   bootstrap: [],

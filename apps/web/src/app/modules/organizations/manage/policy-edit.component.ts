@@ -20,7 +20,7 @@ import { PolicyResponse } from "jslib-common/models/response/policyResponse";
 import {
   BasePolicy,
   BasePolicyComponent,
-} from "../../../organizations/policies/base-policy.component";
+} from "../policies/base-policy.component";
 
 @Component({
   selector: "app-policy-edit",
