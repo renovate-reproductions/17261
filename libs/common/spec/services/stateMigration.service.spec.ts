@@ -3,6 +3,7 @@ import { Arg, Substitute, SubstituteOf } from "@fluffy-spoon/substitute";
 import { StorageService } from "jslib-common/abstractions/storage.service";
 import { StateVersion } from "jslib-common/enums/stateVersion";
 import { StateFactory } from "jslib-common/factories/stateFactory";
+import { EncryptedOrganizationKeyData } from 'jslib-common/models/data/encryptedOrganizationKeyData';
 import { Account } from "jslib-common/models/domain/account";
 import { GlobalState } from "jslib-common/models/domain/globalState";
 import { StateMigrationService } from "jslib-common/services/stateMigration.service";
@@ -108,31 +109,21 @@ describe("State Migration Service", () => {
         },
       } as any);
 
-      storageService.get(userId, Arg.any()).resolves(accountVersion4);
+      const expectedAccount = new Account({
+        keys: {
+          organizationKeys: {
+            encrypted: {
+              orgOneId: new EncryptedOrganizationKeyData("orgOneEncKey"),
+              orgTwoId: new EncryptedOrganizationKeyData("orgTwoEncKey"),
+              orgThreeId: new EncryptedOrganizationKeyData("orgThreeEncKey")
+            },
+          },
+        },
+      });
 
-      await (stateMigrationService as any).migrateStateFrom4To5();
+      const migratedAccount = await (stateMigrationService as any).migrateAccountFrom4To5(accountVersion4);
 
-      storageService.received(1).save(
-        userId,
-        Arg.is((account: Account) => {
-          return (
-            account.keys.organizationKeys.encrypted["orgOneId"].key === "orgOneEncKey" &&
-            account.keys.organizationKeys.encrypted["orgTwoId"].key === "orgTwoEncKey" &&
-            account.keys.organizationKeys.encrypted["orgThreeId"].key === "orgThreeEncKey"
-          );
-        }),
-        Arg.any()
-      );
-    });
-
-    it("updates StateVersion number", async () => {
-      await (stateMigrationService as any).migrateStateFrom4To5();
-
-      storageService.received(1).save(
-        "global",
-        Arg.is((globals: GlobalState) => globals.stateVersion === StateVersion.Five),
-        Arg.any()
-      );
+      expect(migratedAccount).toEqual(expectedAccount);
     });
   });
 });

@@ -158,7 +158,12 @@ export class StateMigrationService<
           await this.migrateStateFrom3To4();
           break;
         case StateVersion.Four:
-          await this.migrateStateFrom4To5();
+          const authenticatedAccounts = await this.getAuthenticatedAccounts();
+          for (const account of authenticatedAccounts) {
+            const migratedAccount = await this.migrateAccountFrom4To5(account);
+            await this.set(account.profile.userId, migratedAccount);
+          }
+          await this.setCurrentStateVersion(StateVersion.Five);
           break;
       }
 
@@ -493,23 +498,15 @@ export class StateMigrationService<
     await this.set(keys.global, globals);
   }
 
-  protected async migrateStateFrom4To5(): Promise<void> {
-    const authenticatedUserIds = await this.get<string[]>(keys.authenticatedAccounts);
-    for (const userId of authenticatedUserIds) {
-      const account = await this.get<TAccount>(userId);
-      const encryptedOrgKeys = account.keys.organizationKeys?.encrypted;
-      if (encryptedOrgKeys == null) {
-        continue;
-      }
-
+  protected async migrateAccountFrom4To5(account: TAccount): Promise<TAccount> {
+    const encryptedOrgKeys = account.keys.organizationKeys?.encrypted;
+    if (encryptedOrgKeys != null) {
       for (const [orgId, encKey] of Object.entries(encryptedOrgKeys)) {
         encryptedOrgKeys[orgId] = new EncryptedOrganizationKeyData(encKey as unknown as string);
       }
-
-      this.set(userId, account);
     }
 
-    await this.setCurrentStateVersion(StateVersion.Five);
+    return account;
   }
 
   protected get options(): StorageOptions {
@@ -539,5 +536,10 @@ export class StateMigrationService<
     const globals = await this.getGlobals();
     globals.stateVersion = newVersion;
     await this.set(keys.global, globals);
+  }
+
+  protected async getAuthenticatedAccounts(): Promise<TAccount[]> {
+    const authenticatedUserIds = await this.get<string[]>(keys.authenticatedAccounts);
+    return Promise.all(authenticatedUserIds.map(id => this.get<TAccount>(id)));
   }
 }
