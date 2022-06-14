@@ -3,7 +3,7 @@ import { Arg, Substitute, SubstituteOf } from "@fluffy-spoon/substitute";
 import { StorageService } from "jslib-common/abstractions/storage.service";
 import { StateVersion } from "jslib-common/enums/stateVersion";
 import { StateFactory } from "jslib-common/factories/stateFactory";
-import { EncryptedOrganizationKeyData } from 'jslib-common/models/data/encryptedOrganizationKeyData';
+import { EncryptedOrganizationKeyData } from "jslib-common/models/data/encryptedOrganizationKeyData";
 import { Account } from "jslib-common/models/domain/account";
 import { GlobalState } from "jslib-common/models/domain/globalState";
 import { StateMigrationService } from "jslib-common/services/stateMigration.service";
@@ -115,13 +115,15 @@ describe("State Migration Service", () => {
             encrypted: {
               orgOneId: new EncryptedOrganizationKeyData("orgOneEncKey"),
               orgTwoId: new EncryptedOrganizationKeyData("orgTwoEncKey"),
-              orgThreeId: new EncryptedOrganizationKeyData("orgThreeEncKey")
+              orgThreeId: new EncryptedOrganizationKeyData("orgThreeEncKey"),
             },
           },
         },
       });
 
-      const migratedAccount = await (stateMigrationService as any).migrateAccountFrom4To5(accountVersion4);
+      const migratedAccount = await (stateMigrationService as any).migrateAccountFrom4To5(
+        accountVersion4
+      );
 
       expect(migratedAccount).toEqual(expectedAccount);
     });

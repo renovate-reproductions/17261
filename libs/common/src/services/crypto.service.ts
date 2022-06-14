@@ -69,7 +69,7 @@ export class CryptoService implements CryptoServiceAbstraction {
     });
 
     providerOrgs.forEach((org) => {
-        encOrgKeyData[org.id] ??= new EncryptedOrganizationKeyData(org.key, org.providerId);
+      encOrgKeyData[org.id] ??= new EncryptedOrganizationKeyData(org.key, org.providerId);
     });
 
     await this.stateService.setDecryptedOrganizationKeys(null);

@@ -540,6 +540,6 @@ export class StateMigrationService<
 
   protected async getAuthenticatedAccounts(): Promise<TAccount[]> {
     const authenticatedUserIds = await this.get<string[]>(keys.authenticatedAccounts);
-    return Promise.all(authenticatedUserIds.map(id => this.get<TAccount>(id)));
+    return Promise.all(authenticatedUserIds.map((id) => this.get<TAccount>(id)));
   }
 }

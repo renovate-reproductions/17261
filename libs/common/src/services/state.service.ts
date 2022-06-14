@@ -1,6 +1,5 @@
 import { BehaviorSubject } from "rxjs";
 
-
 import { LogService } from "../abstractions/log.service";
 import { StateService as StateServiceAbstraction } from "../abstractions/state.service";
 import { StateMigrationService } from "../abstractions/stateMigration.service";
