@@ -157,7 +157,7 @@ export class StateMigrationService<
         case StateVersion.Three:
           await this.migrateStateFrom3To4();
           break;
-        case StateVersion.Four:
+        case StateVersion.Four: {
           const authenticatedAccounts = await this.getAuthenticatedAccounts();
           for (const account of authenticatedAccounts) {
             const migratedAccount = await this.migrateAccountFrom4To5(account);
@@ -165,6 +165,7 @@ export class StateMigrationService<
           }
           await this.setCurrentStateVersion(StateVersion.Five);
           break;
+        }
       }
 
       currentStateVersion += 1;
