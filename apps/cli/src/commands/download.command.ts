@@ -2,8 +2,7 @@ import * as fet from "node-fetch";
 
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
 import { SymmetricCryptoKey } from "@bitwarden/common/models/domain/symmetricCryptoKey";
-import { Response } from "@bitwarden/node/cli/models/response";
-import { FileResponse } from "@bitwarden/node/cli/models/response/fileResponse";
+import { Response, FileResponse } from "@bitwarden/node";
 
 import { CliUtils } from "../utils";
 

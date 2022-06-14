@@ -3,7 +3,7 @@ import {
   restoreConsole,
 } from "@bitwarden/common/../spec/services/consolelog.service.spec";
 
-import { ConsoleLogService } from "@bitwarden/node/cli/services/consoleLog.service";
+import { ConsoleLogService } from "@bitwarden/node";
 
 let caughtMessage: any = {};
 

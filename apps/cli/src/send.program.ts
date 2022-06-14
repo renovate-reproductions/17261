@@ -6,7 +6,7 @@ import * as program from "commander";
 
 import { SendType } from "@bitwarden/common/enums/sendType";
 import { Utils } from "@bitwarden/common/misc/utils";
-import { Response } from "@bitwarden/node/cli/models/response";
+import { Response } from "@bitwarden/node";
 
 import { Main } from "./bw";
 import { GetCommand } from "./commands/get.command";

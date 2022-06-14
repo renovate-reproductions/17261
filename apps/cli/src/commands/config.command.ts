@@ -1,9 +1,7 @@
 import * as program from "commander";
 
 import { EnvironmentService } from "@bitwarden/common/abstractions/environment.service";
-import { Response } from "@bitwarden/node/cli/models/response";
-import { MessageResponse } from "@bitwarden/node/cli/models/response/messageResponse";
-import { StringResponse } from "@bitwarden/node/cli/models/response/stringResponse";
+import { Response, MessageResponse, StringResponse } from "@bitwarden/node";
 
 export class ConfigCommand {
   constructor(private environmentService: EnvironmentService) {}

@@ -2,10 +2,7 @@ import * as chalk from "chalk";
 
 import { StateService } from "@bitwarden/common/abstractions/state.service";
 
-import { Response } from "./models/response";
-import { ListResponse } from "./models/response/listResponse";
-import { MessageResponse } from "./models/response/messageResponse";
-import { StringResponse } from "./models/response/stringResponse";
+import { Response, ListResponse, MessageResponse, StringResponse } from "./models";
 
 export abstract class BaseProgram {
   constructor(

@@ -1,4 +1,4 @@
-import { BaseResponse } from "@bitwarden/node/cli/models/response/baseResponse";
+import { BaseResponse } from "@bitwarden/node";
 
 export class TemplateResponse implements BaseResponse {
   object: string;

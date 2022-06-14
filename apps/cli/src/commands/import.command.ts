@@ -5,8 +5,7 @@ import { ImportService } from "@bitwarden/common/abstractions/import.service";
 import { OrganizationService } from "@bitwarden/common/abstractions/organization.service";
 import { ImportType } from "@bitwarden/common/enums/importOptions";
 import { Importer } from "@bitwarden/common/importers/importer";
-import { Response } from "@bitwarden/node/cli/models/response";
-import { MessageResponse } from "@bitwarden/node/cli/models/response/messageResponse";
+import { Response, MessageResponse } from "@bitwarden/node";
 
 import { CliUtils } from "../utils";
 

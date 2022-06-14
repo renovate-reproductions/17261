@@ -1,7 +1,6 @@
 import * as program from "commander";
 
-import { Response } from "@bitwarden/node/cli/models/response";
-import { MessageResponse } from "@bitwarden/node/cli/models/response/messageResponse";
+import { Response, MessageResponse } from "@bitwarden/node";
 
 interface IOption {
   long?: string;

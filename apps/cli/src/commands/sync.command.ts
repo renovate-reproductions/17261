@@ -1,7 +1,5 @@
 import { SyncService } from "@bitwarden/common/abstractions/sync.service";
-import { Response } from "@bitwarden/node/cli/models/response";
-import { MessageResponse } from "@bitwarden/node/cli/models/response/messageResponse";
-import { StringResponse } from "@bitwarden/node/cli/models/response/stringResponse";
+import { Response, MessageResponse, StringResponse } from "@bitwarden/node";
 
 import { CliUtils } from "src/utils";
 

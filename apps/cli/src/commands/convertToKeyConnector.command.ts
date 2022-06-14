@@ -4,8 +4,7 @@ import { ApiService } from "@bitwarden/common/abstractions/api.service";
 import { EnvironmentService } from "@bitwarden/common/abstractions/environment.service";
 import { KeyConnectorService } from "@bitwarden/common/abstractions/keyConnector.service";
 import { SyncService } from "@bitwarden/common/abstractions/sync.service";
-import { Response } from "@bitwarden/node/cli/models/response";
-import { MessageResponse } from "@bitwarden/node/cli/models/response/messageResponse";
+import { Response, MessageResponse } from "@bitwarden/node";
 
 export class ConvertToKeyConnectorCommand {
   constructor(

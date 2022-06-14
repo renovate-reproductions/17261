@@ -14,7 +14,7 @@ import { SymmetricCryptoKey } from "@bitwarden/common/models/domain/symmetricCry
 import { SendAccessRequest } from "@bitwarden/common/models/request/sendAccessRequest";
 import { ErrorResponse } from "@bitwarden/common/models/response/errorResponse";
 import { SendAccessView } from "@bitwarden/common/models/view/sendAccessView";
-import { Response } from "@bitwarden/node/cli/models/response";
+import { Response } from "@bitwarden/node";
 
 import { SendAccessResponse } from "../../models/response/sendAccessResponse";
 import { DownloadCommand } from "../download.command";

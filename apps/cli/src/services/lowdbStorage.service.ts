@@ -3,7 +3,7 @@ import { OperationOptions } from "retry";
 
 import { LogService } from "@bitwarden/common/abstractions/log.service";
 import { Utils } from "@bitwarden/common/misc/utils";
-import { LowdbStorageService as LowdbStorageServiceBase } from "@bitwarden/node/services/lowdbStorage.service";
+import { LowdbStorageService as LowdbStorageServiceBase } from "@bitwarden/node";
 
 const retries: OperationOptions = {
   retries: 50,

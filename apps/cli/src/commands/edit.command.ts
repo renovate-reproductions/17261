@@ -8,7 +8,7 @@ import { CollectionExport } from "@bitwarden/common/models/export/collectionExpo
 import { FolderExport } from "@bitwarden/common/models/export/folderExport";
 import { CollectionRequest } from "@bitwarden/common/models/request/collectionRequest";
 import { SelectionReadOnlyRequest } from "@bitwarden/common/models/request/selectionReadOnlyRequest";
-import { Response } from "@bitwarden/node/cli/models/response";
+import { Response } from "@bitwarden/node";
 
 import { OrganizationCollectionRequest } from "../models/request/organizationCollectionRequest";
 import { CipherResponse } from "../models/response/cipherResponse";

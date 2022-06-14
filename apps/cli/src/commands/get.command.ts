@@ -26,8 +26,7 @@ import { ErrorResponse } from "@bitwarden/common/models/response/errorResponse";
 import { CipherView } from "@bitwarden/common/models/view/cipherView";
 import { CollectionView } from "@bitwarden/common/models/view/collectionView";
 import { FolderView } from "@bitwarden/common/models/view/folderView";
-import { Response } from "@bitwarden/node/cli/models/response";
-import { StringResponse } from "@bitwarden/node/cli/models/response/stringResponse";
+import { Response, StringResponse } from "@bitwarden/node";
 
 import { OrganizationCollectionRequest } from "../models/request/organizationCollectionRequest";
 import { CipherResponse } from "../models/response/cipherResponse";

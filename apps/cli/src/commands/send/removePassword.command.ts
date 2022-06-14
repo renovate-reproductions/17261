@@ -1,5 +1,5 @@
 import { SendService } from "@bitwarden/common/abstractions/send.service";
-import { Response } from "@bitwarden/node/cli/models/response";
+import { Response } from "@bitwarden/node";
 
 import { SendResponse } from "../../models/response/sendResponse";
 

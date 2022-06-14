@@ -6,8 +6,7 @@ import * as koaBodyParser from "koa-bodyparser";
 import * as koaJson from "koa-json";
 
 import { KeySuffixOptions } from "@bitwarden/common/enums/keySuffixOptions";
-import { Response } from "@bitwarden/node/cli/models/response";
-import { FileResponse } from "@bitwarden/node/cli/models/response/fileResponse";
+import { Response, FileResponse } from "@bitwarden/node";
 
 import { Main } from "../bw";
 

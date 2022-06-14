@@ -5,7 +5,7 @@ import { ExportFormat, ExportService } from "@bitwarden/common/abstractions/expo
 import { PolicyService } from "@bitwarden/common/abstractions/policy.service";
 import { PolicyType } from "@bitwarden/common/enums/policyType";
 import { Utils } from "@bitwarden/common/misc/utils";
-import { Response } from "@bitwarden/node/cli/models/response";
+import { Response } from "@bitwarden/node";
 
 import { CliUtils } from "../utils";
 

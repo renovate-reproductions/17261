@@ -13,8 +13,7 @@ import {
 } from "@bitwarden/common/models/response/collectionResponse";
 import { ListResponse as ApiListResponse } from "@bitwarden/common/models/response/listResponse";
 import { CipherView } from "@bitwarden/common/models/view/cipherView";
-import { Response } from "@bitwarden/node/cli/models/response";
-import { ListResponse } from "@bitwarden/node/cli/models/response/listResponse";
+import { Response, ListResponse } from "@bitwarden/node";
 
 import { CipherResponse } from "../models/response/cipherResponse";
 import { CollectionResponse } from "../models/response/collectionResponse";

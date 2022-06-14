@@ -14,8 +14,7 @@ import { StateService } from "@bitwarden/common/abstractions/state.service";
 import { SyncService } from "@bitwarden/common/abstractions/sync.service";
 import { TwoFactorService } from "@bitwarden/common/abstractions/twoFactor.service";
 import { Utils } from "@bitwarden/common/misc/utils";
-import { LoginCommand as BaseLoginCommand } from "@bitwarden/node/cli/commands/login.command";
-import { MessageResponse } from "@bitwarden/node/cli/models/response/messageResponse";
+import { LoginCommand as BaseLoginCommand, MessageResponse } from "@bitwarden/node";
 
 export class LoginCommand extends BaseLoginCommand {
   private options: program.OptionValues;

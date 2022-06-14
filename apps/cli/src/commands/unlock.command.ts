@@ -9,8 +9,7 @@ import { HashPurpose } from "@bitwarden/common/enums/hashPurpose";
 import { Utils } from "@bitwarden/common/misc/utils";
 import { SecretVerificationRequest } from "@bitwarden/common/models/request/secretVerificationRequest";
 import { ConsoleLogService } from "@bitwarden/common/services/consoleLog.service";
-import { Response } from "@bitwarden/node/cli/models/response";
-import { MessageResponse } from "@bitwarden/node/cli/models/response/messageResponse";
+import { Response, MessageResponse } from "@bitwarden/node";
 
 import { CliUtils } from "../utils";
 

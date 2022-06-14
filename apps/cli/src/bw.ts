@@ -39,10 +39,12 @@ import { TotpService } from "@bitwarden/common/services/totp.service";
 import { TwoFactorService } from "@bitwarden/common/services/twoFactor.service";
 import { UserVerificationService } from "@bitwarden/common/services/userVerification.service";
 import { VaultTimeoutService } from "@bitwarden/common/services/vaultTimeout.service";
-import { CliPlatformUtilsService } from "@bitwarden/node/cli/services/cliPlatformUtils.service";
-import { ConsoleLogService } from "@bitwarden/node/cli/services/consoleLog.service";
-import { NodeApiService } from "@bitwarden/node/services/nodeApi.service";
-import { NodeCryptoFunctionService } from "@bitwarden/node/services/nodeCryptoFunction.service";
+import {
+  CliPlatformUtilsService,
+  ConsoleLogService,
+  NodeApiService,
+  NodeCryptoFunctionService,
+} from "@bitwarden/node";
 
 import { Program } from "./program";
 import { SendProgram } from "./send.program";
