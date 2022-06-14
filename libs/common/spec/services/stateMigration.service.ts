@@ -9,6 +9,9 @@ import { StateMigrationService } from "jslib-common/services/stateMigration.serv
 
 const userId = "USER_ID";
 
+// Note: each test calls the private migration method for that migration,
+// so that we don't accidentally run all following migrations as well
+
 describe("State Migration Service", () => {
   let storageService: SubstituteOf<StorageService>;
   let secureStorageService: SubstituteOf<StorageService>;
@@ -28,7 +31,7 @@ describe("State Migration Service", () => {
     );
   });
 
-  describe("StateVersion 3 to 4 migration", async () => {
+  describe("StateVersion 3 to 4 migration", () => {
     beforeEach(() => {
       const globalVersion3: Partial<GlobalState> = {
         stateVersion: StateVersion.Three,
@@ -66,17 +69,68 @@ describe("State Migration Service", () => {
 
       storageService.get(userId, Arg.any()).resolves(accountVersion3);
 
-      await stateMigrationService.migrate();
+      await (stateMigrationService as any).migrateStateFrom3To4();
 
       storageService.received(1).save(userId, expectedAccountVersion4, Arg.any());
     });
 
     it("updates StateVersion number", async () => {
-      await stateMigrationService.migrate();
+      await (stateMigrationService as any).migrateStateFrom3To4();
 
       storageService.received(1).save(
         "global",
         Arg.is((globals: GlobalState) => globals.stateVersion === StateVersion.Four),
+        Arg.any()
+      );
+    });
+  });
+
+  describe("StateVersion 4 to 5 migration", () => {
+    beforeEach(() => {
+      const globalVersion4: Partial<GlobalState> = {
+        stateVersion: StateVersion.Four,
+      };
+
+      storageService.get("global", Arg.any()).resolves(globalVersion4);
+      storageService.get("authenticatedAccounts", Arg.any()).resolves([userId]);
+    });
+
+    it("migrates organization keys to new format", async () => {
+      const accountVersion4 = new Account({
+        keys: {
+          organizationKeys: {
+            encrypted: {
+              orgOneId: "orgOneEncKey",
+              orgTwoId: "orgTwoEncKey",
+              orgThreeId: "orgThreeEncKey",
+            },
+          },
+        },
+      } as any);
+
+      storageService.get(userId, Arg.any()).resolves(accountVersion4);
+
+      await (stateMigrationService as any).migrateStateFrom4To5();
+
+      storageService.received(1).save(
+        userId,
+        Arg.is((account: Account) => {
+          return (
+            account.keys.organizationKeys.encrypted["orgOneId"].key === "orgOneEncKey" &&
+            account.keys.organizationKeys.encrypted["orgTwoId"].key === "orgTwoEncKey" &&
+            account.keys.organizationKeys.encrypted["orgThreeId"].key === "orgThreeEncKey"
+          );
+        }),
+        Arg.any()
+      );
+    });
+
+    it("updates StateVersion number", async () => {
+      await (stateMigrationService as any).migrateStateFrom4To5();
+
+      storageService.received(1).save(
+        "global",
+        Arg.is((globals: GlobalState) => globals.stateVersion === StateVersion.Five),
         Arg.any()
       );
     });

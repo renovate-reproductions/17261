@@ -1,3 +1,5 @@
+import { EncryptedOrganizationKeyData } from "jslib-common/models/data/encryptedOrganizationKeyData";
+
 import { StorageService } from "../abstractions/storage.service";
 import { HtmlStorageLocation } from "../enums/htmlStorageLocation";
 import { KdfType } from "../enums/kdfType";
@@ -154,6 +156,9 @@ export class StateMigrationService<
           break;
         case StateVersion.Three:
           await this.migrateStateFrom3To4();
+          break;
+        case StateVersion.Four:
+          await this.migrateStateFrom4To5();
           break;
       }
 
@@ -488,6 +493,25 @@ export class StateMigrationService<
     await this.set(keys.global, globals);
   }
 
+  protected async migrateStateFrom4To5(): Promise<void> {
+    const authenticatedUserIds = await this.get<string[]>(keys.authenticatedAccounts);
+    for (const userId of authenticatedUserIds) {
+      const account = await this.get<TAccount>(userId);
+      const encryptedOrgKeys = account.keys.organizationKeys?.encrypted;
+      if (encryptedOrgKeys == null) {
+        continue;
+      }
+
+      for (const [orgId, encKey] of Object.entries(encryptedOrgKeys)) {
+        encryptedOrgKeys[orgId] = new EncryptedOrganizationKeyData(encKey as unknown as string);
+      }
+
+      this.set(userId, account);
+    }
+
+    await this.setCurrentStateVersion(StateVersion.Five);
+  }
+
   protected get options(): StorageOptions {
     return { htmlStorageLocation: HtmlStorageLocation.Local };
   }
@@ -509,5 +533,11 @@ export class StateMigrationService<
 
   protected async getCurrentStateVersion(): Promise<StateVersion> {
     return (await this.getGlobals())?.stateVersion ?? StateVersion.One;
+  }
+
+  protected async setCurrentStateVersion(newVersion: StateVersion): Promise<void> {
+    const globals = await this.getGlobals();
+    globals.stateVersion = newVersion;
+    await this.set(keys.global, globals);
   }
 }

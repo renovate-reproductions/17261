@@ -1,5 +1,8 @@
 import * as bigInt from "big-integer";
 
+import { EncryptedOrganizationKeyData } from "jslib-common/models/data/encryptedOrganizationKeyData";
+import { BaseEncryptedOrganizationKey } from "jslib-common/models/domain/encryptedOrganizationKey";
+
 import { CryptoService as CryptoServiceAbstraction } from "../abstractions/crypto.service";
 import { CryptoFunctionService } from "../abstractions/cryptoFunction.service";
 import { LogService } from "../abstractions/log.service";
@@ -56,23 +59,18 @@ export class CryptoService implements CryptoServiceAbstraction {
   }
 
   async setOrgKeys(
-    orgs: ProfileOrganizationResponse[],
-    providerOrgs: ProfileProviderOrganizationResponse[]
+    orgs: ProfileOrganizationResponse[] = [],
+    providerOrgs: ProfileProviderOrganizationResponse[] = []
   ): Promise<void> {
-    const orgKeys: any = {};
-    orgs.forEach((org) => {
-      orgKeys[org.id] = org.key;
+    const encOrgKeyData: { [orgId: string]: EncryptedOrganizationKeyData } = {};
+
+    const allOrgs = orgs.concat(providerOrgs);
+    allOrgs.forEach((org) => {
+      encOrgKeyData[org.id] = new EncryptedOrganizationKeyData(org.key, org.providerId);
     });
 
-    for (const providerOrg of providerOrgs) {
-      // Convert provider encrypted keys to user encrypted.
-      const providerKey = await this.getProviderKey(providerOrg.providerId);
-      const decValue = await this.decryptToBytes(new EncString(providerOrg.key), providerKey);
-      orgKeys[providerOrg.id] = (await this.rsaEncrypt(decValue)).encryptedString;
-    }
-
     await this.stateService.setDecryptedOrganizationKeys(null);
-    return await this.stateService.setEncryptedOrganizationKeys(orgKeys);
+    return await this.stateService.setEncryptedOrganizationKeys(encOrgKeyData);
   }
 
   async setProviderKeys(providers: ProfileProviderResponse[]): Promise<void> {
@@ -209,35 +207,36 @@ export class CryptoService implements CryptoServiceAbstraction {
 
   @sequentialize(() => "getOrgKeys")
   async getOrgKeys(): Promise<Map<string, SymmetricCryptoKey>> {
-    const orgKeys: Map<string, SymmetricCryptoKey> = new Map<string, SymmetricCryptoKey>();
+    const result: Map<string, SymmetricCryptoKey> = new Map<string, SymmetricCryptoKey>();
     const decryptedOrganizationKeys = await this.stateService.getDecryptedOrganizationKeys();
     if (decryptedOrganizationKeys != null && decryptedOrganizationKeys.size > 0) {
       return decryptedOrganizationKeys;
     }
 
-    const encOrgKeys = await this.stateService.getEncryptedOrganizationKeys();
-    if (encOrgKeys == null) {
+    const encOrgKeyData = await this.stateService.getEncryptedOrganizationKeys();
+    if (encOrgKeyData == null) {
       return null;
     }
 
     let setKey = false;
 
-    for (const orgId in encOrgKeys) {
-      // eslint-disable-next-line
-      if (!encOrgKeys.hasOwnProperty(orgId)) {
+    for (const orgId of Object.keys(encOrgKeyData)) {
+      if (result.has(orgId)) {
         continue;
       }
 
-      const decValue = await this.rsaDecrypt(encOrgKeys[orgId]);
-      orgKeys.set(orgId, new SymmetricCryptoKey(decValue));
+      const encOrgKey = BaseEncryptedOrganizationKey.fromData(encOrgKeyData[orgId]);
+      const decOrgKey = await encOrgKey.decrypt(this);
+      result.set(orgId, decOrgKey);
+
       setKey = true;
     }
 
     if (setKey) {
-      await this.stateService.setDecryptedOrganizationKeys(orgKeys);
+      await this.stateService.setDecryptedOrganizationKeys(result);
     }
 
-    return orgKeys;
+    return result;
   }
 
   async getOrgKey(orgId: string): Promise<SymmetricCryptoKey> {

@@ -1,9 +1,11 @@
 import { BehaviorSubject } from "rxjs";
 
+
 import { LogService } from "../abstractions/log.service";
 import { StateService as StateServiceAbstraction } from "../abstractions/state.service";
 import { StateMigrationService } from "../abstractions/stateMigration.service";
 import { StorageService } from "../abstractions/storage.service";
+import { EncryptedOrganizationKeyData } from "../models/data/encryptedOrganizationKeyData";
 import { HtmlStorageLocation } from "../enums/htmlStorageLocation";
 import { KdfType } from "../enums/kdfType";
 import { StorageLocation } from "../enums/storageLocation";
@@ -1252,14 +1254,16 @@ export class StateService<
     );
   }
 
-  async getEncryptedOrganizationKeys(options?: StorageOptions): Promise<any> {
+  async getEncryptedOrganizationKeys(
+    options?: StorageOptions
+  ): Promise<{ [orgId: string]: EncryptedOrganizationKeyData }> {
     return (
       await this.getAccount(this.reconcileOptions(options, await this.defaultOnDiskOptions()))
     )?.keys?.organizationKeys.encrypted;
   }
 
   async setEncryptedOrganizationKeys(
-    value: Map<string, SymmetricCryptoKey>,
+    value: { [orgId: string]: EncryptedOrganizationKeyData },
     options?: StorageOptions
   ): Promise<void> {
     const account = await this.getAccount(

@@ -1,5 +1,7 @@
 import { BehaviorSubject } from "rxjs";
 
+import { EncryptedOrganizationKeyData } from "jslib-common/models/data/encryptedOrganizationKeyData";
+
 import { KdfType } from "../enums/kdfType";
 import { ThemeType } from "../enums/themeType";
 import { UriMatchType } from "../enums/uriMatchType";
@@ -188,9 +190,11 @@ export abstract class StateService<T extends Account = Account> {
     value: { [id: string]: FolderData },
     options?: StorageOptions
   ) => Promise<void>;
-  getEncryptedOrganizationKeys: (options?: StorageOptions) => Promise<any>;
+  getEncryptedOrganizationKeys: (
+    options?: StorageOptions
+  ) => Promise<{ [orgId: string]: EncryptedOrganizationKeyData }>;
   setEncryptedOrganizationKeys: (
-    value: Map<string, SymmetricCryptoKey>,
+    value: { [orgId: string]: EncryptedOrganizationKeyData },
     options?: StorageOptions
   ) => Promise<void>;
   getEncryptedPasswordGenerationHistory: (
