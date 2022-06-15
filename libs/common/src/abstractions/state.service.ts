@@ -1,6 +1,5 @@
-import { BehaviorSubject } from "rxjs";
-
 import { EncryptedOrganizationKeyData } from "jslib-common/models/data/encryptedOrganizationKeyData";
+import { BehaviorSubject } from "rxjs";
 
 import { KdfType } from "../enums/kdfType";
 import { ThemeType } from "../enums/themeType";

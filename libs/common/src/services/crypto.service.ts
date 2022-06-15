@@ -1,5 +1,4 @@
 import * as bigInt from "big-integer";
-
 import { EncryptedOrganizationKeyData } from "jslib-common/models/data/encryptedOrganizationKeyData";
 import { BaseEncryptedOrganizationKey } from "jslib-common/models/domain/encryptedOrganizationKey";
 
