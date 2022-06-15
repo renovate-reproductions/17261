@@ -87,15 +87,6 @@ describe("State Migration Service", () => {
   });
 
   describe("StateVersion 4 to 5 migration", () => {
-    beforeEach(() => {
-      const globalVersion4: Partial<GlobalState> = {
-        stateVersion: StateVersion.Four,
-      };
-
-      storageService.get("global", Arg.any()).resolves(globalVersion4);
-      storageService.get("authenticatedAccounts", Arg.any()).resolves([userId]);
-    });
-
     it("migrates organization keys to new format", async () => {
       const accountVersion4 = new Account({
         keys: {
