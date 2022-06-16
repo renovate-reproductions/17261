@@ -1,5 +1,3 @@
-import { EncryptedOrganizationKeyData } from "jslib-common/models/data/encryptedOrganizationKeyData";
-
 import { StorageService } from "../abstractions/storage.service";
 import { HtmlStorageLocation } from "../enums/htmlStorageLocation";
 import { KdfType } from "../enums/kdfType";
@@ -8,6 +6,7 @@ import { ThemeType } from "../enums/themeType";
 import { StateFactory } from "../factories/stateFactory";
 import { CipherData } from "../models/data/cipherData";
 import { CollectionData } from "../models/data/collectionData";
+import { EncryptedOrganizationKeyData } from "../models/data/encryptedOrganizationKeyData";
 import { EventData } from "../models/data/eventData";
 import { FolderData } from "../models/data/folderData";
 import { OrganizationData } from "../models/data/organizationData";

@@ -1,6 +1,4 @@
 import * as bigInt from "big-integer";
-import { EncryptedOrganizationKeyData } from "jslib-common/models/data/encryptedOrganizationKeyData";
-import { BaseEncryptedOrganizationKey } from "jslib-common/models/domain/encryptedOrganizationKey";
 
 import { CryptoService as CryptoServiceAbstraction } from "../abstractions/crypto.service";
 import { CryptoFunctionService } from "../abstractions/cryptoFunction.service";
@@ -14,9 +12,11 @@ import { KeySuffixOptions } from "../enums/keySuffixOptions";
 import { sequentialize } from "../misc/sequentialize";
 import { Utils } from "../misc/utils";
 import { EEFLongWordList } from "../misc/wordlist";
+import { EncryptedOrganizationKeyData } from "../models/data/encryptedOrganizationKeyData";
 import { EncArrayBuffer } from "../models/domain/encArrayBuffer";
 import { EncString } from "../models/domain/encString";
 import { EncryptedObject } from "../models/domain/encryptedObject";
+import { BaseEncryptedOrganizationKey } from "../models/domain/encryptedOrganizationKey";
 import { SymmetricCryptoKey } from "../models/domain/symmetricCryptoKey";
 import { ProfileOrganizationResponse } from "../models/response/profileOrganizationResponse";
 import { ProfileProviderOrganizationResponse } from "../models/response/profileProviderOrganizationResponse";
