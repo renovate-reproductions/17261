@@ -165,13 +165,13 @@ const config = {
             return chunk.name === "popup/main";
           },
         },
-        commons2: {
-          test: /[\\/]node_modules[\\/]/,
-          name: "vendor",
-          chunks: (chunk) => {
-            return chunk.name === "background";
-          },
-        },
+        // commons2: {
+        //   test: /[\\/]node_modules[\\/]/,
+        //   name: "vendor",
+        //   chunks: (chunk) => {
+        //     return chunk.name === "background";
+        //   },
+        // },
       },
     },
   },
