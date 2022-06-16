@@ -158,6 +158,16 @@ export class CryptoService implements CryptoServiceAbstraction {
     return this.getEncKeyHelper(key);
   }
 
+  async getKeyForEncStringDecryption(encString: EncString): Promise<SymmetricCryptoKey> {
+    // Extracted from aesDecryptToUtf8
+    // TODO: deprecate getKeyForEncryption and just grab the encKey if possible
+    // (key should only be required to decrypt the encKey, we should be definite & clear about what we need)
+    // also name better and move to KeyManagerService
+    const keyForEnc = await this.getKeyForEncryption();
+    const key = await this.resolveLegacyKey(encString.encryptionType, keyForEnc);
+    return key;
+  }
+
   async getPublicKey(): Promise<ArrayBuffer> {
     const inMemoryPublicKey = await this.stateService.getPublicKey();
     if (inMemoryPublicKey != null) {
@@ -617,7 +627,7 @@ export class CryptoService implements CryptoServiceAbstraction {
     return decipher;
   }
 
-  async decryptToUtf8(encString: EncString, key?: SymmetricCryptoKey): Promise<string> {
+  async decryptToUtf8(encString: EncString, key: SymmetricCryptoKey): Promise<string> {
     return await this.aesDecryptToUtf8(
       encString.encryptionType,
       encString.data,
@@ -777,20 +787,21 @@ export class CryptoService implements CryptoServiceAbstraction {
     mac: string,
     key: SymmetricCryptoKey
   ): Promise<string> {
-    const keyForEnc = await this.getKeyForEncryption(key);
-    const theKey = await this.resolveLegacyKey(encType, keyForEnc);
+    if (key == null) {
+      throw new Error("No key provided for decryptToUtf8");
+    }
 
-    if (theKey.macKey != null && mac == null) {
+    if (key.macKey != null && mac == null) {
       this.logService.error("mac required.");
       return null;
     }
 
-    if (theKey.encType !== encType) {
+    if (key.encType !== encType) {
       this.logService.error("encType unavailable.");
       return null;
     }
 
-    const fastParams = this.cryptoFunctionService.aesDecryptFastParameters(data, iv, mac, theKey);
+    const fastParams = this.cryptoFunctionService.aesDecryptFastParameters(data, iv, mac, key);
     if (fastParams.macKey != null && fastParams.mac != null) {
       const computedMac = await this.cryptoFunctionService.hmacFast(
         fastParams.macData,
