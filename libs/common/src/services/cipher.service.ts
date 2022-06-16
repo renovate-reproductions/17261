@@ -1058,8 +1058,14 @@ export class CipherService implements CipherServiceAbstraction {
       throw Error("Failed to download attachment: " + attachmentResponse.status.toString());
     }
 
-    const buf = await attachmentResponse.arrayBuffer();
-    const decBuf = await this.cryptoService.decryptFromBytes(buf, null);
+    const rawBuffer = await attachmentResponse.arrayBuffer();
+    const encArrayBuffer = new EncArrayBuffer(rawBuffer);
+    const encKey = await this.cryptoService.getKeyForDecryptionAttachment(
+      organizationId,
+      attachmentView,
+      encArrayBuffer
+    );
+    const decBuf = await this.cryptoService.decryptFromBytes(encArrayBuffer, encKey);
     const key = await this.cryptoService.getOrgKey(organizationId);
     const encFileName = await this.cryptoService.encrypt(attachmentView.fileName, key);
 

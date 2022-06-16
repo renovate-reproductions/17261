@@ -498,7 +498,7 @@ export class PasswordGenerationService implements PasswordGenerationServiceAbstr
 
     const promises = history.map(async (item) => {
       const encryptedPassword = new EncString(item.password);
-      const encKey = await this.cryptoService.getKeyForEncStringDecryption(encryptedPassword);
+      const encKey = await this.cryptoService.getKeyForDecryption(encryptedPassword);
       const decrypted = await this.cryptoService.decryptToUtf8(encryptedPassword, encKey);
       return new GeneratedPasswordHistory(decrypted, item.date);
     });

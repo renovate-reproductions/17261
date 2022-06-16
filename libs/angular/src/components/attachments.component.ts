@@ -8,6 +8,7 @@ import { LogService } from "@bitwarden/common/abstractions/log.service";
 import { PlatformUtilsService } from "@bitwarden/common/abstractions/platformUtils.service";
 import { StateService } from "@bitwarden/common/abstractions/state.service";
 import { Cipher } from "@bitwarden/common/models/domain/cipher";
+import { EncArrayBuffer } from "@bitwarden/common/models/domain/encArrayBuffer";
 import { ErrorResponse } from "@bitwarden/common/models/response/errorResponse";
 import { AttachmentView } from "@bitwarden/common/models/view/attachmentView";
 import { CipherView } from "@bitwarden/common/models/view/cipherView";
@@ -165,12 +166,15 @@ export class AttachmentsComponent implements OnInit {
     }
 
     try {
-      const buf = await response.arrayBuffer();
-      const key =
-        attachment.key != null
-          ? attachment.key
-          : await this.cryptoService.getOrgKey(this.cipher.organizationId);
-      const decBuf = await this.cryptoService.decryptFromBytes(buf, key);
+      const rawBuffer = await response.arrayBuffer();
+      const encArrayBuffer = new EncArrayBuffer(rawBuffer);
+      const key = await this.cryptoService.getKeyForDecryptionAttachment(
+        this.cipher.organizationId,
+        attachment,
+        encArrayBuffer
+      );
+
+      const decBuf = await this.cryptoService.decryptFromBytes(encArrayBuffer, key);
       this.platformUtilsService.saveFile(this.win, decBuf, null, attachment.fileName);
     } catch (e) {
       this.platformUtilsService.showToast("error", null, this.i18nService.t("errorOccurred"));
@@ -232,12 +236,15 @@ export class AttachmentsComponent implements OnInit {
 
         try {
           // 2. Resave
-          const buf = await response.arrayBuffer();
-          const key =
-            attachment.key != null
-              ? attachment.key
-              : await this.cryptoService.getOrgKey(this.cipher.organizationId);
-          const decBuf = await this.cryptoService.decryptFromBytes(buf, key);
+          const rawBuffer = await response.arrayBuffer();
+          const encArrayBuffer = new EncArrayBuffer(rawBuffer);
+          const key = await this.cryptoService.getKeyForDecryptionAttachment(
+            this.cipher.organizationId,
+            attachment,
+            encArrayBuffer
+          );
+
+          const decBuf = await this.cryptoService.decryptFromBytes(encArrayBuffer, key);
           this.cipherDomain = await this.cipherService.saveAttachmentRawWithServer(
             this.cipherDomain,
             attachment.fileName,

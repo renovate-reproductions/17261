@@ -9,6 +9,7 @@ import { PlatformUtilsService } from "@bitwarden/common/abstractions/platformUti
 import { SEND_KDF_ITERATIONS } from "@bitwarden/common/enums/kdfType";
 import { SendType } from "@bitwarden/common/enums/sendType";
 import { Utils } from "@bitwarden/common/misc/utils";
+import { EncArrayBuffer } from "@bitwarden/common/models/domain/encArrayBuffer";
 import { SendAccess } from "@bitwarden/common/models/domain/sendAccess";
 import { SymmetricCryptoKey } from "@bitwarden/common/models/domain/symmetricCryptoKey";
 import { SendAccessRequest } from "@bitwarden/common/models/request/sendAccessRequest";
@@ -107,8 +108,9 @@ export class AccessComponent implements OnInit {
     }
 
     try {
-      const buf = await response.arrayBuffer();
-      const decBuf = await this.cryptoService.decryptFromBytes(buf, this.decKey);
+      const rawBuffer = await response.arrayBuffer();
+      const encArrayBuffer = new EncArrayBuffer(rawBuffer);
+      const decBuf = await this.cryptoService.decryptFromBytes(encArrayBuffer, this.decKey);
       this.platformUtilsService.saveFile(window, decBuf, null, this.send.file.fileName);
     } catch (e) {
       this.platformUtilsService.showToast("error", null, this.i18nService.t("errorOccurred"));

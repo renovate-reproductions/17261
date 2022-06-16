@@ -115,11 +115,12 @@ export class EncString {
       if (key == null) {
         key =
           orgId == null
-            ? await cryptoService.getKeyForEncStringDecryption(this)
+            ? await cryptoService.getKeyForDecryption(this)
             : await cryptoService.getOrgKey(orgId);
       }
       this.decryptedValue = await cryptoService.decryptToUtf8(this, key);
     } catch (e) {
+      console.error(e.message);
       this.decryptedValue = "[error: cannot decrypt]";
     }
     return this.decryptedValue;

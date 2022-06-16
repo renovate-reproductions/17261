@@ -26,6 +26,7 @@ import { CipherRepromptType } from "@bitwarden/common/enums/cipherRepromptType";
 import { CipherType } from "@bitwarden/common/enums/cipherType";
 import { EventType } from "@bitwarden/common/enums/eventType";
 import { FieldType } from "@bitwarden/common/enums/fieldType";
+import { EncArrayBuffer } from "@bitwarden/common/models/domain/encArrayBuffer";
 import { ErrorResponse } from "@bitwarden/common/models/response/errorResponse";
 import { AttachmentView } from "@bitwarden/common/models/view/attachmentView";
 import { CipherView } from "@bitwarden/common/models/view/cipherView";
@@ -367,12 +368,14 @@ export class ViewComponent implements OnDestroy, OnInit {
     }
 
     try {
-      const buf = await response.arrayBuffer();
-      const key =
-        attachment.key != null
-          ? attachment.key
-          : await this.cryptoService.getOrgKey(this.cipher.organizationId);
-      const decBuf = await this.cryptoService.decryptFromBytes(buf, key);
+      const rawBuffer = await response.arrayBuffer();
+      const encArrayBuffer = new EncArrayBuffer(rawBuffer);
+      const key = await this.cryptoService.getKeyForDecryptionAttachment(
+        this.cipher.organizationId,
+        attachment,
+        encArrayBuffer
+      );
+      const decBuf = await this.cryptoService.decryptFromBytes(encArrayBuffer, key);
       this.platformUtilsService.saveFile(this.win, decBuf, null, attachment.fileName);
     } catch (e) {
       this.platformUtilsService.showToast("error", null, this.i18nService.t("errorOccurred"));
