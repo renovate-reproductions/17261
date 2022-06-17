@@ -1,7 +1,7 @@
 import { shell, MenuItemConstructorOptions } from "electron";
 
-import { I18nService } from "jslib-common/abstractions/i18n.service";
-import { isMacAppStore, isWindowsStore } from "jslib-electron/utils";
+import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
+import { isMacAppStore, isWindowsStore } from "@bitwarden/electron/utils";
 
 import { AboutMenu } from "./menu.about";
 import { IMenubarMenu } from "./menubar";
@@ -64,7 +64,7 @@ export class HelpMenu implements IMenubarMenu {
     return {
       id: "fileBugReport",
       label: this.localize("fileBugReport"),
-      click: () => shell.openExternal("https://github.com/bitwarden/desktop/issues"),
+      click: () => shell.openExternal("https://github.com/bitwarden/clients/issues"),
     };
   }
 
