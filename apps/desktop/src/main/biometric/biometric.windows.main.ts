@@ -27,7 +27,7 @@ export default class BiometricWindowsMain implements BiometricMain {
     await this.stateService.setBiometricText("unlockWithWindowsHello");
     await this.stateService.setNoAutoPromptBiometricsText("noAutoPromptWindowsHello");
 
-    ipcMain.handle("biometric", async (event: any, message: any) => {
+    ipcMain.handle("biometric", async () => {
       return await this.authenticateBiometric();
     });
   }
@@ -43,10 +43,5 @@ export default class BiometricWindowsMain implements BiometricMain {
   async authenticateBiometric(): Promise<boolean> {
     const hwnd = this.windowMain.win.getNativeWindowHandle();
     return await biometrics.prompt(hwnd, this.i18nservice.t("windowsHelloConsentMessage"));
-  }
-
-  // TODO: Get someone with a w7 to verify this doesn't crash
-  async checkAvailabilityAsync(): Promise<any> {
-    return await biometrics.available();
   }
 }
