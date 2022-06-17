@@ -4,6 +4,7 @@ import { ActivatedRoute } from "@angular/router";
 import { ApiService } from "@bitwarden/common/abstractions/api.service";
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
 import { CryptoFunctionService } from "@bitwarden/common/abstractions/cryptoFunction.service";
+import { DecryptService } from "@bitwarden/common/abstractions/decrypt.service";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { PlatformUtilsService } from "@bitwarden/common/abstractions/platformUtils.service";
 import { SEND_KDF_ITERATIONS } from "@bitwarden/common/enums/kdfType";
@@ -45,7 +46,8 @@ export class AccessComponent implements OnInit {
     private apiService: ApiService,
     private platformUtilsService: PlatformUtilsService,
     private route: ActivatedRoute,
-    private cryptoService: CryptoService
+    private cryptoService: CryptoService,
+    private decryptService: DecryptService
   ) {}
 
   get sendText() {
@@ -110,7 +112,7 @@ export class AccessComponent implements OnInit {
     try {
       const rawBuffer = await response.arrayBuffer();
       const encArrayBuffer = new EncArrayBuffer(rawBuffer);
-      const decBuf = await this.cryptoService.decryptFromBytes(encArrayBuffer, this.decKey);
+      const decBuf = await this.decryptService.decryptFromBytes(encArrayBuffer, this.decKey);
       this.platformUtilsService.saveFile(window, decBuf, null, this.send.file.fileName);
     } catch (e) {
       this.platformUtilsService.showToast("error", null, this.i18nService.t("errorOccurred"));

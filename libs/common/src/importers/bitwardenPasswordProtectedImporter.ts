@@ -1,4 +1,5 @@
 import { CryptoService } from "../abstractions/crypto.service";
+import { DecryptService } from "../abstractions/decrypt.service";
 import { I18nService } from "../abstractions/i18n.service";
 import { KdfType } from "../enums/kdfType";
 import { EncString } from "../models/domain/encString";
@@ -21,8 +22,13 @@ interface BitwardenPasswordProtectedFileFormat {
 export class BitwardenPasswordProtectedImporter extends BitwardenJsonImporter implements Importer {
   private key: SymmetricCryptoKey;
 
-  constructor(cryptoService: CryptoService, i18nService: I18nService, private password: string) {
-    super(cryptoService, i18nService);
+  constructor(
+    cryptoService: CryptoService,
+    decryptService: DecryptService,
+    i18nService: I18nService,
+    private password: string
+  ) {
+    super(cryptoService, i18nService, decryptService);
   }
 
   async parse(data: string): Promise<ImportResult> {
@@ -40,7 +46,7 @@ export class BitwardenPasswordProtectedImporter extends BitwardenJsonImporter im
     }
 
     const encData = new EncString(parsedData.data);
-    const clearTextData = await this.cryptoService.decryptToUtf8(encData, this.key);
+    const clearTextData = await this.decryptService.decryptToUtf8(encData, this.key);
     return await super.parse(clearTextData);
   }
 
@@ -54,7 +60,7 @@ export class BitwardenPasswordProtectedImporter extends BitwardenJsonImporter im
 
     const encKeyValidation = new EncString(jdoc.encKeyValidation_DO_NOT_EDIT);
 
-    const encKeyValidationDecrypt = await this.cryptoService.decryptToUtf8(
+    const encKeyValidationDecrypt = await this.decryptService.decryptToUtf8(
       encKeyValidation,
       this.key
     );

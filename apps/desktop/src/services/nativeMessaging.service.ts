@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
 import { CryptoFunctionService } from "@bitwarden/common/abstractions/cryptoFunction.service";
+import { DecryptService } from "@bitwarden/common/abstractions/decrypt.service";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { LogService } from "@bitwarden/common/abstractions/log.service";
 import { MessagingService } from "@bitwarden/common/abstractions/messaging.service";
@@ -42,7 +43,8 @@ export class NativeMessagingService {
     private logService: LogService,
     private i18nService: I18nService,
     private messagingService: MessagingService,
-    private stateService: StateService
+    private stateService: StateService,
+    private decryptService: DecryptService
   ) {}
 
   init() {
@@ -104,7 +106,10 @@ export class NativeMessagingService {
     }
 
     const message: Message = JSON.parse(
-      await this.cryptoService.decryptToUtf8(rawMessage as EncString, this.sharedSecrets.get(appId))
+      await this.decryptService.decryptToUtf8(
+        rawMessage as EncString,
+        this.sharedSecrets.get(appId)
+      )
     );
 
     // Shared secret is invalidated, force re-authentication

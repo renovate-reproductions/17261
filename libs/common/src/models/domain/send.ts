@@ -1,3 +1,6 @@
+import { DecryptService } from "@bitwarden/common/abstractions/decrypt.service";
+import { ContainerService } from "@bitwarden/common/services/container.service";
+
 import { CryptoService } from "../../abstractions/crypto.service";
 import { SendType } from "../../enums/sendType";
 import { Utils } from "../../misc/utils";
@@ -72,15 +75,17 @@ export class Send extends Domain {
     const model = new SendView(this);
 
     let cryptoService: CryptoService;
-    const containerService = (Utils.global as any).bitwardenContainerService;
+    let decryptService: DecryptService;
+    const containerService: ContainerService = (Utils.global as any).bitwardenContainerService;
     if (containerService) {
       cryptoService = containerService.getCryptoService();
+      decryptService = containerService.getDecryptService();
     } else {
       throw new Error("global bitwardenContainerService not initialized.");
     }
 
     try {
-      model.key = await cryptoService.decryptToBytes(this.key, null);
+      model.key = await decryptService.decryptToBytes(this.key, null);
       model.cryptoKey = await cryptoService.makeSendKey(model.key);
     } catch (e) {
       // TODO: error?

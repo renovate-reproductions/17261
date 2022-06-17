@@ -4,6 +4,7 @@ import { take } from "rxjs/operators";
 
 import { ApiService } from "@bitwarden/common/abstractions/api.service";
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
+import { DecryptService } from "@bitwarden/common/abstractions/decrypt.service";
 import { EnvironmentService } from "@bitwarden/common/abstractions/environment.service";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { KeyConnectorService } from "@bitwarden/common/abstractions/keyConnector.service";
@@ -51,7 +52,8 @@ export class LockComponent implements OnInit {
     protected apiService: ApiService,
     protected logService: LogService,
     private keyConnectorService: KeyConnectorService,
-    protected ngZone: NgZone
+    protected ngZone: NgZone,
+    protected decryptService: DecryptService
   ) {}
 
   async ngOnInit() {
@@ -96,7 +98,7 @@ export class LockComponent implements OnInit {
           );
           const encKey = await this.cryptoService.getEncKey(key);
           const protectedPin = await this.stateService.getProtectedPin();
-          const decPin = await this.cryptoService.decryptToUtf8(
+          const decPin = await this.decryptService.decryptToUtf8(
             new EncString(protectedPin),
             encKey
           );
@@ -170,7 +172,7 @@ export class LockComponent implements OnInit {
         if (this.pinSet[0]) {
           const protectedPin = await this.stateService.getProtectedPin();
           const encKey = await this.cryptoService.getEncKey(key);
-          const decPin = await this.cryptoService.decryptToUtf8(
+          const decPin = await this.decryptService.decryptToUtf8(
             new EncString(protectedPin),
             encKey
           );

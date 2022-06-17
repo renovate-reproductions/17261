@@ -5,6 +5,7 @@ import { ChangePasswordComponent as BaseChangePasswordComponent } from "@bitward
 import { ApiService } from "@bitwarden/common/abstractions/api.service";
 import { CipherService } from "@bitwarden/common/abstractions/cipher.service";
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
+import { DecryptService } from "@bitwarden/common/abstractions/decrypt.service";
 import { FolderService } from "@bitwarden/common/abstractions/folder.service";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { KeyConnectorService } from "@bitwarden/common/abstractions/keyConnector.service";
@@ -51,7 +52,8 @@ export class ChangePasswordComponent extends BaseChangePasswordComponent {
     private sendService: SendService,
     private organizationService: OrganizationService,
     private keyConnectorService: KeyConnectorService,
-    private router: Router
+    private router: Router,
+    private decryptService: DecryptService
   ) {
     super(
       i18nService,
@@ -214,7 +216,8 @@ export class ChangePasswordComponent extends BaseChangePasswordComponent {
     const sends = await this.sendService.getAll();
     await Promise.all(
       sends.map(async (send) => {
-        const cryptoKey = await this.cryptoService.decryptToBytes(send.key, null);
+        const userEncKey = await this.cryptoService.getKeyForDecryption(send.key);
+        const cryptoKey = await this.decryptService.decryptToBytes(send.key, userEncKey);
         send.key = (await this.cryptoService.encrypt(cryptoKey, encKey[0])) ?? send.key;
         request.sends.push(new SendWithIdRequest(send));
       })

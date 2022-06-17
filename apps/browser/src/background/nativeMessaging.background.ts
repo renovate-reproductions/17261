@@ -2,6 +2,7 @@ import { AppIdService } from "@bitwarden/common/abstractions/appId.service";
 import { AuthService } from "@bitwarden/common/abstractions/auth.service";
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
 import { CryptoFunctionService } from "@bitwarden/common/abstractions/cryptoFunction.service";
+import { DecryptService } from "@bitwarden/common/abstractions/decrypt.service";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { LogService } from "@bitwarden/common/abstractions/log.service";
 import { MessagingService } from "@bitwarden/common/abstractions/messaging.service";
@@ -76,7 +77,8 @@ export class NativeMessagingBackground {
     private platformUtilsService: PlatformUtilsService,
     private stateService: StateService,
     private logService: LogService,
-    private authService: AuthService
+    private authService: AuthService,
+    private decryptService: DecryptService
   ) {
     this.stateService.setBiometricFingerprintValidated(false);
 
@@ -259,7 +261,7 @@ export class NativeMessagingBackground {
     let message = rawMessage as ReceiveMessage;
     if (!this.platformUtilsService.isSafari()) {
       message = JSON.parse(
-        await this.cryptoService.decryptToUtf8(rawMessage as EncString, this.sharedSecret)
+        await this.decryptService.decryptToUtf8(rawMessage as EncString, this.sharedSecret)
       );
     }
 

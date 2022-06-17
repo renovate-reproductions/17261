@@ -1,4 +1,5 @@
 import { CryptoService } from "../abstractions/crypto.service";
+import { DecryptService } from "../abstractions/decrypt.service";
 import { I18nService } from "../abstractions/i18n.service";
 import { EncString } from "../models/domain/encString";
 import { ImportResult } from "../models/domain/importResult";
@@ -13,7 +14,11 @@ export class BitwardenJsonImporter extends BaseImporter implements Importer {
   private results: any;
   private result: ImportResult;
 
-  constructor(protected cryptoService: CryptoService, protected i18nService: I18nService) {
+  constructor(
+    protected cryptoService: CryptoService,
+    protected i18nService: I18nService,
+    protected decryptService: DecryptService
+  ) {
     super();
   }
 
@@ -45,7 +50,7 @@ export class BitwardenJsonImporter extends BaseImporter implements Importer {
     if (this.results.encKeyValidation_DO_NOT_EDIT != null) {
       const orgKey = await this.cryptoService.getOrgKey(this.organizationId);
       const encKeyValidation = new EncString(this.results.encKeyValidation_DO_NOT_EDIT);
-      const encKeyValidationDecrypt = await this.cryptoService.decryptToUtf8(
+      const encKeyValidationDecrypt = await this.decryptService.decryptToUtf8(
         encKeyValidation,
         orgKey
       );

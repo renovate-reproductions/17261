@@ -17,6 +17,7 @@ import { CipherService } from "@bitwarden/common/services/cipher.service";
 import { CollectionService } from "@bitwarden/common/services/collection.service";
 import { ContainerService } from "@bitwarden/common/services/container.service";
 import { CryptoService } from "@bitwarden/common/services/crypto.service";
+import { DecryptService } from "@bitwarden/common/services/decrypt.service";
 import { EnvironmentService } from "@bitwarden/common/services/environment.service";
 import { ExportService } from "@bitwarden/common/services/export.service";
 import { FileUploadService } from "@bitwarden/common/services/fileUpload.service";
@@ -97,6 +98,7 @@ export class Main {
   organizationService: OrganizationService;
   providerService: ProviderService;
   twoFactorService: TwoFactorService;
+  decryptService: DecryptService;
 
   constructor() {
     let p = null;
@@ -129,6 +131,8 @@ export class Main {
       () => this.cryptoService
     );
 
+    this.decryptService = new DecryptService(this.cryptoFunctionService, this.logService);
+
     this.stateMigrationService = new StateMigrationService(
       this.storageService,
       this.secureStorageService,
@@ -147,7 +151,8 @@ export class Main {
       this.cryptoFunctionService,
       this.platformUtilsService,
       this.logService,
-      this.stateService
+      this.stateService,
+      this.decryptService
     );
 
     this.appIdService = new AppIdService(this.storageService);
@@ -169,7 +174,7 @@ export class Main {
       async (expired: boolean) => await this.logout(),
       customUserAgent
     );
-    this.containerService = new ContainerService(this.cryptoService);
+    this.containerService = new ContainerService(this.cryptoService, this.decryptService);
 
     this.settingsService = new SettingsService(this.stateService);
 
@@ -183,7 +188,8 @@ export class Main {
       this.i18nService,
       null,
       this.logService,
-      this.stateService
+      this.stateService,
+      this.decryptService
     );
 
     this.folderService = new FolderService(
@@ -290,7 +296,8 @@ export class Main {
     this.passwordGenerationService = new PasswordGenerationService(
       this.cryptoService,
       this.policyService,
-      this.stateService
+      this.stateService,
+      this.decryptService
     );
 
     this.totpService = new TotpService(

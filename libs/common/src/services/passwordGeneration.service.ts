@@ -1,6 +1,7 @@
 import * as zxcvbn from "zxcvbn";
 
 import { CryptoService } from "../abstractions/crypto.service";
+import { DecryptService } from "../abstractions/decrypt.service";
 import { PasswordGenerationService as PasswordGenerationServiceAbstraction } from "../abstractions/passwordGeneration.service";
 import { PolicyService } from "../abstractions/policy.service";
 import { StateService } from "../abstractions/state.service";
@@ -35,7 +36,8 @@ export class PasswordGenerationService implements PasswordGenerationServiceAbstr
   constructor(
     private cryptoService: CryptoService,
     private policyService: PolicyService,
-    private stateService: StateService
+    private stateService: StateService,
+    private decryptService: DecryptService
   ) {}
 
   async generatePassword(options: any): Promise<string> {
@@ -499,7 +501,7 @@ export class PasswordGenerationService implements PasswordGenerationServiceAbstr
     const promises = history.map(async (item) => {
       const encryptedPassword = new EncString(item.password);
       const encKey = await this.cryptoService.getKeyForDecryption(encryptedPassword);
-      const decrypted = await this.cryptoService.decryptToUtf8(encryptedPassword, encKey);
+      const decrypted = await this.decryptService.decryptToUtf8(encryptedPassword, encKey);
       return new GeneratedPasswordHistory(decrypted, item.date);
     });
 

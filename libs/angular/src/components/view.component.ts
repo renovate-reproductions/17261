@@ -14,6 +14,7 @@ import { AuditService } from "@bitwarden/common/abstractions/audit.service";
 import { BroadcasterService } from "@bitwarden/common/abstractions/broadcaster.service";
 import { CipherService } from "@bitwarden/common/abstractions/cipher.service";
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
+import { DecryptService } from "@bitwarden/common/abstractions/decrypt.service";
 import { EventService } from "@bitwarden/common/abstractions/event.service";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { LogService } from "@bitwarden/common/abstractions/log.service";
@@ -77,7 +78,8 @@ export class ViewComponent implements OnDestroy, OnInit {
     protected apiService: ApiService,
     protected passwordRepromptService: PasswordRepromptService,
     private logService: LogService,
-    protected stateService: StateService
+    protected stateService: StateService,
+    protected decryptService: DecryptService
   ) {}
 
   ngOnInit() {
@@ -375,7 +377,7 @@ export class ViewComponent implements OnDestroy, OnInit {
         attachment,
         encArrayBuffer
       );
-      const decBuf = await this.cryptoService.decryptFromBytes(encArrayBuffer, key);
+      const decBuf = await this.decryptService.decryptFromBytes(encArrayBuffer, key);
       this.platformUtilsService.saveFile(this.win, decBuf, null, attachment.fileName);
     } catch (e) {
       this.platformUtilsService.showToast("error", null, this.i18nService.t("errorOccurred"));

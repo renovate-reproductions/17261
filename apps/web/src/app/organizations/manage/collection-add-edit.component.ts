@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
 import { ApiService } from "@bitwarden/common/abstractions/api.service";
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
+import { DecryptService } from "@bitwarden/common/abstractions/decrypt.service";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { LogService } from "@bitwarden/common/abstractions/log.service";
 import { OrganizationService } from "@bitwarden/common/abstractions/organization.service";
@@ -12,7 +13,6 @@ import { SymmetricCryptoKey } from "@bitwarden/common/models/domain/symmetricCry
 import { CollectionRequest } from "@bitwarden/common/models/request/collectionRequest";
 import { SelectionReadOnlyRequest } from "@bitwarden/common/models/request/selectionReadOnlyRequest";
 import { GroupResponse } from "@bitwarden/common/models/response/groupResponse";
-
 @Component({
   selector: "app-collection-add-edit",
   templateUrl: "collection-add-edit.component.html",
@@ -43,7 +43,8 @@ export class CollectionAddEditComponent implements OnInit {
     private platformUtilsService: PlatformUtilsService,
     private cryptoService: CryptoService,
     private logService: LogService,
-    private organizationService: OrganizationService
+    private organizationService: OrganizationService,
+    private decryptService: DecryptService
   ) {}
 
   async ngOnInit() {
@@ -66,7 +67,7 @@ export class CollectionAddEditComponent implements OnInit {
           this.organizationId,
           this.collectionId
         );
-        this.name = await this.cryptoService.decryptToUtf8(
+        this.name = await this.decryptService.decryptToUtf8(
           new EncString(collection.name),
           this.orgKey
         );

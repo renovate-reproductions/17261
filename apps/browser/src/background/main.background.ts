@@ -6,6 +6,7 @@ import { CipherService as CipherServiceAbstraction } from "@bitwarden/common/abs
 import { CollectionService as CollectionServiceAbstraction } from "@bitwarden/common/abstractions/collection.service";
 import { CryptoService as CryptoServiceAbstraction } from "@bitwarden/common/abstractions/crypto.service";
 import { CryptoFunctionService as CryptoFunctionServiceAbstraction } from "@bitwarden/common/abstractions/cryptoFunction.service";
+import { DecryptService as DecryptServiceAbstraction } from "@bitwarden/common/abstractions/decrypt.service";
 import { EnvironmentService as EnvironmentServiceAbstraction } from "@bitwarden/common/abstractions/environment.service";
 import { EventService as EventServiceAbstraction } from "@bitwarden/common/abstractions/event.service";
 import { ExportService as ExportServiceAbstraction } from "@bitwarden/common/abstractions/export.service";
@@ -47,6 +48,7 @@ import { CipherService } from "@bitwarden/common/services/cipher.service";
 import { CollectionService } from "@bitwarden/common/services/collection.service";
 import { ConsoleLogService } from "@bitwarden/common/services/consoleLog.service";
 import { ContainerService } from "@bitwarden/common/services/container.service";
+import { DecryptService } from "@bitwarden/common/services/decrypt.service";
 import { EnvironmentService } from "@bitwarden/common/services/environment.service";
 import { EventService } from "@bitwarden/common/services/event.service";
 import { ExportService } from "@bitwarden/common/services/export.service";
@@ -141,6 +143,7 @@ export default class MainBackground {
   twoFactorService: TwoFactorServiceAbstraction;
   vaultFilterService: VaultFilterService;
   usernameGenerationService: UsernameGenerationServiceAbstraction;
+  decryptService: DecryptServiceAbstraction;
 
   onUpdatedRan: boolean;
   onReplacedRan: boolean;
@@ -220,11 +223,13 @@ export default class MainBackground {
     );
     this.i18nService = new I18nService(BrowserApi.getUILanguage(window));
     this.cryptoFunctionService = new WebCryptoFunctionService(window);
+    this.decryptService = new DecryptService(this.cryptoFunctionService, this.logService);
     this.cryptoService = new BrowserCryptoService(
       this.cryptoFunctionService,
       this.platformUtilsService,
       this.logService,
-      this.stateService
+      this.stateService,
+      this.decryptService
     );
     this.tokenService = new TokenService(this.stateService);
     this.appIdService = new AppIdService(this.storageService);
@@ -246,7 +251,8 @@ export default class MainBackground {
       this.i18nService,
       () => this.searchService,
       this.logService,
-      this.stateService
+      this.stateService,
+      this.decryptService
     );
     this.folderService = new FolderService(
       this.cryptoService,
@@ -364,7 +370,8 @@ export default class MainBackground {
     this.passwordGenerationService = new PasswordGenerationService(
       this.cryptoService,
       this.policyService,
-      this.stateService
+      this.stateService,
+      this.decryptService
     );
     this.totpService = new TotpService(
       this.cryptoFunctionService,
@@ -378,7 +385,7 @@ export default class MainBackground {
       this.eventService,
       this.logService
     );
-    this.containerService = new ContainerService(this.cryptoService);
+    this.containerService = new ContainerService(this.cryptoService, this.decryptService);
     this.auditService = new AuditService(this.cryptoFunctionService, this.apiService);
     this.exportService = new ExportService(
       this.folderService,
@@ -451,7 +458,8 @@ export default class MainBackground {
       this.platformUtilsService,
       this.stateService,
       this.logService,
-      this.authService
+      this.authService,
+      this.decryptService
     );
     this.commandsBackground = new CommandsBackground(
       this,

@@ -2,6 +2,7 @@ import { Inject, Injectable } from "@angular/core";
 
 import { WINDOW } from "@bitwarden/angular/services/jslib-services.module";
 import { CryptoService as CryptoServiceAbstraction } from "@bitwarden/common/abstractions/crypto.service";
+import { DecryptService as DecryptServiceAbstraction } from "@bitwarden/common/abstractions/decrypt.service";
 import {
   EnvironmentService as EnvironmentServiceAbstraction,
   Urls,
@@ -32,7 +33,8 @@ export class InitService {
     private twoFactorService: TwoFactorServiceAbstraction,
     private stateService: StateServiceAbstraction,
     private platformUtilsService: PlatformUtilsServiceAbstraction,
-    private cryptoService: CryptoServiceAbstraction
+    private cryptoService: CryptoServiceAbstraction,
+    private decryptService: DecryptServiceAbstraction
   ) {}
 
   init() {
@@ -62,7 +64,7 @@ export class InitService {
         }
       });
 
-      const containerService = new ContainerService(this.cryptoService);
+      const containerService = new ContainerService(this.cryptoService, this.decryptService);
       containerService.attachToWindow(this.win);
     };
   }

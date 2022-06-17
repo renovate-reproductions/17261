@@ -2,6 +2,7 @@ import { ApiService } from "../abstractions/api.service";
 import { CipherService } from "../abstractions/cipher.service";
 import { CollectionService } from "../abstractions/collection.service";
 import { CryptoService } from "../abstractions/crypto.service";
+import { DecryptService } from "../abstractions/decrypt.service";
 import { FolderService } from "../abstractions/folder.service";
 import { I18nService } from "../abstractions/i18n.service";
 import { ImportService as ImportServiceAbstraction } from "../abstractions/import.service";
@@ -94,7 +95,8 @@ export class ImportService implements ImportServiceAbstraction {
     private i18nService: I18nService,
     private collectionService: CollectionService,
     private platformUtilsService: PlatformUtilsService,
-    private cryptoService: CryptoService
+    private cryptoService: CryptoService,
+    private decryptService: DecryptService
   ) {}
 
   getImportOptions(): ImportOption[] {
@@ -163,10 +165,11 @@ export class ImportService implements ImportServiceAbstraction {
       case "bitwardencsv":
         return new BitwardenCsvImporter();
       case "bitwardenjson":
-        return new BitwardenJsonImporter(this.cryptoService, this.i18nService);
+        return new BitwardenJsonImporter(this.cryptoService, this.i18nService, this.decryptService);
       case "bitwardenpasswordprotected":
         return new BitwardenPasswordProtectedImporter(
           this.cryptoService,
+          this.decryptService,
           this.i18nService,
           password
         );

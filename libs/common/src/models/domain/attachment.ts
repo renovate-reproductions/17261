@@ -1,3 +1,6 @@
+import { DecryptService } from "@bitwarden/common/abstractions/decrypt.service";
+import { ContainerService } from "@bitwarden/common/services/container.service";
+
 import { CryptoService } from "../../abstractions/crypto.service";
 import { Utils } from "../../misc/utils";
 import { AttachmentData } from "../data/attachmentData";
@@ -48,16 +51,18 @@ export class Attachment extends Domain {
 
     if (this.key != null) {
       let cryptoService: CryptoService;
-      const containerService = (Utils.global as any).bitwardenContainerService;
+      let decryptService: DecryptService;
+      const containerService: ContainerService = (Utils.global as any).bitwardenContainerService;
       if (containerService) {
         cryptoService = containerService.getCryptoService();
+        decryptService = containerService.getDecryptService();
       } else {
         throw new Error("global bitwardenContainerService not initialized.");
       }
 
       try {
         const orgKey = await cryptoService.getOrgKey(orgId);
-        const decValue = await cryptoService.decryptToBytes(this.key, orgKey ?? encKey);
+        const decValue = await decryptService.decryptToBytes(this.key, orgKey ?? encKey);
         view.key = new SymmetricCryptoKey(decValue);
       } catch (e) {
         // TODO: error?

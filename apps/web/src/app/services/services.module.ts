@@ -14,6 +14,7 @@ import { ApiService as ApiServiceAbstraction } from "@bitwarden/common/abstracti
 import { CipherService as CipherServiceAbstraction } from "@bitwarden/common/abstractions/cipher.service";
 import { CollectionService as CollectionServiceAbstraction } from "@bitwarden/common/abstractions/collection.service";
 import { CryptoService as CryptoServiceAbstraction } from "@bitwarden/common/abstractions/crypto.service";
+import { DecryptService as DecryptServiceAbstraction } from "@bitwarden/common/abstractions/decrypt.service";
 import { FolderService as FolderServiceAbstraction } from "@bitwarden/common/abstractions/folder.service";
 import { I18nService as I18nServiceAbstraction } from "@bitwarden/common/abstractions/i18n.service";
 import { ImportService as ImportServiceAbstraction } from "@bitwarden/common/abstractions/import.service";
@@ -101,6 +102,7 @@ import { RouterService } from "./router.service";
         CollectionServiceAbstraction,
         PlatformUtilsServiceAbstraction,
         CryptoServiceAbstraction,
+        DecryptServiceAbstraction,
       ],
     },
     {

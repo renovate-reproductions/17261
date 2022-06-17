@@ -3,6 +3,7 @@ import { AuditService } from "@bitwarden/common/abstractions/audit.service";
 import { CipherService } from "@bitwarden/common/abstractions/cipher.service";
 import { CollectionService } from "@bitwarden/common/abstractions/collection.service";
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
+import { DecryptService } from "@bitwarden/common/abstractions/decrypt.service";
 import { FolderService } from "@bitwarden/common/abstractions/folder.service";
 import { OrganizationService } from "@bitwarden/common/abstractions/organization.service";
 import { SearchService } from "@bitwarden/common/abstractions/search.service";
@@ -44,18 +45,19 @@ import { DownloadCommand } from "./download.command";
 
 export class GetCommand extends DownloadCommand {
   constructor(
+    decryptService: DecryptService,
     private cipherService: CipherService,
     private folderService: FolderService,
     private collectionService: CollectionService,
     private totpService: TotpService,
     private auditService: AuditService,
-    cryptoService: CryptoService,
+    private cryptoService: CryptoService,
     private stateService: StateService,
     private searchService: SearchService,
     private apiService: ApiService,
     private organizationService: OrganizationService
   ) {
-    super(cryptoService);
+    super(decryptService);
   }
 
   async run(object: string, id: string, cmdOptions: Record<string, any>): Promise<Response> {
@@ -418,7 +420,7 @@ export class GetCommand extends DownloadCommand {
 
       const response = await this.apiService.getCollectionDetails(options.organizationId, id);
       const decCollection = new CollectionView(response);
-      decCollection.name = await this.cryptoService.decryptToUtf8(
+      decCollection.name = await this.decryptService.decryptToUtf8(
         new EncString(response.name),
         orgKey
       );

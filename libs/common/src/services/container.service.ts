@@ -1,7 +1,8 @@
 import { CryptoService } from "../abstractions/crypto.service";
+import { DecryptService } from "../abstractions/decrypt.service";
 
 export class ContainerService {
-  constructor(private cryptoService: CryptoService) {}
+  constructor(private cryptoService: CryptoService, private decryptService: DecryptService) {}
 
   // deprecated, use attachToGlobal instead
   attachToWindow(win: any) {
@@ -16,5 +17,9 @@ export class ContainerService {
 
   getCryptoService(): CryptoService {
     return this.cryptoService;
+  }
+
+  getDecryptService(): DecryptService {
+    return this.decryptService;
   }
 }

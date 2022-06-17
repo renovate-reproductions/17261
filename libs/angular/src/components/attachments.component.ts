@@ -3,6 +3,7 @@ import { Directive, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ApiService } from "@bitwarden/common/abstractions/api.service";
 import { CipherService } from "@bitwarden/common/abstractions/cipher.service";
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
+import { DecryptService } from "@bitwarden/common/abstractions/decrypt.service";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { LogService } from "@bitwarden/common/abstractions/log.service";
 import { PlatformUtilsService } from "@bitwarden/common/abstractions/platformUtils.service";
@@ -37,7 +38,8 @@ export class AttachmentsComponent implements OnInit {
     protected apiService: ApiService,
     protected win: Window,
     protected logService: LogService,
-    protected stateService: StateService
+    protected stateService: StateService,
+    protected decryptService: DecryptService
   ) {}
 
   async ngOnInit() {
@@ -174,7 +176,7 @@ export class AttachmentsComponent implements OnInit {
         encArrayBuffer
       );
 
-      const decBuf = await this.cryptoService.decryptFromBytes(encArrayBuffer, key);
+      const decBuf = await this.decryptService.decryptFromBytes(encArrayBuffer, key);
       this.platformUtilsService.saveFile(this.win, decBuf, null, attachment.fileName);
     } catch (e) {
       this.platformUtilsService.showToast("error", null, this.i18nService.t("errorOccurred"));
@@ -244,7 +246,7 @@ export class AttachmentsComponent implements OnInit {
             encArrayBuffer
           );
 
-          const decBuf = await this.cryptoService.decryptFromBytes(encArrayBuffer, key);
+          const decBuf = await this.decryptService.decryptFromBytes(encArrayBuffer, key);
           this.cipherDomain = await this.cipherService.saveAttachmentRawWithServer(
             this.cipherDomain,
             attachment.fileName,

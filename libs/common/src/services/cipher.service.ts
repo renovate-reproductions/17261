@@ -1,6 +1,7 @@
 import { ApiService } from "../abstractions/api.service";
 import { CipherService as CipherServiceAbstraction } from "../abstractions/cipher.service";
 import { CryptoService } from "../abstractions/crypto.service";
+import { DecryptService } from "../abstractions/decrypt.service";
 import { FileUploadService } from "../abstractions/fileUpload.service";
 import { I18nService } from "../abstractions/i18n.service";
 import { LogService } from "../abstractions/log.service";
@@ -61,7 +62,8 @@ export class CipherService implements CipherServiceAbstraction {
     private i18nService: I18nService,
     private searchService: () => SearchService,
     private logService: LogService,
-    private stateService: StateService
+    private stateService: StateService,
+    private decryptService: DecryptService
   ) {}
 
   async getDecryptedCipherCache(): Promise<CipherView[]> {
@@ -1065,7 +1067,7 @@ export class CipherService implements CipherServiceAbstraction {
       attachmentView,
       encArrayBuffer
     );
-    const decBuf = await this.cryptoService.decryptFromBytes(encArrayBuffer, encKey);
+    const decBuf = await this.decryptService.decryptFromBytes(encArrayBuffer, encKey);
     const key = await this.cryptoService.getOrgKey(organizationId);
     const encFileName = await this.cryptoService.encrypt(attachmentView.fileName, key);
 

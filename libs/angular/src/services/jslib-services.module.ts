@@ -9,6 +9,7 @@ import { CipherService as CipherServiceAbstraction } from "@bitwarden/common/abs
 import { CollectionService as CollectionServiceAbstraction } from "@bitwarden/common/abstractions/collection.service";
 import { CryptoService as CryptoServiceAbstraction } from "@bitwarden/common/abstractions/crypto.service";
 import { CryptoFunctionService as CryptoFunctionServiceAbstraction } from "@bitwarden/common/abstractions/cryptoFunction.service";
+import { DecryptService as DecryptServiceAbstraction } from "@bitwarden/common/abstractions/decrypt.service";
 import { EnvironmentService as EnvironmentServiceAbstraction } from "@bitwarden/common/abstractions/environment.service";
 import { EventService as EventServiceAbstraction } from "@bitwarden/common/abstractions/event.service";
 import { ExportService as ExportServiceAbstraction } from "@bitwarden/common/abstractions/export.service";
@@ -49,6 +50,7 @@ import { CipherService } from "@bitwarden/common/services/cipher.service";
 import { CollectionService } from "@bitwarden/common/services/collection.service";
 import { ConsoleLogService } from "@bitwarden/common/services/consoleLog.service";
 import { CryptoService } from "@bitwarden/common/services/crypto.service";
+import { DecryptService } from "@bitwarden/common/services/decrypt.service";
 import { EnvironmentService } from "@bitwarden/common/services/environment.service";
 import { EventService } from "@bitwarden/common/services/event.service";
 import { ExportService } from "@bitwarden/common/services/export.service";
@@ -175,7 +177,8 @@ export const SYSTEM_LANGUAGE = new InjectionToken<string>("SYSTEM_LANGUAGE");
         i18nService: I18nServiceAbstraction,
         injector: Injector,
         logService: LogService,
-        stateService: StateServiceAbstraction
+        stateService: StateServiceAbstraction,
+        decryptService: DecryptServiceAbstraction
       ) =>
         new CipherService(
           cryptoService,
@@ -185,7 +188,8 @@ export const SYSTEM_LANGUAGE = new InjectionToken<string>("SYSTEM_LANGUAGE");
           i18nService,
           () => injector.get(SearchServiceAbstraction),
           logService,
-          stateService
+          stateService,
+          decryptService
         ),
       deps: [
         CryptoServiceAbstraction,
@@ -196,6 +200,7 @@ export const SYSTEM_LANGUAGE = new InjectionToken<string>("SYSTEM_LANGUAGE");
         Injector, // TODO: Get rid of this circular dependency!
         LogService,
         StateServiceAbstraction,
+        DecryptServiceAbstraction,
       ],
     },
     {
@@ -234,12 +239,18 @@ export const SYSTEM_LANGUAGE = new InjectionToken<string>("SYSTEM_LANGUAGE");
         PlatformUtilsServiceAbstraction,
         LogService,
         StateServiceAbstraction,
+        DecryptServiceAbstraction,
       ],
     },
     {
       provide: PasswordGenerationServiceAbstraction,
       useClass: PasswordGenerationService,
-      deps: [CryptoServiceAbstraction, PolicyServiceAbstraction, StateServiceAbstraction],
+      deps: [
+        CryptoServiceAbstraction,
+        PolicyServiceAbstraction,
+        StateServiceAbstraction,
+        DecryptServiceAbstraction,
+      ],
     },
     {
       provide: UsernameGenerationServiceAbstraction,
@@ -422,6 +433,11 @@ export const SYSTEM_LANGUAGE = new InjectionToken<string>("SYSTEM_LANGUAGE");
       provide: TwoFactorServiceAbstraction,
       useClass: TwoFactorService,
       deps: [I18nServiceAbstraction, PlatformUtilsServiceAbstraction],
+    },
+    {
+      provide: DecryptServiceAbstraction,
+      useClass: DecryptService,
+      deps: [CryptoFunctionServiceAbstraction, LogService],
     },
   ],
 })

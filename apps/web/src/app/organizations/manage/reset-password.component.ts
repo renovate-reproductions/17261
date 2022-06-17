@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
 import { ApiService } from "@bitwarden/common/abstractions/api.service";
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
+import { DecryptService } from "@bitwarden/common/abstractions/decrypt.service";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { LogService } from "@bitwarden/common/abstractions/log.service";
 import { PasswordGenerationService } from "@bitwarden/common/abstractions/passwordGeneration.service";
@@ -37,7 +38,8 @@ export class ResetPasswordComponent implements OnInit {
     private passwordGenerationService: PasswordGenerationService,
     private policyService: PolicyService,
     private cryptoService: CryptoService,
-    private logService: LogService
+    private logService: LogService,
+    private decryptService: DecryptService
   ) {}
 
   async ngOnInit() {
@@ -138,7 +140,7 @@ export class ResetPasswordComponent implements OnInit {
 
           // Decrypt Organization's encrypted Private Key with org key
           const orgSymKey = await this.cryptoService.getOrgKey(this.organizationId);
-          const decPrivateKey = await this.cryptoService.decryptToBytes(
+          const decPrivateKey = await this.decryptService.decryptToBytes(
             new EncString(encryptedPrivateKey),
             orgSymKey
           );
