@@ -33,7 +33,11 @@ export default class BiometricWindowsMain implements BiometricMain {
   }
 
   async supportsBiometric(): Promise<boolean> {
-    return Promise.resolve(true);
+    try {
+      return await biometrics.available();
+    } catch {
+      return false;
+    }
   }
 
   async authenticateBiometric(): Promise<boolean> {
