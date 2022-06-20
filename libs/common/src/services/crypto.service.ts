@@ -175,22 +175,23 @@ export class CryptoService implements CryptoServiceAbstraction {
       return attachment.key;
     }
 
-    // Legacy option 1: encrypted with orgKey
-    if (orgId != null) {
-      return this.getOrgKey(orgId);
-    }
-
-    // Legacy option 2: encrypted with user's encKey
-    return this.getKeyForDecryption(encArrayBuffer);
+    // Legacy implementation: encrypted with orgKey or user encKey
+    return this.getKeyForDecryption(encArrayBuffer, orgId);
   }
 
   async getKeyForDecryption(
-    encryptedThing: EncString | EncArrayBuffer
+    encryptedThing: EncString | EncArrayBuffer,
+    orgId?: string
   ): Promise<SymmetricCryptoKey> {
     // Extracted from aesDecryptToUtf8
     // TODO: deprecate getKeyForEncryption and just grab the encKey if possible
     // (key should only be required to decrypt the encKey, we should be definite & clear about what we need)
     // also name better and move to KeyManagerService
+
+    if (orgId != null) {
+      return this.getOrgKey(orgId);
+    }
+
     const keyForEnc = await this.getKeyForEncryption();
     const key = await this.resolveLegacyKey(encryptedThing.encryptionType, keyForEnc);
     return key;

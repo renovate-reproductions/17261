@@ -29,7 +29,10 @@ export abstract class CryptoService {
     attachment: AttachmentView,
     encArrayBuffer: EncArrayBuffer
   ) => Promise<SymmetricCryptoKey>;
-  getKeyForDecryption: (encryptedThing: EncString | EncArrayBuffer) => Promise<SymmetricCryptoKey>;
+  getKeyForDecryption: (
+    encryptedThing: EncString | EncArrayBuffer,
+    orgId?: string
+  ) => Promise<SymmetricCryptoKey>;
   getPublicKey: () => Promise<ArrayBuffer>;
   getPrivateKey: () => Promise<ArrayBuffer>;
   getFingerprint: (userId: string, publicKey?: ArrayBuffer) => Promise<string[]>;
