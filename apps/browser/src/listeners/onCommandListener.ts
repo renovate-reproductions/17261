@@ -1,10 +1,12 @@
 import { StateFactory } from "jslib-common/factories/stateFactory";
 import { GlobalState } from "jslib-common/models/domain/globalState";
-// import { BackgroundConsoleLogService } from "../services/backgroundConsoleLog.service";
-// import { StateService } from "jslib-common/services/state.service";
+import { StateService } from "jslib-common/services/state.service";
 import { StateMigrationService } from "jslib-common/services/stateMigration.service";
 
+import AutofillService from "src/services/autofill.service";
+
 import { Account } from "../models/account";
+import { BackgroundConsoleLogService } from "../services/backgroundConsoleLog.service";
 import BrowserStorageService from "../services/browserStorage.service";
 
 export const onCommandListener = async (command: string, tab: chrome.tabs.Tab) => {
@@ -34,18 +36,19 @@ const doAutoFillLogin = async (tab: chrome.tabs.Tab): Promise<void> => {
     stateFactory
   );
 
-  // const logService = new BackgroundConsoleLogService();
+  const logService = new BackgroundConsoleLogService();
 
-  // const stateService = new StateService(
-  //   browserStorageService,
-  //   secureStorageService,
-  //   logService,
-  //   stateMigrationService,
-  //   new StateFactory(GlobalState, Account)
-  // );
+  const stateService = new StateService(
+    browserStorageService,
+    secureStorageService,
+    logService,
+    stateMigrationService,
+    new StateFactory(GlobalState, Account)
+  );
 
-  // // init all needed services
-  // await stateService.init();
+  await stateService.init();
+
+  // cipherService
 
   console.log("autofill_login inited");
 };

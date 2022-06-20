@@ -102,7 +102,7 @@ export class EncString {
     }
 
     let cryptoService: CryptoService;
-    const containerService = (Utils.global as any).bitwardenContainerService;
+    const containerService = Utils.global.bitwardenContainerService;
     if (containerService) {
       cryptoService = containerService.getCryptoService();
     } else {

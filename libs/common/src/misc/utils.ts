@@ -1,17 +1,29 @@
 /* eslint-disable no-useless-escape */
 import * as tldjs from "tldjs";
 
+import { CryptoService } from "jslib-common/abstractions/crypto.service";
+
 import { I18nService } from "../abstractions/i18n.service";
 
 const nodeURL = typeof window === "undefined" ? require("url") : null;
+
+declare global {
+  /* eslint-disable */
+  var bitwardenContainerService: BitwardenContainerService;
+}
+
+interface BitwardenContainerService {
+  getCryptoService: () => CryptoService;
+}
 
 export class Utils {
   static inited = false;
   static isNode = false;
   static isBrowser = true;
+  static isServiceWorker = false;
   static isMobileBrowser = false;
   static isAppleMobileBrowser = false;
-  static global: any = null;
+  static global: { bitwardenContainerService: BitwardenContainerService } | null = null;
   static tldEndingRegex =
     /.*\.(com|net|org|edu|uk|gov|ca|de|jp|fr|au|ru|ch|io|es|us|co|xyz|info|ly|mil)$/;
   // Transpiled version of /\p{Emoji_Presentation}/gu using https://mothereff.in/regexpu. Used for compatability in older browsers.
@@ -29,15 +41,20 @@ export class Utils {
       (process as any).release != null &&
       (process as any).release.name === "node";
     Utils.isBrowser = typeof window !== "undefined";
-    Utils.isMobileBrowser = Utils.isBrowser && this.isMobile(window);
-    Utils.isAppleMobileBrowser = Utils.isBrowser && this.isAppleMobile(window);
-    Utils.global = Utils.isNode && !Utils.isBrowser ? global : window;
+
+    Utils.isMobileBrowser = Utils.isBrowser && !Utils.isServiceWorker && this.isMobile(window);
+    Utils.isAppleMobileBrowser =
+      Utils.isBrowser && !Utils.isServiceWorker && this.isAppleMobile(window);
+
+    Utils.isServiceWorker = !Utils.isNode && !Utils.isBrowser; // window won't be defined in a service worker but we also aren't in node
+    Utils.global =
+      Utils.isNode && !Utils.isBrowser ? global : Utils.isServiceWorker ? undefined : window;
   }
 
   static fromB64ToArray(str: string): Uint8Array {
     if (Utils.isNode) {
       return new Uint8Array(Buffer.from(str, "base64"));
-    } else {
+    } else if (Utils.isBrowser) {
       const binaryString = window.atob(str);
       const bytes = new Uint8Array(binaryString.length);
       for (let i = 0; i < binaryString.length; i++) {
