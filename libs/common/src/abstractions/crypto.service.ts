@@ -27,6 +27,14 @@ export abstract class CryptoService {
   getKeyHash: () => Promise<string>;
   compareAndUpdateKeyHash: (masterPassword: string, key: SymmetricCryptoKey) => Promise<boolean>;
   getEncKey: (key?: SymmetricCryptoKey) => Promise<SymmetricCryptoKey>;
+  getPublicKey: () => Promise<ArrayBuffer>;
+  getPrivateKey: () => Promise<ArrayBuffer>;
+  getFingerprint: (userId: string, publicKey?: ArrayBuffer) => Promise<string[]>;
+  getOrgKeys: () => Promise<Map<string, SymmetricCryptoKey>>;
+  getOrgKey: (orgId: string) => Promise<SymmetricCryptoKey>;
+  getProviderKey: (providerId: string) => Promise<SymmetricCryptoKey>;
+
+  // New key getters: to refactor
   getKeyForDecryptionAttachment: (
     orgId: string,
     attachment: AttachmentView,
@@ -36,12 +44,6 @@ export abstract class CryptoService {
     encryptedThing: EncString | EncArrayBuffer,
     orgId?: string
   ) => Promise<SymmetricCryptoKey>;
-  getPublicKey: () => Promise<ArrayBuffer>;
-  getPrivateKey: () => Promise<ArrayBuffer>;
-  getFingerprint: (userId: string, publicKey?: ArrayBuffer) => Promise<string[]>;
-  getOrgKeys: () => Promise<Map<string, SymmetricCryptoKey>>;
-  getOrgKey: (orgId: string) => Promise<SymmetricCryptoKey>;
-  getProviderKey: (providerId: string) => Promise<SymmetricCryptoKey>;
 
   // Has keys
   hasKey: () => Promise<boolean>;
@@ -93,13 +95,15 @@ export abstract class CryptoService {
     key: SymmetricCryptoKey,
     encKey?: SymmetricCryptoKey
   ) => Promise<[SymmetricCryptoKey, EncString]>;
+  validateKey: (key: SymmetricCryptoKey) => Promise<boolean>;
 
   // Encrypt
+  // TODO: move to encryptService
   encrypt: (plainValue: string | ArrayBuffer, key?: SymmetricCryptoKey) => Promise<EncString>;
   encryptToBytes: (plainValue: ArrayBuffer, key?: SymmetricCryptoKey) => Promise<EncArrayBuffer>;
   rsaEncrypt: (data: ArrayBuffer, publicKey?: ArrayBuffer) => Promise<EncString>;
 
   // Helpers
+  // TODO: where does this belong?
   randomNumber: (min: number, max: number) => Promise<number>;
-  validateKey: (key: SymmetricCryptoKey) => Promise<boolean>;
 }
