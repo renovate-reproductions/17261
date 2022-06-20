@@ -117,12 +117,7 @@ export class EncString {
     try {
       // TODO: refactor this up and out so that decrypt always takes the key
       // or at least so it takes the keyManagerService explicitly, and gets the key from that
-      if (key == null) {
-        key =
-          orgId == null
-            ? await cryptoService.getKeyForDecryption(this)
-            : await cryptoService.getOrgKey(orgId);
-      }
+      key ??= await cryptoService.getKeyForDecryption(this, orgId);
       this.decryptedValue = await decryptService.decryptToUtf8(this, key);
     } catch (e) {
       console.error(e.message);
