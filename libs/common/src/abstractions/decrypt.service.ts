@@ -6,4 +6,5 @@ export abstract class DecryptService {
   decryptToBytes: (encString: EncString, key: SymmetricCryptoKey) => Promise<ArrayBuffer>;
   decryptToUtf8: (encString: EncString, key: SymmetricCryptoKey) => Promise<string>;
   decryptFromBytes: (encBuf: EncArrayBuffer, key: SymmetricCryptoKey) => Promise<ArrayBuffer>;
+  rsaDecrypt: (encValue: string, privateKeyValue?: ArrayBuffer) => Promise<ArrayBuffer>;
 }

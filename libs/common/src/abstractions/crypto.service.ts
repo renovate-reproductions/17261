@@ -10,6 +10,7 @@ import { ProfileProviderResponse } from "../models/response/profileProviderRespo
 import { AttachmentView } from "../models/view/attachmentView";
 
 export abstract class CryptoService {
+  // Set keys
   setKey: (key: SymmetricCryptoKey) => Promise<any>;
   setKeyHash: (keyHash: string) => Promise<void>;
   setEncKey: (encKey: string) => Promise<void>;
@@ -19,6 +20,8 @@ export abstract class CryptoService {
     providerOrgs: ProfileProviderOrganizationResponse[]
   ) => Promise<void>;
   setProviderKeys: (orgs: ProfileProviderResponse[]) => Promise<void>;
+
+  // Get keys
   getKey: (keySuffix?: KeySuffixOptions, userId?: string) => Promise<SymmetricCryptoKey>;
   getKeyFromStorage: (keySuffix: KeySuffixOptions, userId?: string) => Promise<SymmetricCryptoKey>;
   getKeyHash: () => Promise<string>;
@@ -39,10 +42,14 @@ export abstract class CryptoService {
   getOrgKeys: () => Promise<Map<string, SymmetricCryptoKey>>;
   getOrgKey: (orgId: string) => Promise<SymmetricCryptoKey>;
   getProviderKey: (providerId: string) => Promise<SymmetricCryptoKey>;
+
+  // Has keys
   hasKey: () => Promise<boolean>;
   hasKeyInMemory: (userId?: string) => Promise<boolean>;
   hasKeyStored: (keySuffix?: KeySuffixOptions, userId?: string) => Promise<boolean>;
   hasEncKey: () => Promise<boolean>;
+
+  // Clear keys
   clearKey: (clearSecretStorage?: boolean, userId?: string) => Promise<any>;
   clearKeyHash: () => Promise<any>;
   clearEncKey: (memoryOnly?: boolean, userId?: string) => Promise<any>;
@@ -52,6 +59,8 @@ export abstract class CryptoService {
   clearPinProtectedKey: () => Promise<any>;
   clearKeys: (userId?: string) => Promise<any>;
   toggleKey: () => Promise<any>;
+
+  // Make keys
   makeKey: (
     password: string,
     salt: string,
@@ -84,10 +93,13 @@ export abstract class CryptoService {
     key: SymmetricCryptoKey,
     encKey?: SymmetricCryptoKey
   ) => Promise<[SymmetricCryptoKey, EncString]>;
+
+  // Encrypt
   encrypt: (plainValue: string | ArrayBuffer, key?: SymmetricCryptoKey) => Promise<EncString>;
   encryptToBytes: (plainValue: ArrayBuffer, key?: SymmetricCryptoKey) => Promise<EncArrayBuffer>;
   rsaEncrypt: (data: ArrayBuffer, publicKey?: ArrayBuffer) => Promise<EncString>;
-  rsaDecrypt: (encValue: string, privateKeyValue?: ArrayBuffer) => Promise<ArrayBuffer>;
+
+  // Helpers
   randomNumber: (min: number, max: number) => Promise<number>;
   validateKey: (key: SymmetricCryptoKey) => Promise<boolean>;
 }

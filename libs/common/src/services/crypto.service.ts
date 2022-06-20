@@ -269,7 +269,10 @@ export class CryptoService implements CryptoServiceAbstraction {
         continue;
       }
 
-      const decValue = await this.rsaDecrypt(encOrgKeys[orgId]);
+      const decValue = await this.decryptService.rsaDecrypt(
+        encOrgKeys[orgId],
+        await this.getPrivateKey()
+      );
       orgKeys.set(orgId, new SymmetricCryptoKey(decValue));
       setKey = true;
     }
@@ -315,7 +318,10 @@ export class CryptoService implements CryptoServiceAbstraction {
         continue;
       }
 
-      const decValue = await this.rsaDecrypt(encProviderKeys[orgId]);
+      const decValue = await this.decryptService.rsaDecrypt(
+        encProviderKeys[orgId],
+        await this.getPrivateKey()
+      );
       providerKeys.set(orgId, new SymmetricCryptoKey(decValue));
       setKey = true;
     }
@@ -591,59 +597,6 @@ export class CryptoService implements CryptoServiceAbstraction {
 
     const encBytes = await this.cryptoFunctionService.rsaEncrypt(data, publicKey, "sha1");
     return new EncString(EncryptionType.Rsa2048_OaepSha1_B64, Utils.fromBufferToB64(encBytes));
-  }
-
-  async rsaDecrypt(encValue: string, privateKeyValue?: ArrayBuffer): Promise<ArrayBuffer> {
-    const headerPieces = encValue.split(".");
-    let encType: EncryptionType = null;
-    let encPieces: string[];
-
-    if (headerPieces.length === 1) {
-      encType = EncryptionType.Rsa2048_OaepSha256_B64;
-      encPieces = [headerPieces[0]];
-    } else if (headerPieces.length === 2) {
-      try {
-        encType = parseInt(headerPieces[0], null);
-        encPieces = headerPieces[1].split("|");
-      } catch (e) {
-        this.logService.error(e);
-      }
-    }
-
-    switch (encType) {
-      case EncryptionType.Rsa2048_OaepSha256_B64:
-      case EncryptionType.Rsa2048_OaepSha1_B64:
-      case EncryptionType.Rsa2048_OaepSha256_HmacSha256_B64: // HmacSha256 types are deprecated
-      case EncryptionType.Rsa2048_OaepSha1_HmacSha256_B64:
-        break;
-      default:
-        throw new Error("encType unavailable.");
-    }
-
-    if (encPieces == null || encPieces.length <= 0) {
-      throw new Error("encPieces unavailable.");
-    }
-
-    const data = Utils.fromB64ToArray(encPieces[0]).buffer;
-    const privateKey = privateKeyValue ?? (await this.getPrivateKey());
-    if (privateKey == null) {
-      throw new Error("No private key.");
-    }
-
-    let alg: "sha1" | "sha256" = "sha1";
-    switch (encType) {
-      case EncryptionType.Rsa2048_OaepSha256_B64:
-      case EncryptionType.Rsa2048_OaepSha256_HmacSha256_B64:
-        alg = "sha256";
-        break;
-      case EncryptionType.Rsa2048_OaepSha1_B64:
-      case EncryptionType.Rsa2048_OaepSha1_HmacSha256_B64:
-        break;
-      default:
-        throw new Error("encType unavailable.");
-    }
-
-    return this.cryptoFunctionService.rsaDecrypt(data, privateKey, alg);
   }
 
   // EFForg/OpenWireless

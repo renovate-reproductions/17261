@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ChangePasswordComponent } from "@bitwarden/angular/components/change-password.component";
 import { ApiService } from "@bitwarden/common/abstractions/api.service";
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
+import { DecryptService } from "@bitwarden/common/abstractions/decrypt.service";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { LogService } from "@bitwarden/common/abstractions/log.service";
 import { MessagingService } from "@bitwarden/common/abstractions/messaging.service";
@@ -40,7 +41,8 @@ export class EmergencyAccessTakeoverComponent extends ChangePasswordComponent im
     platformUtilsService: PlatformUtilsService,
     policyService: PolicyService,
     private apiService: ApiService,
-    private logService: LogService
+    private logService: LogService,
+    private decryptService: DecryptService
   ) {
     super(
       i18nService,
@@ -74,7 +76,11 @@ export class EmergencyAccessTakeoverComponent extends ChangePasswordComponent im
       this.emergencyAccessId
     );
 
-    const oldKeyBuffer = await this.cryptoService.rsaDecrypt(takeoverResponse.keyEncrypted);
+    const privateKey = await this.cryptoService.getPrivateKey();
+    const oldKeyBuffer = await this.decryptService.rsaDecrypt(
+      takeoverResponse.keyEncrypted,
+      privateKey
+    );
     const oldEncKey = new SymmetricCryptoKey(oldKeyBuffer);
 
     if (oldEncKey == null) {

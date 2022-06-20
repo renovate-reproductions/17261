@@ -128,4 +128,56 @@ export class DecryptService implements DecryptServiceAbstraction {
 
     return await this.cryptoFunctionService.aesDecrypt(data, iv, key.encKey);
   }
+
+  async rsaDecrypt(encValue: string, privateKeyValue?: ArrayBuffer): Promise<ArrayBuffer> {
+    if (privateKeyValue == null) {
+      throw new Error("No private key.");
+    }
+    const headerPieces = encValue.split(".");
+    let encType: EncryptionType = null;
+    let encPieces: string[];
+
+    if (headerPieces.length === 1) {
+      encType = EncryptionType.Rsa2048_OaepSha256_B64;
+      encPieces = [headerPieces[0]];
+    } else if (headerPieces.length === 2) {
+      try {
+        encType = parseInt(headerPieces[0], null);
+        encPieces = headerPieces[1].split("|");
+      } catch (e) {
+        this.logService.error(e);
+      }
+    }
+
+    switch (encType) {
+      case EncryptionType.Rsa2048_OaepSha256_B64:
+      case EncryptionType.Rsa2048_OaepSha1_B64:
+      case EncryptionType.Rsa2048_OaepSha256_HmacSha256_B64: // HmacSha256 types are deprecated
+      case EncryptionType.Rsa2048_OaepSha1_HmacSha256_B64:
+        break;
+      default:
+        throw new Error("encType unavailable.");
+    }
+
+    if (encPieces == null || encPieces.length <= 0) {
+      throw new Error("encPieces unavailable.");
+    }
+
+    const data = Utils.fromB64ToArray(encPieces[0]).buffer;
+
+    let alg: "sha1" | "sha256" = "sha1";
+    switch (encType) {
+      case EncryptionType.Rsa2048_OaepSha256_B64:
+      case EncryptionType.Rsa2048_OaepSha256_HmacSha256_B64:
+        alg = "sha256";
+        break;
+      case EncryptionType.Rsa2048_OaepSha1_B64:
+      case EncryptionType.Rsa2048_OaepSha1_HmacSha256_B64:
+        break;
+      default:
+        throw new Error("encType unavailable.");
+    }
+
+    return this.cryptoFunctionService.rsaDecrypt(data, privateKeyValue, alg);
+  }
 }

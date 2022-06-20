@@ -146,7 +146,7 @@ export class ResetPasswordComponent implements OnInit {
           );
 
           // Decrypt User's Reset Password Key to get EncKey
-          const decValue = await this.cryptoService.rsaDecrypt(resetPasswordKey, decPrivateKey);
+          const decValue = await this.decryptService.rsaDecrypt(resetPasswordKey, decPrivateKey);
           const userEncKey = new SymmetricCryptoKey(decValue);
 
           // Create new key and hash new password
