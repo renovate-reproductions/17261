@@ -85,7 +85,8 @@ export class Send extends Domain {
     }
 
     try {
-      model.key = await decryptService.decryptToBytes(this.key, null);
+      const userEncKey = await cryptoService.getKeyForDecryption(this.key);
+      model.key = await decryptService.decryptToBytes(this.key, userEncKey);
       model.cryptoKey = await cryptoService.makeSendKey(model.key);
     } catch (e) {
       // TODO: error?
