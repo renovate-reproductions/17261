@@ -5,6 +5,9 @@
     "allowSyntheticDefaultImports": true
   },
   "exclude": ["../src/test.ts", "../src/**/*.spec.ts", "../projects/**/*.spec.ts"],
-  "include": ["../src/**/*", "../projects/**/*"],
-  "files": ["./typings.d.ts"]
+  "files": [
+    "./typings.d.ts",
+    "../libs/components/src/main.ts",
+    "../libs/components/src/polyfills.ts"
+  ]
 }
