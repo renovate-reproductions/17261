@@ -1,0 +1,27 @@
+<ng-template #linkRef>
+  <a
+    role="tab"
+    [class]="baseClassList"
+    [routerLink]="route"
+    [routerLinkActive]="activeClassList"
+    #rla="routerLinkActive"
+    [attr.aria-selected]="rla.isActive"
+  >
+    <ng-container [ngTemplateOutlet]="contentRef"></ng-container>
+  </a>
+</ng-template>
+<ng-template #btnRef>
+  <button
+    type="button"
+    role="tab"
+    [class]="baseClassList"
+    [disabled]="disabled"
+    [attr.aria-disabled]="disabled"
+  >
+    <ng-container [ngTemplateOutlet]="contentRef"></ng-container>
+  </button>
+</ng-template>
+<ng-template #contentRef>
+  <ng-content></ng-content>
+</ng-template>
+<ng-container [ngTemplateOutlet]="disabled ? btnRef : linkRef"></ng-container>
