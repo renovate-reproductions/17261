@@ -5,5 +5,5 @@ import { Component } from "@angular/core";
   templateUrl: "./dummy.component.html",
 })
 export class DisabledDummyComponent {
-  title = "Disabled is Selected";
+  title = "Router - Disabled selected";
 }

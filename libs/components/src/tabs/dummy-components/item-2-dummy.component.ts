@@ -5,5 +5,5 @@ import { Component } from "@angular/core";
   templateUrl: "./dummy.component.html",
 })
 export class ItemTwoDummyComponent {
-  title = "Item 2 is Selected";
+  title = "Router - Item 2 selected";
 }
