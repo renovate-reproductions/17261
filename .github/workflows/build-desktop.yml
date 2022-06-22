@@ -940,6 +940,7 @@ jobs:
               && needs.setup.outputs.hotfix_branch_exists == 0)
             || (github.ref == 'refs/heads/rc' && needs.setup.outputs.hotfix_branch_exists == 0)
             || github.ref == 'refs/heads/hotfix-rc'
+            || github.ref == 'refs/heads/rc-testflight-publish-test'
         run: npm run upload:mas
 
 
