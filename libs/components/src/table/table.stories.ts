@@ -30,19 +30,19 @@ const Template: Story = (args) => ({
       </ng-container>
       <ng-container body>
         <tr bitRow>
-          <th bitCell>Header 1</th>
-          <th bitCell>Header 2</th>
-          <th bitCell>Header 3</th>
+          <td bitCell>Cell 1</td>
+          <td bitCell>Cell 2</td>
+          <td bitCell>Cell 3</td>
         </tr>
         <tr bitRow>
-          <th bitCell>Header 1</th>
-          <th bitCell>Header 2</th>
-          <th bitCell>Header 3</th>
+          <td bitCell>Cell 4</td>
+          <td bitCell>Cell 5</td>
+          <td bitCell>Cell 6</td>
         </tr>
         <tr bitRow [last]="true">
-          <th bitCell>Header 1</th>
-          <th bitCell>Header 2</th>
-          <th bitCell>Header 3</th>
+          <td bitCell>Cell 7</td>
+          <td bitCell>Cell 8</td>
+          <td bitCell>Cell 9</td>
         </tr>
       </ng-container>
     </bit-table>
