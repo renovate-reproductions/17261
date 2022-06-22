@@ -61,7 +61,19 @@ const moduleRules = [
     ],
   },
   {
-    test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
+    test: /\.[cm]?js$/,
+    use: [
+      {
+        loader: "babel-loader",
+        options: {
+          configFile: false,
+          plugins: ["@angular/compiler-cli/linker/babel"], // Required!
+        },
+      },
+    ],
+  },
+  {
+    test: /\.[jt]sx?$/,
     loader: "@ngtools/webpack",
   },
 ];
@@ -139,6 +151,9 @@ const plugins = [
     filename: "[name].[contenthash].css",
     chunkFilename: "[id].[contenthash].css",
   }),
+  new webpack.ProvidePlugin({
+    process: "process/browser.js",
+  }),
   new webpack.EnvironmentPlugin({
     ENV: ENV,
     NODE_ENV: NODE_ENV === "production" ? "production" : "development",
@@ -148,9 +163,6 @@ const plugins = [
     STRIPE_KEY: envConfig["stripeKey"] ?? "",
     BRAINTREE_KEY: envConfig["braintreeKey"] ?? "",
     PAYPAL_CONFIG: envConfig["paypal"] ?? {},
-  }),
-  new webpack.ProvidePlugin({
-    process: "process/browser",
   }),
   new AngularWebpackPlugin({
     tsConfigPath: "tsconfig.json",
@@ -205,8 +217,8 @@ const devServer =
               {
                 key: "Content-Security-Policy",
                 value: `
-                  default-src 'self'; 
-                  script-src 
+                  default-src 'self';
+                  script-src
                     'self'
                     'sha256-ryoU+5+IUZTuUyTElqkrQGBJXr1brEv6r2CA62WUw8w='
                     https://js.stripe.com
@@ -255,7 +267,7 @@ const devServer =
                     https://*.blob.core.windows.net
                     https://app.simplelogin.io/api/alias/random/new
                     https://app.anonaddy.com/api/v1/aliases;
-                  object-src 
+                  object-src
                     'self'
                     blob:;`,
               },
