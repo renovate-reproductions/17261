@@ -53,6 +53,7 @@ import localeZhTw from "@angular/common/locales/zh-Hant";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import { ToastrModule } from "ngx-toastr";
 
 import { JslibModule } from "@bitwarden/angular/jslib.module";
@@ -114,6 +115,7 @@ registerLocaleData(localeZhTw, "zh-TW");
     CommonModule,
     DragDropModule,
     FormsModule,
+    InfiniteScrollModule,
     JslibModule,
     ReactiveFormsModule,
     RouterModule,
@@ -129,6 +131,7 @@ registerLocaleData(localeZhTw, "zh-TW");
     CommonModule,
     DragDropModule,
     FormsModule,
+    InfiniteScrollModule,
     JslibModule,
     ReactiveFormsModule,
     RouterModule,

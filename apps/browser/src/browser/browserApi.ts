@@ -170,8 +170,8 @@ export class BrowserApi {
       );
     } else {
       const blob = new Blob([blobData], blobOptions);
-      if (navigator.msSaveOrOpenBlob) {
-        navigator.msSaveBlob(blob, fileName);
+      if ((navigator as any).msSaveOrOpenBlob) {
+        (navigator as any).msSaveBlob(blob, fileName);
       } else {
         const a = win.document.createElement("a");
         a.href = URL.createObjectURL(blob);
@@ -193,7 +193,7 @@ export class BrowserApi {
 
   static reloadExtension(win: Window) {
     if (win != null) {
-      return win.location.reload(true);
+      return (win.location as any).reload(true);
     } else {
       return chrome.runtime.reload();
     }

@@ -67,7 +67,7 @@ const moduleRules = [
         loader: "babel-loader",
         options: {
           configFile: false,
-          plugins: ["@angular/compiler-cli/linker/babel"], // Required!
+          plugins: ["@angular/compiler-cli/linker/babel"],
         },
       },
     ],
