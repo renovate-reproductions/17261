@@ -348,12 +348,21 @@ export class Utils {
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
 
-  static copyProperties(source: any, target: any, map: { [sourcePropName: string]: string }) {
+  /**
+   * Copies properties from source object to target object according to a mapping
+   * @param source The source object to copy from
+   * @param map A map of $sourcePropertyName:$targetPropertyName to copy from/to. If $targetPropertyName is null,
+   *   it will use the same name as the source
+   * @param target The target object to copy into; if none is provided, a new object will be created
+   */
+  static copyProperties(source: any, map: { [sourcePropName: string]: string }, target: any = {}) {
     Object.keys(map).forEach((sourcePropName) => {
       const targetPropName = map[sourcePropName] ?? sourcePropName;
       const value = source[sourcePropName];
       target[targetPropName] = value;
     });
+
+    return target;
   }
 
   private static validIpAddress(ipString: string): boolean {

@@ -85,9 +85,7 @@ describe("Utils Service", () => {
         sourceProp3: "targetProp3",
       };
 
-      const target = {};
-
-      Utils.copyProperties(source, target, map);
+      const target = Utils.copyProperties(source, map);
 
       expect(target).toEqual({
         targetProp1: "value1",
@@ -103,9 +101,7 @@ describe("Utils Service", () => {
         sourceProp3: null,
       };
 
-      const target = {};
-
-      Utils.copyProperties(source, target, map);
+      const target = Utils.copyProperties(source, map);
 
       expect(target).toEqual(source);
     });
