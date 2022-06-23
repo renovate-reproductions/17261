@@ -5,10 +5,13 @@ import { HostBinding, Directive, Input } from "@angular/core";
 })
 export class RowDirective {
   @HostBinding("class") get classList() {
-    return ["hover:tw-bg-background-alt"].concat(
-      this.last ? [] : ["tw-border-solid", "tw-border-0", "tw-border-b", "tw-border-secondary-300"]
-    );
+    return [
+      "tw-border-0",
+      "tw-border-b",
+      "tw-border-secondary-300",
+      "tw-border-solid",
+      "hover:tw-bg-background-alt",
+      "last:tw-border-0",
+    ];
   }
-
-  @Input() last = false;
 }

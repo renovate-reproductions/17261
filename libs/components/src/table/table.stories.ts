@@ -39,7 +39,7 @@ const Template: Story = (args) => ({
           <td bitCell>Cell 5</td>
           <td bitCell>Cell 6</td>
         </tr>
-        <tr bitRow [last]="true">
+        <tr bitRow>
           <td bitCell>Cell 7</td>
           <td bitCell>Cell 8</td>
           <td bitCell>Cell 9</td>
