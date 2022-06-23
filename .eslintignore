@@ -18,3 +18,6 @@ apps/web/config.js
 apps/web/scripts/*.js
 apps/web/src/theme.js
 apps/web/tailwind.config.js
+
+libs\components\tailwind.config.base.js
+libs\components\tailwind.config.js

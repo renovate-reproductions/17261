@@ -7,7 +7,7 @@
   "plugins": ["@typescript-eslint", "rxjs-angular"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": ["apps/*/tsconfig.json", "libs/*/tsconfig.json"],
+    "project": ["./tsconfig.eslint.json"],
     "sourceType": "module"
   },
   "extends": [
