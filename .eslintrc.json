@@ -5,6 +5,11 @@
     "webextensions": true
   },
   "plugins": ["@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./apps/web/tsconfig.json",
+    "sourceType": "module"
+  },
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -50,6 +55,7 @@
         ],
         "pathGroupsExcludedImportTypes": ["builtin"]
       }
-    ]
+    ],
+    "rxjs-angular/prefer-takeuntil": "error"
   }
 }
