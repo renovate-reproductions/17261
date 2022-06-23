@@ -349,13 +349,18 @@ export class Utils {
   }
 
   /**
-   * Copies properties from source object to target object according to a mapping
+   * Copies properties from a source object to a new object according to a mapping
    * @param source The source object to copy from
-   * @param map A map of $sourcePropertyName:$targetPropertyName to copy from/to. If $targetPropertyName is null,
-   *   it will use the same name as the source
-   * @param target The target object to copy into; if none is provided, a new object will be created
+   * @param map A map of source:target property names (leave target null to use the same property name as source)
+   * @param targetType The target type to be created and populated (leave null to use a plain JS object)
    */
-  static copyProperties(source: any, map: { [sourcePropName: string]: string }, target: any = {}) {
+  static copyToNewObject<T = Record<string, unknown>>(
+    source: any,
+    map: { [sourcePropName: string]: string },
+    targetType?: new () => T
+  ): T {
+    const target: any = targetType != null ? new targetType() : {};
+
     Object.keys(map).forEach((sourcePropName) => {
       const targetPropName = map[sourcePropName] ?? sourcePropName;
       const value = source[sourcePropName];

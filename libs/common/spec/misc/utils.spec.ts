@@ -85,7 +85,7 @@ describe("Utils Service", () => {
         sourceProp3: "targetProp3",
       };
 
-      const target = Utils.copyProperties(source, map);
+      const target = Utils.copyToNewObject(source, map);
 
       expect(target).toEqual({
         targetProp1: "value1",
@@ -101,9 +101,23 @@ describe("Utils Service", () => {
         sourceProp3: null,
       };
 
-      const target = Utils.copyProperties(source, map);
+      const target = Utils.copyToNewObject(source, map);
 
       expect(target).toEqual(source);
+    });
+
+    it("Instantiates a new object type if provided", () => {
+      class TestClass {
+        prop1: string;
+      }
+
+      const map: any = {
+        sourceProp1: "prop1",
+      };
+
+      const target = Utils.copyToNewObject(source, map, TestClass);
+
+      expect(target).toBeInstanceOf(TestClass);
     });
   });
 });
