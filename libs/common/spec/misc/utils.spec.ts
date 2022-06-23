@@ -70,4 +70,44 @@ describe("Utils Service", () => {
       expect(Utils.newGuid()).toMatch(validGuid);
     });
   });
+
+  describe("copyProperties", () => {
+    const source = {
+      sourceProp1: "value1",
+      sourceProp2: "value2",
+      sourceProp3: "value3",
+    };
+
+    it("Copies properties with different target names", () => {
+      const map = {
+        sourceProp1: "targetProp1",
+        sourceProp2: "targetProp2",
+        sourceProp3: "targetProp3",
+      };
+
+      const target = {};
+
+      Utils.copyProperties(source, target, map);
+
+      expect(target).toEqual({
+        targetProp1: "value1",
+        targetProp2: "value2",
+        targetProp3: "value3",
+      });
+    });
+
+    it("Copies properties with the same names", () => {
+      const map: any = {
+        sourceProp1: null,
+        sourceProp2: null,
+        sourceProp3: null,
+      };
+
+      const target = {};
+
+      Utils.copyProperties(source, target, map);
+
+      expect(target).toEqual(source);
+    });
+  });
 });

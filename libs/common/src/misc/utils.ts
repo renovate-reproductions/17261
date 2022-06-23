@@ -348,6 +348,14 @@ export class Utils {
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
 
+  static copyProperties(source: any, target: any, map: { [sourcePropName: string]: string }) {
+    Object.keys(map).forEach((sourcePropName) => {
+      const targetPropName = map[sourcePropName] ?? sourcePropName;
+      const value = source[sourcePropName];
+      target[targetPropName] = value;
+    });
+  }
+
   private static validIpAddress(ipString: string): boolean {
     const ipRegex =
       /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
