@@ -5,6 +5,14 @@ import { SymmetricCryptoKey } from "../domain/symmetricCryptoKey";
 
 import { View } from "./view";
 
+const propertyMap: any = {
+  id: null,
+  url: null,
+  size: null,
+  sizeName: null,
+  filename: null,
+};
+
 export class AttachmentView implements View {
   id: string = null;
   url: string = null;
@@ -36,34 +44,15 @@ export class AttachmentView implements View {
   }
 
   toJSON(): string {
-    const obj = Utils.copyToNewObject(this, {
-      id: null,
-      url: null,
-      size: null,
-      sizeName: null,
-      filename: null,
-    });
-
+    const obj = Utils.copyToNewObject(this, propertyMap);
     obj.key = this.key == null ? null : JSON.stringify(this.key);
-
     return JSON.stringify(obj);
   }
 
   static fromJSON(obj: any): AttachmentView {
-    const view = Utils.copyToNewObject(
-      obj,
-      {
-        id: null,
-        url: null,
-        size: null,
-        sizeName: null,
-        filename: null,
-      },
-      AttachmentView
-    );
+    const view = Utils.copyToNewObject(obj, propertyMap, AttachmentView);
 
     view.key = obj.key == null ? null : SymmetricCryptoKey.fromJSON(obj.key);
-
     return view;
   }
 }

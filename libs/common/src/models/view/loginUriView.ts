@@ -1,3 +1,5 @@
+import { stringify } from "querystring";
+
 import { UriMatchType } from "../../enums/uriMatchType";
 import { Utils } from "../../misc/utils";
 import { LoginUri } from "../domain/loginUri";
@@ -19,6 +21,11 @@ const CanLaunchWhitelist = [
   "iosapp://",
   "androidapp://",
 ];
+
+const propertyMap: any = {
+  match: null,
+  uri: null,
+};
 
 export class LoginUriView implements View {
   match: UriMatchType = null;
@@ -123,5 +130,14 @@ export class LoginUriView implements View {
     return this.uri.indexOf("://") < 0 && Utils.tldEndingRegex.test(this.uri)
       ? "http://" + this.uri
       : this.uri;
+  }
+
+  toJSON(): string {
+    const obj = Utils.copyToNewObject(this, propertyMap);
+    return JSON.stringify(obj);
+  }
+
+  static fromJSON(obj: any) {
+    return Utils.copyToNewObject(obj, propertyMap, LoginUriView);
   }
 }

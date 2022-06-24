@@ -15,6 +15,7 @@ const propertyMap: any = {
   showCount: null,
   linkedId: null,
 };
+
 export class FieldView implements View {
   name: string = null;
   value: string = null;

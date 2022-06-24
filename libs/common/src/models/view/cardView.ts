@@ -5,6 +5,14 @@ import { linkedFieldOption } from "../../misc/linkedFieldOption.decorator";
 
 import { ItemView } from "./itemView";
 
+const propertyMap: any = {
+  cardholderName: null,
+  brand: null,
+  number: null,
+  expMonth: null,
+  expYear: null,
+  code: null,
+};
 export class CardView extends ItemView {
   @linkedFieldOption(LinkedId.CardholderName)
   cardholderName: string = null;
@@ -83,30 +91,11 @@ export class CardView extends ItemView {
   }
 
   toJSON(): string {
-    const obj = Utils.copyToNewObject(this, {
-      cardholderName: null,
-      brand: null,
-      number: null,
-      expMonth: null,
-      expYear: null,
-      code: null,
-    });
-
+    const obj = Utils.copyToNewObject(this, propertyMap);
     return JSON.stringify(obj);
   }
 
   static fromJSON(obj: any): CardView {
-    return Utils.copyToNewObject(
-      obj,
-      {
-        cardholderName: null,
-        brand: null,
-        number: null,
-        expMonth: null,
-        expYear: null,
-        code: null,
-      },
-      CardView
-    );
+    return Utils.copyToNewObject(obj, propertyMap, CardView);
   }
 }

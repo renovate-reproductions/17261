@@ -25,7 +25,7 @@ export class PasswordHistoryView implements View {
     return JSON.stringify(obj);
   }
 
-  fromJSON(obj: any): PasswordHistoryView {
+  static fromJSON(obj: any): PasswordHistoryView {
     return Utils.copyToNewObject(obj, propertyMap, PasswordHistoryView);
   }
 }

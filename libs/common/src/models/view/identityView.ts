@@ -4,6 +4,27 @@ import { Utils } from "../../misc/utils";
 
 import { ItemView } from "./itemView";
 
+const propertyMap: any = {
+  title: null,
+  firstName: null,
+  middleName: null,
+  lastName: null,
+  address1: null,
+  address2: null,
+  address3: null,
+  city: null,
+  state: null,
+  postalCode: null,
+  country: null,
+  company: null,
+  email: null,
+  phone: null,
+  ssn: null,
+  username: null,
+  passportNumber: null,
+  licenseNumber: null,
+};
+
 export class IdentityView extends ItemView {
   @linkedFieldOption(LinkedId.Title)
   title: string = null;
@@ -138,5 +159,14 @@ export class IdentityView extends ItemView {
     }
     addressPart2 += ", " + postalCode;
     return addressPart2;
+  }
+
+  toJSON(): string {
+    const obj = Utils.copyToNewObject(this, propertyMap);
+    return JSON.stringify(obj);
+  }
+
+  static fromJSON(obj: any): IdentityView {
+    return Utils.copyToNewObject(obj, propertyMap, IdentityView);
   }
 }

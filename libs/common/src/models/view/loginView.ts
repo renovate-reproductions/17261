@@ -6,6 +6,13 @@ import { Login } from "../domain/login";
 import { ItemView } from "./itemView";
 import { LoginUriView } from "./loginUriView";
 
+const propertyMap: any = {
+  username: null,
+  password: null,
+  totp: null,
+  autofillOnPageLoad: null,
+};
+
 export class LoginView extends ItemView {
   @linkedFieldOption(LinkedId.Username)
   username: string = null;
@@ -59,5 +66,20 @@ export class LoginView extends ItemView {
 
   get hasUris(): boolean {
     return this.uris != null && this.uris.length > 0;
+  }
+
+  toJSON(): string {
+    const obj = Utils.copyToNewObject(this, propertyMap);
+    obj.passwordRevisionDate = this.passwordRevisionDate?.toISOString();
+    obj.uris = this.uris == null ? null : JSON.stringify(this.uris);
+    return JSON.stringify(obj);
+  }
+
+  static fromJSON(obj: any): LoginView {
+    const view = Utils.copyToNewObject(obj, propertyMap, LoginView);
+    view.passwordRevisionDate =
+      obj.passwordRevisionDate == null ? null : new Date(obj.passwordRevisionDate);
+    view.uris = obj.uris?.map((uri: any) => LoginUriView.fromJSON(uri));
+    return view;
   }
 }

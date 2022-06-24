@@ -14,6 +14,22 @@ import { PasswordHistoryView } from "./passwordHistoryView";
 import { SecureNoteView } from "./secureNoteView";
 import { View } from "./view";
 
+const propertyMap: any = {
+  id: null,
+  corganizationId: null,
+  folderId: null,
+  name: null,
+  notes: null,
+  type: null,
+  favorite: null,
+  organizationUseTotp: null,
+  edit: null,
+  viewPassword: null,
+  localData: null,
+  collectionIds: null,
+  reprompt: null,
+};
+
 export class CipherView implements View {
   id: string = null;
   organizationId: string = null;
@@ -135,40 +151,26 @@ export class CipherView implements View {
   }
 
   toJSON(): string {
-    // localdata is not included because it has 'any' type
-    const obj = Utils.copyToNewObject(this, {
-      id: null,
-      organizationId: null,
-      folderId: null,
-      name: null,
-      notes: null,
-      type: null,
-      favorite: null,
-      organizationUseTotp: null,
-      edit: null,
-      viewPassword: null,
-      collectionIds: null,
-      reprompt: null,
-    });
+    const obj = Utils.copyToNewObject(this, propertyMap);
 
     // Dates
-    // obj.revisionDate = this.revisionDate?.toISOString();
-    // obj.deletedDate = this.deletedDate?.toISOString();
+    obj.revisionDate = this.revisionDate?.toISOString();
+    obj.deletedDate = this.deletedDate?.toISOString();
 
     // Nested objects
     obj.attachments = JSON.stringify(this.attachments);
     obj.fields = JSON.stringify(this.fields);
-    // obj.passwordHistory = JSON.stringify(this.passwordHistory);
+    obj.passwordHistory = JSON.stringify(this.passwordHistory);
 
     switch (this.type) {
       case CipherType.Card:
         obj.card = JSON.stringify(this.card);
         break;
       case CipherType.Identity:
-        // obj.identity = JSON.stringify(this.identity);
+        obj.identity = JSON.stringify(this.identity);
         break;
       case CipherType.Login:
-        // obj.login = JSON.stringify(this.login);
+        obj.login = JSON.stringify(this.login);
         break;
       case CipherType.SecureNote:
         obj.secureNote = JSON.stringify(this.secureNote);
@@ -181,24 +183,7 @@ export class CipherView implements View {
   }
 
   static fromJSON(obj: any): CipherView {
-    const view = Utils.copyToNewObject(
-      obj,
-      {
-        id: null,
-        corganizationId: null,
-        folderId: null,
-        name: null,
-        notes: null,
-        type: null,
-        favorite: null,
-        organizationUseTotp: null,
-        edit: null,
-        viewPassword: null,
-        collectionIds: null,
-        reprompt: null,
-      },
-      CipherView
-    );
+    const view = Utils.copyToNewObject(obj, propertyMap, CipherView);
 
     // Dates
     view.revisionDate = new Date(obj.revisionDate);
@@ -214,10 +199,10 @@ export class CipherView implements View {
         view.card = CardView.fromJSON(obj.card);
         break;
       case CipherType.Identity:
-        // view.identity = IdentityView.fromJSON(obj.identity);
+        view.identity = IdentityView.fromJSON(obj.identity);
         break;
       case CipherType.Login:
-        // view.login = LoginView.fromJSON(obj.login);
+        view.login = LoginView.fromJSON(obj.login);
         break;
       case CipherType.SecureNote:
         view.secureNote = SecureNoteView.fromJSON(obj.secureNote);
