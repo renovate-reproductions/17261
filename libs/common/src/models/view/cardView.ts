@@ -1,3 +1,5 @@
+import { Utils } from "@bitwarden/common/misc/utils";
+
 import { CardLinkedId as LinkedId } from "../../enums/linkedIdType";
 import { linkedFieldOption } from "../../misc/linkedFieldOption.decorator";
 
@@ -78,5 +80,33 @@ export class CardView extends ItemView {
 
   private formatYear(year: string): string {
     return year.length === 2 ? "20" + year : year;
+  }
+
+  toJSON(): string {
+    const obj = Utils.copyToNewObject(this, {
+      cardholderName: null,
+      brand: null,
+      number: null,
+      expMonth: null,
+      expYear: null,
+      code: null,
+    });
+
+    return JSON.stringify(obj);
+  }
+
+  static fromJSON(obj: any): CardView {
+    return Utils.copyToNewObject(
+      obj,
+      {
+        cardholderName: null,
+        brand: null,
+        number: null,
+        expMonth: null,
+        expYear: null,
+        code: null,
+      },
+      CardView
+    );
   }
 }

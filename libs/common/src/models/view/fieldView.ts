@@ -1,9 +1,20 @@
+import { Utils } from "@bitwarden/common/misc/utils";
+
 import { FieldType } from "../../enums/fieldType";
 import { LinkedIdType } from "../../enums/linkedIdType";
 import { Field } from "../domain/field";
 
 import { View } from "./view";
 
+const propertyMap: any = {
+  name: null,
+  value: null,
+  type: null,
+  newField: null,
+  showValue: null,
+  showCount: null,
+  linkedId: null,
+};
 export class FieldView implements View {
   name: string = null;
   value: string = null;
@@ -24,5 +35,14 @@ export class FieldView implements View {
 
   get maskedValue(): string {
     return this.value != null ? "••••••••" : null;
+  }
+
+  toJSON(): string {
+    const obj = Utils.copyToNewObject(this, propertyMap);
+    return JSON.stringify(obj);
+  }
+
+  static fromJSON(obj: any): FieldView {
+    return Utils.copyToNewObject(obj, propertyMap, FieldView);
   }
 }

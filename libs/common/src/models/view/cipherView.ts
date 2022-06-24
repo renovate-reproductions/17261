@@ -1,3 +1,5 @@
+import { Utils } from "@bitwarden/common/misc/utils";
+
 import { CipherRepromptType } from "../../enums/cipherRepromptType";
 import { CipherType } from "../../enums/cipherType";
 import { LinkedIdType } from "../../enums/linkedIdType";
@@ -130,5 +132,100 @@ export class CipherView implements View {
 
   linkedFieldI18nKey(id: LinkedIdType): string {
     return this.linkedFieldOptions.get(id)?.i18nKey;
+  }
+
+  toJSON(): string {
+    // localdata is not included because it has 'any' type
+    const obj = Utils.copyToNewObject(this, {
+      id: null,
+      organizationId: null,
+      folderId: null,
+      name: null,
+      notes: null,
+      type: null,
+      favorite: null,
+      organizationUseTotp: null,
+      edit: null,
+      viewPassword: null,
+      collectionIds: null,
+      reprompt: null,
+    });
+
+    // Dates
+    // obj.revisionDate = this.revisionDate?.toISOString();
+    // obj.deletedDate = this.deletedDate?.toISOString();
+
+    // Nested objects
+    obj.attachments = JSON.stringify(this.attachments);
+    obj.fields = JSON.stringify(this.fields);
+    // obj.passwordHistory = JSON.stringify(this.passwordHistory);
+
+    switch (this.type) {
+      case CipherType.Card:
+        obj.card = JSON.stringify(this.card);
+        break;
+      case CipherType.Identity:
+        // obj.identity = JSON.stringify(this.identity);
+        break;
+      case CipherType.Login:
+        // obj.login = JSON.stringify(this.login);
+        break;
+      case CipherType.SecureNote:
+        obj.secureNote = JSON.stringify(this.secureNote);
+        break;
+      default:
+        break;
+    }
+
+    return JSON.stringify(obj);
+  }
+
+  static fromJSON(obj: any): CipherView {
+    const view = Utils.copyToNewObject(
+      obj,
+      {
+        id: null,
+        corganizationId: null,
+        folderId: null,
+        name: null,
+        notes: null,
+        type: null,
+        favorite: null,
+        organizationUseTotp: null,
+        edit: null,
+        viewPassword: null,
+        collectionIds: null,
+        reprompt: null,
+      },
+      CipherView
+    );
+
+    // Dates
+    view.revisionDate = new Date(obj.revisionDate);
+    view.deletedDate = new Date(obj.deletedDate);
+
+    // Nested objects
+    view.attachments = obj.attachments?.map((a: any) => AttachmentView.fromJSON(a));
+    view.fields = obj.fields?.map((f: any) => FieldView.fromJSON(f));
+    view.passwordHistory = obj.passwordHistory?.map((ph: any) => PasswordHistoryView.fromJSON(ph));
+
+    switch (view.type) {
+      case CipherType.Card:
+        view.card = CardView.fromJSON(obj.card);
+        break;
+      case CipherType.Identity:
+        // view.identity = IdentityView.fromJSON(obj.identity);
+        break;
+      case CipherType.Login:
+        // view.login = LoginView.fromJSON(obj.login);
+        break;
+      case CipherType.SecureNote:
+        view.secureNote = SecureNoteView.fromJSON(obj.secureNote);
+        break;
+      default:
+        break;
+    }
+
+    return view;
   }
 }
