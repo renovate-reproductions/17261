@@ -52,6 +52,14 @@
           >
             {{ "eventLogs" | i18n }}
           </a>
+          <a
+            routerLink="scim"
+            class="list-group-item"
+            routerLinkActive="active"
+            *ngIf="organization.canManageScim && accessScim"
+          >
+            {{ "singleSignOn" | i18n }}
+          </a>
         </div>
       </div>
     </div>

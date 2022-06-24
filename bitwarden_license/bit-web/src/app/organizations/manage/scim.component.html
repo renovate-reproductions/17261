@@ -1,0 +1,16 @@
+<div class="page-header d-flex">
+  <h1>{{ "scim" | i18n }}</h1>
+</div>
+
+<ng-container *ngIf="loading">
+  <i
+    class="bwi bwi-spinner bwi-spin text-muted"
+    title="{{ 'loading' | i18n }}"
+    aria-hidden="true"
+  ></i>
+  <span class="sr-only">{{ "loading" | i18n }}</span>
+</ng-container>
+
+<form #form (ngSubmit)="submit()" [appApiAction]="formPromise" *ngIf="!loading">
+  <p><!-- TODO: Need to fill in this component, just a placeholder for now --></p>
+</form>

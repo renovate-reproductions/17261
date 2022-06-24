@@ -5165,5 +5165,9 @@
         "example": "My Email"
       }
     }
+  },
+  "scim": {
+    "message": "SCIM Provisioning",
+    "description": "This text, 'SCIM', is an acronymn and should not be translated."
   }
 }
