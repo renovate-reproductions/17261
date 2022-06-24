@@ -17,14 +17,18 @@ export default class BrowserPlatformUtilsService implements PlatformUtilsService
     { tryResolve: (canceled: boolean, password: string) => Promise<boolean>; date: Date }
   >();
   private deviceCache: DeviceType = null;
-  private prefersColorSchemeDark = window.matchMedia("(prefers-color-scheme: dark)");
+  private prefersColorSchemeDark: MediaQueryList;
+  private global: typeof window | typeof global;
 
   constructor(
     private messagingService: MessagingService,
     private stateService: StateService,
     private clipboardWriteCallback: (clipboardValue: string, clearMs: number) => void,
     private biometricCallback: () => Promise<boolean>
-  ) {}
+  ) {
+    this.global = typeof window !== "undefined" ? window : global;
+    this.prefersColorSchemeDark = this.global.matchMedia("(prefers-color-scheme: dark)");
+  }
 
   getDevice(): DeviceType {
     if (this.deviceCache) {

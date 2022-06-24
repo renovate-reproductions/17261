@@ -11,7 +11,7 @@ import { CipherType } from "../enums/cipherType";
 import { FieldType } from "../enums/fieldType";
 import { UriMatchType } from "../enums/uriMatchType";
 import { sequentialize } from "../misc/sequentialize";
-import { Utils } from "../misc/utils";
+import { UrlUtils } from "../misc/utils/urlUtils";
 import { CipherData } from "../models/data/cipherData";
 import { Attachment } from "../models/domain/attachment";
 import { Card } from "../models/domain/card";
@@ -383,7 +383,7 @@ export class CipherService implements CipherServiceAbstraction {
       return Promise.resolve([]);
     }
 
-    const domain = Utils.getDomain(url);
+    const domain = UrlUtils.getDomain(url);
     const eqDomainsPromise =
       domain == null
         ? Promise.resolve([])
@@ -433,7 +433,7 @@ export class CipherService implements CipherServiceAbstraction {
             case UriMatchType.Domain:
               if (domain != null && u.domain != null && matchingDomains.indexOf(u.domain) > -1) {
                 if (DomainMatchBlacklist.has(u.domain)) {
-                  const domainUrlHost = Utils.getHost(url);
+                  const domainUrlHost = UrlUtils.getHost(url);
                   if (!DomainMatchBlacklist.get(u.domain).has(domainUrlHost)) {
                     return true;
                   }
@@ -443,8 +443,8 @@ export class CipherService implements CipherServiceAbstraction {
               }
               break;
             case UriMatchType.Host: {
-              const urlHost = Utils.getHost(url);
-              if (urlHost != null && urlHost === Utils.getHost(u.uri)) {
+              const urlHost = UrlUtils.getHost(url);
+              if (urlHost != null && urlHost === UrlUtils.getHost(u.uri)) {
                 return true;
               }
               break;
@@ -760,7 +760,7 @@ export class CipherService implements CipherServiceAbstraction {
       fd.append("key", key.encryptedString);
       fd.append("data", blob, encFileName.encryptedString);
     } catch (e) {
-      if (Utils.isNode && !Utils.isBrowser) {
+      if (typeof Buffer !== undefined) {
         fd.append("key", key.encryptedString);
         fd.append(
           "data",
@@ -1072,7 +1072,7 @@ export class CipherService implements CipherServiceAbstraction {
       fd.append("key", dataEncKey[1].encryptedString);
       fd.append("data", blob, encFileName.encryptedString);
     } catch (e) {
-      if (Utils.isNode && !Utils.isBrowser) {
+      if (typeof Buffer !== "undefined") {
         fd.append("key", dataEncKey[1].encryptedString);
         fd.append(
           "data",

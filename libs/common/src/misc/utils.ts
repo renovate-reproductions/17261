@@ -20,7 +20,6 @@ export class Utils {
   static inited = false;
   static isNode = false;
   static isBrowser = true;
-  static isServiceWorker = false;
   static isMobileBrowser = false;
   static isAppleMobileBrowser = false;
   static global: { bitwardenContainerService: BitwardenContainerService } | null = null;
@@ -42,13 +41,17 @@ export class Utils {
       (process as any).release.name === "node";
     Utils.isBrowser = typeof window !== "undefined";
 
-    Utils.isMobileBrowser = Utils.isBrowser && !Utils.isServiceWorker && this.isMobile(window);
-    Utils.isAppleMobileBrowser =
-      Utils.isBrowser && !Utils.isServiceWorker && this.isAppleMobile(window);
+    Utils.isMobileBrowser = Utils.isBrowser && this.isMobile(window);
+    Utils.isAppleMobileBrowser = Utils.isBrowser && this.isAppleMobile(window);
 
-    Utils.isServiceWorker = !Utils.isNode && !Utils.isBrowser; // window won't be defined in a service worker but we also aren't in node
-    Utils.global =
-      Utils.isNode && !Utils.isBrowser ? global : Utils.isServiceWorker ? undefined : window;
+    if (Utils.isNode) {
+      Utils.global = global;
+    } else if (Utils.isBrowser) {
+      Utils.global = window;
+    } else {
+      // If it's not browser or node then it must be a service worker
+      Utils.global = self;
+    }
   }
 
   static fromB64ToArray(str: string): Uint8Array {

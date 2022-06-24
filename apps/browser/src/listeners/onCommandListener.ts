@@ -1,13 +1,18 @@
 import { StateFactory } from "jslib-common/factories/stateFactory";
 import { GlobalState } from "jslib-common/models/domain/globalState";
-import { StateService } from "jslib-common/services/state.service";
+import { CipherService } from "jslib-common/services/cipher.service";
 import { StateMigrationService } from "jslib-common/services/stateMigration.service";
+import { WebCryptoFunctionService } from "jslib-common/services/webCryptoFunction.service";
 
-import AutofillService from "src/services/autofill.service";
-
+import { AutoFillActiveTabCommand } from "../commands/AutoFillActiveTabCommand";
 import { Account } from "../models/account";
+import { StateService as AbstractStateService } from "../services/abstractions/state.service";
+import AutofillService from "../services/autofill.service";
 import { BackgroundConsoleLogService } from "../services/backgroundConsoleLog.service";
+import { BrowserCryptoService } from "../services/browserCrypto.service";
+import BrowserPlatformUtilsService from "../services/browserPlatformUtils.service";
 import BrowserStorageService from "../services/browserStorage.service";
+import { StateService } from "../services/state.service";
 
 export const onCommandListener = async (command: string, tab: chrome.tabs.Tab) => {
   console.log("onCommand", {
@@ -38,17 +43,53 @@ const doAutoFillLogin = async (tab: chrome.tabs.Tab): Promise<void> => {
 
   const logService = new BackgroundConsoleLogService();
 
-  const stateService = new StateService(
+  const stateService: AbstractStateService = new StateService(
     browserStorageService,
     secureStorageService,
     logService,
     stateMigrationService,
-    new StateFactory(GlobalState, Account)
+    stateFactory
   );
 
   await stateService.init();
 
-  // cipherService
+  const cryptoFunctionService = new WebCryptoFunctionService(global);
 
-  console.log("autofill_login inited");
+  const platformUtils = new BrowserPlatformUtilsService(
+    null, // MessagingService
+    stateService,
+    null, // clipboardWriteCallback,
+    null // biometricCallback
+  );
+
+  const cryptoService = new BrowserCryptoService(
+    cryptoFunctionService,
+    platformUtils,
+    logService,
+    stateService
+  );
+
+  const cipherService = new CipherService(
+    cryptoService, // CryptoService
+    null, // SettingsService
+    null, // ApiService
+    null, // FileUploadService
+    null, // I18nService
+    null, // () => SearchService
+    logService,
+    stateService
+  );
+
+  const autofillService = new AutofillService(
+    null, // CipherService
+    stateService,
+    null, // TotpService
+    null, // EventService
+    logService // LogService
+  );
+
+  const command = new AutoFillActiveTabCommand(autofillService);
+  await command.doAutoFillActiveTabCommand(tab);
+
+  console.log("autofill_login finished");
 };

@@ -15,12 +15,24 @@ import AutofillPageDetails from "../models/autofillPageDetails";
 import AutofillScript from "../models/autofillScript";
 import { StateService } from "../services/abstractions/state.service";
 
-import { AutofillService as AutofillServiceInterface } from "./abstractions/autofill.service";
+import {
+  AutoFillOptions,
+  AutofillService as AutofillServiceInterface,
+  PageDetail,
+} from "./abstractions/autofill.service";
 import {
   AutoFillConstants,
   CreditCardAutoFillConstants,
   IdentityAutoFillConstants,
 } from "./autofillConstants";
+
+interface GenerateFillScriptOptions {
+  skipUsernameOnlyFill: boolean;
+  onlyEmptyFields: boolean;
+  onlyVisibleFields: boolean;
+  fillNewPassword: boolean;
+  cipher: CipherView;
+}
 
 export default class AutofillService implements AutofillServiceInterface {
   constructor(
@@ -64,7 +76,7 @@ export default class AutofillService implements AutofillServiceInterface {
     return formData;
   }
 
-  async doAutoFill(options: any) {
+  async doAutoFill(options: AutoFillOptions) {
     let totpPromise: Promise<string> = null;
     const tab = await this.getActiveTab();
     if (!tab || !options.cipher || !options.pageDetails || !options.pageDetails.length) {
@@ -73,7 +85,7 @@ export default class AutofillService implements AutofillServiceInterface {
 
     const canAccessPremium = await this.stateService.getCanAccessPremium();
     let didAutofill = false;
-    options.pageDetails.forEach((pd: any) => {
+    options.pageDetails.forEach((pd) => {
       // make sure we're still on correct tab
       if (pd.tab.id !== tab.id || pd.tab.url !== tab.url) {
         return;
@@ -138,7 +150,7 @@ export default class AutofillService implements AutofillServiceInterface {
     }
   }
 
-  async doAutoFillActiveTab(pageDetails: any, fromCommand: boolean) {
+  async doAutoFillActiveTab(pageDetails: PageDetail[], fromCommand: boolean) {
     const tab = await this.getActiveTab();
     if (!tab || !tab.url) {
       return;
@@ -187,7 +199,7 @@ export default class AutofillService implements AutofillServiceInterface {
 
   // Helpers
 
-  private async getActiveTab(): Promise<any> {
+  private async getActiveTab(): Promise<chrome.tabs.Tab> {
     const tab = await BrowserApi.getTabFromCurrentWindow();
     if (!tab) {
       throw new Error("No tab found.");
@@ -196,7 +208,10 @@ export default class AutofillService implements AutofillServiceInterface {
     return tab;
   }
 
-  private generateFillScript(pageDetails: AutofillPageDetails, options: any): AutofillScript {
+  private generateFillScript(
+    pageDetails: AutofillPageDetails,
+    options: GenerateFillScriptOptions
+  ): AutofillScript {
     if (!pageDetails || !options.cipher) {
       return null;
     }
@@ -208,13 +223,13 @@ export default class AutofillService implements AutofillServiceInterface {
     if (fields && fields.length) {
       const fieldNames: string[] = [];
 
-      fields.forEach((f: any) => {
+      fields.forEach((f) => {
         if (this.hasValue(f.name)) {
           fieldNames.push(f.name.toLowerCase());
         }
       });
 
-      pageDetails.fields.forEach((field: any) => {
+      pageDetails.fields.forEach((field) => {
         // eslint-disable-next-line
         if (filledFields.hasOwnProperty(field.opid)) {
           return;
@@ -227,10 +242,10 @@ export default class AutofillService implements AutofillServiceInterface {
         const matchingIndex = this.findMatchingFieldIndex(field, fieldNames);
         if (matchingIndex > -1) {
           const matchingField: FieldView = fields[matchingIndex];
-          let val;
+          let val: string;
           if (matchingField.type === FieldType.Linked) {
             // Assumption: Linked Field is not being used to autofill a boolean value
-            val = options.cipher.linkedFieldValue(matchingField.linkedId);
+            val = options.cipher.linkedFieldValue(matchingField.linkedId) as string;
           } else {
             val = matchingField.value;
             if (val == null && matchingField.type === FieldType.Boolean) {
@@ -268,9 +283,9 @@ export default class AutofillService implements AutofillServiceInterface {
 
   private generateLoginFillScript(
     fillScript: AutofillScript,
-    pageDetails: any,
+    pageDetails: AutofillPageDetails,
     filledFields: { [id: string]: AutofillField },
-    options: any
+    options: GenerateFillScriptOptions
   ): AutofillScript {
     if (!options.cipher.login) {
       return null;
@@ -361,7 +376,7 @@ export default class AutofillService implements AutofillServiceInterface {
 
     if (!passwordFields.length && !options.skipUsernameOnlyFill) {
       // No password fields on this page. Let's try to just fuzzy fill the username.
-      pageDetails.fields.forEach((f: any) => {
+      pageDetails.fields.forEach((f) => {
         if (
           f.viewable &&
           (f.type === "text" || f.type === "email" || f.type === "tel") &&
@@ -398,9 +413,9 @@ export default class AutofillService implements AutofillServiceInterface {
 
   private generateCardFillScript(
     fillScript: AutofillScript,
-    pageDetails: any,
+    pageDetails: AutofillPageDetails,
     filledFields: { [id: string]: AutofillField },
-    options: any
+    options: GenerateFillScriptOptions
   ): AutofillScript {
     if (!options.cipher.card) {
       return null;
@@ -408,7 +423,7 @@ export default class AutofillService implements AutofillServiceInterface {
 
     const fillFields: { [id: string]: AutofillField } = {};
 
-    pageDetails.fields.forEach((f: any) => {
+    pageDetails.fields.forEach((f) => {
       if (this.forCustomFieldsOnly(f)) {
         return;
       }
@@ -711,7 +726,7 @@ export default class AutofillService implements AutofillServiceInterface {
     return fillScript;
   }
 
-  private fieldAttrsContain(field: any, containsVal: string) {
+  private fieldAttrsContain(field: AutofillField, containsVal: string) {
     if (!field) {
       return false;
     }
@@ -733,9 +748,9 @@ export default class AutofillService implements AutofillServiceInterface {
 
   private generateIdentityFillScript(
     fillScript: AutofillScript,
-    pageDetails: any,
+    pageDetails: AutofillPageDetails,
     filledFields: { [id: string]: AutofillField },
-    options: any
+    options: GenerateFillScriptOptions
   ): AutofillScript {
     if (!options.cipher.identity) {
       return null;
@@ -743,7 +758,7 @@ export default class AutofillService implements AutofillServiceInterface {
 
     const fillFields: { [id: string]: AutofillField } = {};
 
-    pageDetails.fields.forEach((f: any) => {
+    pageDetails.fields.forEach((f) => {
       if (this.forCustomFieldsOnly(f)) {
         return;
       }
