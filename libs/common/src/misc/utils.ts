@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 import * as tldjs from "tldjs";
 
-import { CryptoService } from "jslib-common/abstractions/crypto.service";
+import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
 
 import { I18nService } from "../abstractions/i18n.service";
 

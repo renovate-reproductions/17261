@@ -1,18 +1,18 @@
-import { StateFactory } from "jslib-common/factories/stateFactory";
-import { GlobalState } from "jslib-common/models/domain/globalState";
-import { CipherService } from "jslib-common/services/cipher.service";
-import { ConsoleLogService } from "jslib-common/services/consoleLog.service";
-import { SettingsService } from "jslib-common/services/settings.service";
-import { StateMigrationService } from "jslib-common/services/stateMigration.service";
-import { WebCryptoFunctionService } from "jslib-common/services/webCryptoFunction.service";
+import { StateFactory } from "@bitwarden/common/factories/stateFactory";
+import { GlobalState } from "@bitwarden/common/models/domain/globalState";
+import { CipherService } from "@bitwarden/common/services/cipher.service";
+import { ConsoleLogService } from "@bitwarden/common/services/consoleLog.service";
+import { SettingsService } from "@bitwarden/common/services/settings.service";
+import { StateMigrationService } from "@bitwarden/common/services/stateMigration.service";
+import { WebCryptoFunctionService } from "@bitwarden/common/services/webCryptoFunction.service";
 
 import { AutoFillActiveTabCommand } from "../commands/AutoFillActiveTabCommand";
 import { Account } from "../models/account";
 import { StateService as AbstractStateService } from "../services/abstractions/state.service";
 import AutofillService from "../services/autofill.service";
 import { BrowserCryptoService } from "../services/browserCrypto.service";
+import BrowserStorageService from "../services/browserMemoryStorage.service";
 import BrowserPlatformUtilsService from "../services/browserPlatformUtils.service";
-import BrowserStorageService from "../services/browserStorage.service";
 import { StateService } from "../services/state.service";
 
 export const onCommandListener = async (command: string, tab: chrome.tabs.Tab) => {
@@ -47,6 +47,7 @@ const doAutoFillLogin = async (tab: chrome.tabs.Tab): Promise<void> => {
   const stateService: AbstractStateService = new StateService(
     browserStorageService,
     secureStorageService,
+    null, // AbstractStorageService
     logService,
     stateMigrationService,
     stateFactory
@@ -65,6 +66,7 @@ const doAutoFillLogin = async (tab: chrome.tabs.Tab): Promise<void> => {
 
   const cryptoService = new BrowserCryptoService(
     cryptoFunctionService,
+    null, // AbstractEncryptService
     platformUtils,
     logService,
     stateService
