@@ -4,7 +4,7 @@ import { Utils } from "../../misc/utils";
 
 import { ItemView } from "./itemView";
 
-const propertyMap: any = {
+const serializedProperties: any = {
   title: null,
   firstName: null,
   middleName: null,
@@ -162,10 +162,11 @@ export class IdentityView extends ItemView {
   }
 
   toJSON() {
-    return Utils.copyToNewObject(this, propertyMap);
+    // Needed to serialize getters which are not included by JSON.stringify
+    return Utils.copyToNewObject(this, serializedProperties);
   }
 
   static fromJSON(obj: any): IdentityView {
-    return Utils.copyToNewObject(obj, propertyMap, IdentityView);
+    return Utils.copyToNewObject(obj, serializedProperties, IdentityView);
   }
 }

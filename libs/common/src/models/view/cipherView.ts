@@ -14,7 +14,7 @@ import { PasswordHistoryView } from "./passwordHistoryView";
 import { SecureNoteView } from "./secureNoteView";
 import { View } from "./view";
 
-const propertyMap: any = {
+const serializedProperties: any = {
   id: null,
   corganizationId: null,
   folderId: null,
@@ -158,7 +158,7 @@ export class CipherView implements View {
   }
 
   toJSON() {
-    const obj = Utils.copyToNewObject(this, propertyMap);
+    const obj = Utils.copyToNewObject(this, serializedProperties);
 
     switch (this.type) {
       case CipherType.Card:
@@ -181,11 +181,11 @@ export class CipherView implements View {
   }
 
   static fromJSON(obj: any): CipherView {
-    const view = Utils.copyToNewObject(obj, propertyMap, CipherView);
+    const view = Utils.copyToNewObject(obj, serializedProperties, CipherView);
 
     // Dates
-    view.revisionDate = new Date(obj.revisionDate);
-    view.deletedDate = new Date(obj.deletedDate);
+    view.revisionDate = obj.revisionDate == null ? null : new Date(obj.revisionDate);
+    view.deletedDate = obj.deletedDate == null ? null : new Date(obj.deletedDate);
 
     // Nested objects
     view.attachments = obj.attachments?.map((a: any) => AttachmentView.fromJSON(a));

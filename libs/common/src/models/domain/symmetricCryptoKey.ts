@@ -57,6 +57,7 @@ export class SymmetricCryptoKey {
   }
 
   toJSON() {
+    // The whole object is constructed from the initial key, so just store the B64 key
     return { keyB64: this.keyB64 };
   }
 

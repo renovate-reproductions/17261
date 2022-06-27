@@ -22,7 +22,7 @@ const CanLaunchWhitelist = [
   "androidapp://",
 ];
 
-const propertyMap: any = {
+const serializedProperties: any = {
   match: null,
   uri: null,
 };
@@ -133,10 +133,11 @@ export class LoginUriView implements View {
   }
 
   toJSON() {
-    return Utils.copyToNewObject(this, propertyMap);
+    // Needed to serialize getters which are not included by JSON.stringify
+    return Utils.copyToNewObject(this, serializedProperties);
   }
 
   static fromJSON(obj: any) {
-    return Utils.copyToNewObject(obj, propertyMap, LoginUriView);
+    return Utils.copyToNewObject(obj, serializedProperties, LoginUriView);
   }
 }

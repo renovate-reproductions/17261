@@ -5,9 +5,6 @@ import { SecureNote } from "../domain/secureNote";
 
 import { ItemView } from "./itemView";
 
-const propertyMap: any = {
-  type: null,
-};
 export class SecureNoteView extends ItemView {
   type: SecureNoteType = null;
 
@@ -24,11 +21,13 @@ export class SecureNoteView extends ItemView {
     return null;
   }
 
-  toJSON() {
-    return Utils.copyToNewObject(this, propertyMap);
-  }
-
   static fromJSON(obj: any): SecureNoteView {
-    return Utils.copyToNewObject(obj, propertyMap, SecureNoteView);
+    return Utils.copyToNewObject(
+      obj,
+      {
+        type: null,
+      },
+      SecureNoteView
+    );
   }
 }

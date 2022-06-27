@@ -6,7 +6,7 @@ import { Login } from "../domain/login";
 import { ItemView } from "./itemView";
 import { LoginUriView } from "./loginUriView";
 
-const propertyMap: any = {
+const serializedProperties: any = {
   username: null,
   password: null,
   totp: null,
@@ -70,12 +70,8 @@ export class LoginView extends ItemView {
     return this.uris != null && this.uris.length > 0;
   }
 
-  toJSON() {
-    return Utils.copyToNewObject(this, propertyMap);
-  }
-
   static fromJSON(obj: any): LoginView {
-    const view = Utils.copyToNewObject(obj, propertyMap, LoginView);
+    const view = Utils.copyToNewObject(obj, serializedProperties, LoginView);
     view.passwordRevisionDate =
       obj.passwordRevisionDate == null ? null : new Date(obj.passwordRevisionDate);
     view.uris = obj.uris?.map((uri: any) => LoginUriView.fromJSON(uri));

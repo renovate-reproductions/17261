@@ -5,7 +5,7 @@ import { linkedFieldOption } from "../../misc/linkedFieldOption.decorator";
 
 import { ItemView } from "./itemView";
 
-const propertyMap: any = {
+const serializedProperties: any = {
   cardholderName: null,
   brand: null,
   number: null,
@@ -13,6 +13,7 @@ const propertyMap: any = {
   expYear: null,
   code: null,
 };
+
 export class CardView extends ItemView {
   @linkedFieldOption(LinkedId.CardholderName)
   cardholderName: string = null;
@@ -91,10 +92,11 @@ export class CardView extends ItemView {
   }
 
   toJSON() {
-    return Utils.copyToNewObject(this, propertyMap);
+    // Needed to serialize getters which are not included by JSON.stringify
+    return Utils.copyToNewObject(this, serializedProperties);
   }
 
   static fromJSON(obj: any): CardView {
-    return Utils.copyToNewObject(obj, propertyMap, CardView);
+    return Utils.copyToNewObject(obj, serializedProperties, CardView);
   }
 }
