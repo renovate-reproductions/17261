@@ -1,6 +1,6 @@
 const { pathsToModuleNameMapper } = require("ts-jest");
 
-const { compilerOptions } = require("./tsconfig");
+const { compilerOptions } = require("../shared/tsconfig.libs");
 
 module.exports = {
   name: "common",
@@ -8,7 +8,7 @@ module.exports = {
   preset: "ts-jest",
   testEnvironment: "jsdom",
   testMatch: ["**/+(*.)+(spec).+(ts)"],
-  setupFilesAfterEnv: ["<rootDir>/spec/test.ts"],
+  setupFilesAfterEnv: ["<rootDir>/spec/test.setup.ts"],
   collectCoverage: true,
   coverageReporters: ["html", "lcov"],
   coverageDirectory: "coverage",

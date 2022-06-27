@@ -1,12 +1,11 @@
 import { clipboard, ipcRenderer, shell } from "electron";
 
-import { I18nService } from "jslib-common/abstractions/i18n.service";
-import { MessagingService } from "jslib-common/abstractions/messaging.service";
-import { PlatformUtilsService } from "jslib-common/abstractions/platformUtils.service";
-import { StateService } from "jslib-common/abstractions/state.service";
-import { ClientType } from "jslib-common/enums/clientType";
-import { DeviceType } from "jslib-common/enums/deviceType";
-import { ThemeType } from "jslib-common/enums/themeType";
+import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
+import { MessagingService } from "@bitwarden/common/abstractions/messaging.service";
+import { PlatformUtilsService } from "@bitwarden/common/abstractions/platformUtils.service";
+import { StateService } from "@bitwarden/common/abstractions/state.service";
+import { ClientType } from "@bitwarden/common/enums/clientType";
+import { DeviceType } from "@bitwarden/common/enums/deviceType";
 
 import { isDev, isMacAppStore } from "../utils";
 
@@ -187,25 +186,6 @@ export class ElectronPlatformUtilsService implements PlatformUtilsService {
       });
       resolve(val);
     });
-  }
-
-  getDefaultSystemTheme() {
-    return ipcRenderer.invoke("systemTheme");
-  }
-
-  onDefaultSystemThemeChange(callback: (theme: ThemeType.Light | ThemeType.Dark) => unknown) {
-    ipcRenderer.on("systemThemeUpdated", (event, theme: ThemeType.Light | ThemeType.Dark) =>
-      callback(theme)
-    );
-  }
-
-  async getEffectiveTheme() {
-    const theme = await this.stateService.getTheme();
-    if (theme == null || theme === ThemeType.System) {
-      return this.getDefaultSystemTheme();
-    } else {
-      return theme;
-    }
   }
 
   supportsSecureStorage(): boolean {
