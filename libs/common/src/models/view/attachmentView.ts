@@ -43,7 +43,7 @@ export class AttachmentView implements View {
         url: null,
         size: null,
         sizeName: null,
-        filename: null,
+        fileName: null,
       },
       AttachmentView
     );

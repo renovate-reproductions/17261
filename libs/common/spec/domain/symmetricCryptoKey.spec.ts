@@ -66,4 +66,13 @@ describe("SymmetricCryptoKey", () => {
       expect(t).toThrowError("Unable to determine encType.");
     });
   });
+
+  it("serializes and deserializes", () => {
+    const key = new SymmetricCryptoKey(makeStaticByteArray(64));
+    const serialized = JSON.stringify(key);
+
+    const newKey = SymmetricCryptoKey.fromJSON(JSON.parse(serialized));
+
+    expect(newKey).toEqual(key);
+  });
 });
