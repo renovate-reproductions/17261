@@ -24,9 +24,8 @@ export class SecureNoteView extends ItemView {
     return null;
   }
 
-  toJSON(): string {
-    const obj = Utils.copyToNewObject(this, propertyMap);
-    return JSON.stringify(obj);
+  toJSON() {
+    return Utils.copyToNewObject(this, propertyMap);
   }
 
   static fromJSON(obj: any): SecureNoteView {

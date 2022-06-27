@@ -11,6 +11,8 @@ const propertyMap: any = {
   password: null,
   totp: null,
   autofillOnPageLoad: null,
+  passwordRevisionDate: null,
+  uris: null,
 };
 
 export class LoginView extends ItemView {
@@ -68,11 +70,8 @@ export class LoginView extends ItemView {
     return this.uris != null && this.uris.length > 0;
   }
 
-  toJSON(): string {
-    const obj = Utils.copyToNewObject(this, propertyMap);
-    obj.passwordRevisionDate = this.passwordRevisionDate?.toISOString();
-    obj.uris = this.uris == null ? null : JSON.stringify(this.uris);
-    return JSON.stringify(obj);
+  toJSON() {
+    return Utils.copyToNewObject(this, propertyMap);
   }
 
   static fromJSON(obj: any): LoginView {

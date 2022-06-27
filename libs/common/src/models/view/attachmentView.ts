@@ -43,10 +43,8 @@ export class AttachmentView implements View {
     return 0;
   }
 
-  toJSON(): string {
-    const obj = Utils.copyToNewObject(this, propertyMap);
-    obj.key = this.key == null ? null : JSON.stringify(this.key);
-    return JSON.stringify(obj);
+  toJSON() {
+    return Utils.copyToNewObject(this, propertyMap);
   }
 
   static fromJSON(obj: any): AttachmentView {

@@ -56,9 +56,8 @@ export class SymmetricCryptoKey {
     }
   }
 
-  toJSON(): string {
-    const obj = Utils.copyToNewObject(this, { keyB64: null });
-    return JSON.stringify(obj);
+  toJSON() {
+    return { keyB64: this.keyB64 };
   }
 
   static fromJSON(obj: any): SymmetricCryptoKey {

@@ -20,9 +20,8 @@ export class PasswordHistoryView implements View {
     this.lastUsedDate = ph.lastUsedDate;
   }
 
-  toJSON(): string {
-    const obj = Utils.copyToNewObject(this, propertyMap);
-    return JSON.stringify(obj);
+  toJSON() {
+    return Utils.copyToNewObject(this, propertyMap);
   }
 
   static fromJSON(obj: any): PasswordHistoryView {

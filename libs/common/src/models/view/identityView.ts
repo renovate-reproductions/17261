@@ -161,9 +161,8 @@ export class IdentityView extends ItemView {
     return addressPart2;
   }
 
-  toJSON(): string {
-    const obj = Utils.copyToNewObject(this, propertyMap);
-    return JSON.stringify(obj);
+  toJSON() {
+    return Utils.copyToNewObject(this, propertyMap);
   }
 
   static fromJSON(obj: any): IdentityView {

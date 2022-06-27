@@ -38,9 +38,8 @@ export class FieldView implements View {
     return this.value != null ? "••••••••" : null;
   }
 
-  toJSON(): string {
-    const obj = Utils.copyToNewObject(this, propertyMap);
-    return JSON.stringify(obj);
+  toJSON() {
+    return Utils.copyToNewObject(this, propertyMap);
   }
 
   static fromJSON(obj: any): FieldView {

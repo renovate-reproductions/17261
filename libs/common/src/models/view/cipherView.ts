@@ -28,6 +28,13 @@ const propertyMap: any = {
   localData: null,
   collectionIds: null,
   reprompt: null,
+
+  revisionDate: null,
+  deletedDate: null,
+
+  attachments: null,
+  fields: null,
+  passwordHistory: null,
 };
 
 export class CipherView implements View {
@@ -150,17 +157,8 @@ export class CipherView implements View {
     return this.linkedFieldOptions.get(id)?.i18nKey;
   }
 
-  toJSON(): string {
+  toJSON() {
     const obj = Utils.copyToNewObject(this, propertyMap);
-
-    // Dates
-    obj.revisionDate = this.revisionDate?.toISOString();
-    obj.deletedDate = this.deletedDate?.toISOString();
-
-    // Nested objects
-    obj.attachments = JSON.stringify(this.attachments);
-    obj.fields = JSON.stringify(this.fields);
-    obj.passwordHistory = JSON.stringify(this.passwordHistory);
 
     switch (this.type) {
       case CipherType.Card:
@@ -179,7 +177,7 @@ export class CipherView implements View {
         break;
     }
 
-    return JSON.stringify(obj);
+    return obj;
   }
 
   static fromJSON(obj: any): CipherView {

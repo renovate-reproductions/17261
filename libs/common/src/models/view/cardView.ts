@@ -90,9 +90,8 @@ export class CardView extends ItemView {
     return year.length === 2 ? "20" + year : year;
   }
 
-  toJSON(): string {
-    const obj = Utils.copyToNewObject(this, propertyMap);
-    return JSON.stringify(obj);
+  toJSON() {
+    return Utils.copyToNewObject(this, propertyMap);
   }
 
   static fromJSON(obj: any): CardView {
