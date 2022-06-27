@@ -1,6 +1,8 @@
 import { StateFactory } from "jslib-common/factories/stateFactory";
 import { GlobalState } from "jslib-common/models/domain/globalState";
 import { CipherService } from "jslib-common/services/cipher.service";
+import { ConsoleLogService } from "jslib-common/services/consoleLog.service";
+import { SettingsService } from "jslib-common/services/settings.service";
 import { StateMigrationService } from "jslib-common/services/stateMigration.service";
 import { WebCryptoFunctionService } from "jslib-common/services/webCryptoFunction.service";
 
@@ -8,7 +10,6 @@ import { AutoFillActiveTabCommand } from "../commands/AutoFillActiveTabCommand";
 import { Account } from "../models/account";
 import { StateService as AbstractStateService } from "../services/abstractions/state.service";
 import AutofillService from "../services/autofill.service";
-import { BackgroundConsoleLogService } from "../services/backgroundConsoleLog.service";
 import { BrowserCryptoService } from "../services/browserCrypto.service";
 import BrowserPlatformUtilsService from "../services/browserPlatformUtils.service";
 import BrowserStorageService from "../services/browserStorage.service";
@@ -41,7 +42,7 @@ const doAutoFillLogin = async (tab: chrome.tabs.Tab): Promise<void> => {
     stateFactory
   );
 
-  const logService = new BackgroundConsoleLogService();
+  const logService = new ConsoleLogService(false);
 
   const stateService: AbstractStateService = new StateService(
     browserStorageService,
@@ -69,9 +70,11 @@ const doAutoFillLogin = async (tab: chrome.tabs.Tab): Promise<void> => {
     stateService
   );
 
+  const settingsService = new SettingsService(stateService);
+
   const cipherService = new CipherService(
     cryptoService, // CryptoService
-    null, // SettingsService
+    settingsService,
     null, // ApiService
     null, // FileUploadService
     null, // I18nService
@@ -81,7 +84,7 @@ const doAutoFillLogin = async (tab: chrome.tabs.Tab): Promise<void> => {
   );
 
   const autofillService = new AutofillService(
-    null, // CipherService
+    cipherService,
     stateService,
     null, // TotpService
     null, // EventService

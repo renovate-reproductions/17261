@@ -26,8 +26,11 @@ export default class BrowserPlatformUtilsService implements PlatformUtilsService
     private clipboardWriteCallback: (clipboardValue: string, clearMs: number) => void,
     private biometricCallback: () => Promise<boolean>
   ) {
-    this.global = typeof window !== "undefined" ? window : global;
-    this.prefersColorSchemeDark = this.global.matchMedia("(prefers-color-scheme: dark)");
+    const windowDefined = typeof window !== "undefined";
+    this.global = windowDefined ? window : global;
+    this.prefersColorSchemeDark = windowDefined
+      ? this.global.matchMedia("(prefers-color-scheme: dark)")
+      : null;
   }
 
   getDevice(): DeviceType {

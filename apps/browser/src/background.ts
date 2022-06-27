@@ -1,19 +1,20 @@
+import MainBackground from "./background/main.background";
 import { onCommandListener } from "./listeners/onCommandListener";
 
-chrome.runtime.onInstalled.addListener((installedDetails) => {
-  console.log("onInstalled", installedDetails);
-  if (installedDetails.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-    chrome.commands.getAll((commands) => {
-      console.log("commands", commands);
+const manifest = chrome.runtime.getManifest();
+
+if (manifest.manifest_version === 3) {
+  chrome.commands.onCommand.addListener(onCommandListener);
+
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    console.log("onMessage: ", {
+      request,
+      sender,
     });
-  }
-});
-
-chrome.commands.onCommand.addListener(onCommandListener);
-
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  console.log("onMessage: ", {
-    request,
-    sender,
   });
-});
+} else {
+  const bitwardenMain = ((window as any).bitwardenMain = new MainBackground());
+  bitwardenMain.bootstrap().then(() => {
+    // Finished bootstrapping
+  });
+}
