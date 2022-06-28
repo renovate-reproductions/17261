@@ -1,10 +1,10 @@
 import { UriMatchType } from "@bitwarden/common/enums/uriMatchType";
+import { AttachmentView } from "@bitwarden/common/models/view/attachmentView";
 import { CipherView } from "@bitwarden/common/models/view/cipherView";
 import { LoginUriView } from "@bitwarden/common/models/view/loginUriView";
 
-import { AttachmentView } from "../../src/models/view/attachmentView";
 
-jest.mock("../../src/models/view/attachmentView");
+jest.mock("@bitwarden/common/models/view/attachmentView");
 
 const primitiveFields = {
   id: "myId",
