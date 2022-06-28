@@ -16,7 +16,7 @@ import { View } from "./view";
 
 const serializedProperties: any = {
   id: null,
-  corganizationId: null,
+  organizationId: null,
   folderId: null,
   name: null,
   notes: null,
@@ -31,10 +31,6 @@ const serializedProperties: any = {
 
   revisionDate: null,
   deletedDate: null,
-
-  attachments: null,
-  fields: null,
-  passwordHistory: null,
 };
 
 export class CipherView implements View {
@@ -158,7 +154,12 @@ export class CipherView implements View {
   }
 
   toJSON() {
-    const obj = Utils.copyToNewObject(this, serializedProperties);
+    const obj = Utils.copyToNewObject(this, {
+      attachments: null,
+      fields: null,
+      passwordHistory: null,
+      ...serializedProperties,
+    });
 
     switch (this.type) {
       case CipherType.Card:
