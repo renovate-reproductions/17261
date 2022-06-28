@@ -56,13 +56,21 @@ export class SymmetricCryptoKey {
     }
   }
 
-  toJSON(): any {
-    // The whole object is constructed from the initial key, so just store the B64 key
-    return { keyB64: this.keyB64 };
-  }
+  static initFromJson(jsonResult: SymmetricCryptoKey): SymmetricCryptoKey {
+    if (jsonResult == null) {
+      return jsonResult;
+    }
 
-  static fromJSON(obj: any): SymmetricCryptoKey {
-    const arrayBuffer = Utils.fromB64ToArray(obj.keyB64);
-    return new SymmetricCryptoKey(arrayBuffer);
+    if (jsonResult.keyB64 != null) {
+      jsonResult.key = Utils.fromB64ToArray(jsonResult.keyB64).buffer;
+    }
+    if (jsonResult.encKeyB64 != null) {
+      jsonResult.encKey = Utils.fromB64ToArray(jsonResult.encKeyB64).buffer;
+    }
+    if (jsonResult.macKeyB64 != null) {
+      jsonResult.macKey = Utils.fromB64ToArray(jsonResult.macKeyB64).buffer;
+    }
+
+    return jsonResult;
   }
 }
