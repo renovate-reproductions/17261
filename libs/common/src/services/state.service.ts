@@ -483,7 +483,7 @@ export class StateService<
     );
   }
 
-  @withPrototype(SymmetricCryptoKey, SymmetricCryptoKey.initFromJson)
+  @withPrototype(SymmetricCryptoKey, SymmetricCryptoKey.fromJSON)
   async getCryptoMasterKey(options?: StorageOptions): Promise<SymmetricCryptoKey> {
     return (
       await this.getAccount(this.reconcileOptions(options, await this.defaultInMemoryOptions()))
@@ -637,7 +637,7 @@ export class StateService<
     );
   }
 
-  @withPrototype(SymmetricCryptoKey, SymmetricCryptoKey.initFromJson)
+  @withPrototype(SymmetricCryptoKey, SymmetricCryptoKey.fromJSON)
   async getDecryptedCryptoSymmetricKey(options?: StorageOptions): Promise<SymmetricCryptoKey> {
     return (
       await this.getAccount(this.reconcileOptions(options, await this.defaultInMemoryOptions()))
@@ -676,7 +676,7 @@ export class StateService<
     );
   }
 
-  @withPrototypeForMap(SymmetricCryptoKey, SymmetricCryptoKey.initFromJson)
+  @withPrototypeForMap(SymmetricCryptoKey, SymmetricCryptoKey.fromJSON)
   async getDecryptedOrganizationKeys(
     options?: StorageOptions
   ): Promise<Map<string, SymmetricCryptoKey>> {
@@ -783,7 +783,7 @@ export class StateService<
     );
   }
 
-  @withPrototypeForMap(SymmetricCryptoKey, SymmetricCryptoKey.initFromJson)
+  @withPrototypeForMap(SymmetricCryptoKey, SymmetricCryptoKey.fromJSON)
   async getDecryptedProviderKeys(
     options?: StorageOptions
   ): Promise<Map<string, SymmetricCryptoKey>> {
@@ -1745,7 +1745,7 @@ export class StateService<
     );
   }
 
-  @withPrototype(SymmetricCryptoKey, SymmetricCryptoKey.initFromJson)
+  @withPrototype(SymmetricCryptoKey, SymmetricCryptoKey.fromJSON)
   async getLegacyEtmKey(options?: StorageOptions): Promise<SymmetricCryptoKey> {
     return (
       await this.getAccount(this.reconcileOptions(options, await this.defaultOnDiskOptions()))

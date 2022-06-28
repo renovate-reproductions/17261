@@ -68,7 +68,7 @@ describe("SymmetricCryptoKey", () => {
   });
 
   it("serializes and deserializes", () => {
-    const key = new SymmetricCryptoKey(makeStaticByteArray(64));
+    const key = new SymmetricCryptoKey(makeStaticByteArray(64).buffer);
     const serialized = JSON.stringify(key);
 
     const newKey = SymmetricCryptoKey.fromJSON(JSON.parse(serialized));
