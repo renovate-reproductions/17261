@@ -17,7 +17,9 @@ describe("AttachmentView", () => {
     attachment.fileName = "my filename";
     attachment.key = "encKey" as any;
 
-    jest.spyOn(SymmetricCryptoKey, "fromJSON").mockImplementation(() => "encKeyfromJSON" as any);
+    jest
+      .spyOn(SymmetricCryptoKey, "fromJSON")
+      .mockImplementation((key: string) => (key + "fromJSON") as any);
 
     const stringify = JSON.stringify(attachment);
 
