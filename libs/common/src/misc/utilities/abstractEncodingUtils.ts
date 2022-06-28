@@ -1,6 +1,7 @@
 export abstract class AbstractEncodingUtils {
   abstract fromB64ToArray(str: string): Uint8Array;
   abstract fromUrlB64ToUtf8(urlB64Str: string): string;
+  abstract fromBufferToB64(buffer: ArrayBuffer): string;
 
   fromUrlB64ToB64(urlB64Str: string): string {
     let output = urlB64Str.replace(/-/g, "+").replace(/_/g, "/");

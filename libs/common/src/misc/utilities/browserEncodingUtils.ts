@@ -29,6 +29,15 @@ export class BrowserEncodingUtils extends AbstractEncodingUtils {
     return this.toArray(binaryString);
   }
 
+  fromBufferToB64(buffer: ArrayBuffer): string {
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+    for (let i = 0; i < bytes.byteLength; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return this.global.btoa(binary);
+  }
+
   private toArray(input: string): Uint8Array {
     const inputBytes = new Uint8Array(input.length);
     for (let i = 0; i < input.length; i++) {

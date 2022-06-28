@@ -2,9 +2,11 @@ import { StateFactory } from "@bitwarden/common/factories/stateFactory";
 import { GlobalState } from "@bitwarden/common/models/domain/globalState";
 import { CipherService } from "@bitwarden/common/services/cipher.service";
 import { ConsoleLogService } from "@bitwarden/common/services/consoleLog.service";
+import { EncryptService } from "@bitwarden/common/services/encrypt.service";
 import { SettingsService } from "@bitwarden/common/services/settings.service";
 import { StateMigrationService } from "@bitwarden/common/services/stateMigration.service";
 import { WebCryptoFunctionService } from "@bitwarden/common/services/webCryptoFunction.service";
+
 
 import { AutoFillActiveTabCommand } from "../commands/AutoFillActiveTabCommand";
 import { Account } from "../models/account";
@@ -13,6 +15,8 @@ import AutofillService from "../services/autofill.service";
 import { BrowserCryptoService } from "../services/browserCrypto.service";
 import BrowserStorageService from "../services/browserMemoryStorage.service";
 import BrowserPlatformUtilsService from "../services/browserPlatformUtils.service";
+import { KeyGenerationService } from "../services/keyGeneration.service";
+import { LocalBackedSessionStorageService } from "../services/localBackedSessionStorage.service";
 import { StateService } from "../services/state.service";
 
 export const onCommandListener = async (command: string, tab: chrome.tabs.Tab) => {
@@ -30,32 +34,37 @@ export const onCommandListener = async (command: string, tab: chrome.tabs.Tab) =
 };
 
 const doAutoFillLogin = async (tab: chrome.tabs.Tab): Promise<void> => {
-  const browserStorageService = new BrowserStorageService();
+  const logService = new ConsoleLogService(false);
+
+  const cryptoFunctionService = new WebCryptoFunctionService(self);
+
+  const storageService = new BrowserStorageService();
 
   const secureStorageService = new BrowserStorageService();
+
+  const memoryStorageService = new LocalBackedSessionStorageService(
+    new EncryptService(cryptoFunctionService, logService, false),
+    new KeyGenerationService(cryptoFunctionService)
+  );
 
   const stateFactory = new StateFactory(GlobalState, Account);
 
   const stateMigrationService = new StateMigrationService(
-    browserStorageService,
+    storageService,
     secureStorageService,
     stateFactory
   );
 
-  const logService = new ConsoleLogService(false);
-
   const stateService: AbstractStateService = new StateService(
-    browserStorageService,
+    storageService,
     secureStorageService,
-    null, // AbstractStorageService
+    memoryStorageService, // AbstractStorageService
     logService,
     stateMigrationService,
     stateFactory
   );
 
   await stateService.init();
-
-  const cryptoFunctionService = new WebCryptoFunctionService(global);
 
   const platformUtils = new BrowserPlatformUtilsService(
     null, // MessagingService
