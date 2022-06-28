@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 
 import { LayoutComponent } from "./layout.component";
 import { NavigationComponent } from "./navigation.component";
+import { SecretsComponent } from "./secrets/secrets.component";
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
         path: "",
         component: NavigationComponent,
         outlet: "sidebar",
+      },
+      {
+        path: "",
+        component: SecretsComponent,
       },
     ],
   },
