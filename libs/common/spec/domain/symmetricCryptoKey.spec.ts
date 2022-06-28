@@ -74,5 +74,6 @@ describe("SymmetricCryptoKey", () => {
     const newKey = SymmetricCryptoKey.fromJSON(JSON.parse(serialized));
 
     expect(newKey).toEqual(key);
+    expect(newKey).toBeInstanceOf(SymmetricCryptoKey);
   });
 });

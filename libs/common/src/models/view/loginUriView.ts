@@ -132,12 +132,12 @@ export class LoginUriView implements View {
       : this.uri;
   }
 
-  toJSON() {
+  toJSON(): any {
     // Needed to serialize getters which are not included by JSON.stringify
     return Utils.copyToNewObject(this, serializedProperties);
   }
 
-  static fromJSON(obj: any) {
+  static fromJSON(obj: any): LoginUriView {
     return Utils.copyToNewObject(obj, serializedProperties, LoginUriView);
   }
 }

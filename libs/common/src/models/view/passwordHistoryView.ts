@@ -17,13 +17,16 @@ export class PasswordHistoryView implements View {
   }
 
   static fromJSON(obj: any): PasswordHistoryView {
-    return Utils.copyToNewObject(
+    const ph = Utils.copyToNewObject(
       obj,
       {
         password: null,
-        lastUsedDate: null,
       },
       PasswordHistoryView
     );
+
+    ph.lastUsedDate = obj.lastUsedDate == null ? null : new Date(obj.lastUsedDate);
+
+    return ph;
   }
 }

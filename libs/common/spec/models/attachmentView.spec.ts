@@ -25,6 +25,8 @@ describe("AttachmentView", () => {
 
     const newAttachment = AttachmentView.fromJSON(JSON.parse(stringify));
     expect(newAttachment).toEqual(attachment);
+    expect(newAttachment).toBeInstanceOf(AttachmentView);
+
     expect(SymmetricCryptoKey.fromJSON).toHaveBeenCalledTimes(1);
   });
 });
