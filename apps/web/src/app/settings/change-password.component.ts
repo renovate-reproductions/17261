@@ -35,6 +35,7 @@ import { UpdateKeyRequest } from "@bitwarden/common/models/request/updateKeyRequ
 export class ChangePasswordComponent extends BaseChangePasswordComponent {
   rotateEncKey = false;
   currentMasterPassword: string;
+  masterPasswordHint: string;
 
   constructor(
     i18nService: I18nService,
@@ -68,6 +69,8 @@ export class ChangePasswordComponent extends BaseChangePasswordComponent {
     if (await this.keyConnectorService.getUsesKeyConnector()) {
       this.router.navigate(["/settings/security/two-factor"]);
     }
+
+    this.masterPasswordHint = (await this.apiService.getProfile()).masterPasswordHint;
     await super.ngOnInit();
   }
 
@@ -155,6 +158,7 @@ export class ChangePasswordComponent extends BaseChangePasswordComponent {
       this.currentMasterPassword,
       null
     );
+    request.masterPasswordHint = this.masterPasswordHint;
     request.newMasterPasswordHash = newMasterPasswordHash;
     request.key = newEncKey[1].encryptedString;
 
