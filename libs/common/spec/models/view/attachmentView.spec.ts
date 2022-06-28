@@ -15,16 +15,17 @@ describe("AttachmentView", () => {
     attachment.size = "1000";
     attachment.sizeName = "kb";
     attachment.fileName = "my filename";
-    attachment.key = new SymmetricCryptoKey(null);
+    attachment.key = "encKey" as any;
 
-    jest.spyOn(SymmetricCryptoKey.prototype, "toJSON").mockImplementation(() => "not null value");
-
-    jest.spyOn(SymmetricCryptoKey, "fromJSON").mockImplementation(() => attachment.key);
+    jest.spyOn(SymmetricCryptoKey, "fromJSON").mockImplementation(() => "encKeyfromJSON" as any);
 
     const stringify = JSON.stringify(attachment);
 
     const newAttachment = AttachmentView.fromJSON(JSON.parse(stringify));
-    expect(newAttachment).toEqual(attachment);
+    expect(newAttachment).toEqual({
+      ...attachment,
+      key: "encKeyfromJSON",
+    });
     expect(newAttachment).toBeInstanceOf(AttachmentView);
 
     expect(SymmetricCryptoKey.fromJSON).toHaveBeenCalledTimes(1);

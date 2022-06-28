@@ -53,15 +53,21 @@ describe("CipherView", () => {
     const expected = new CipherView();
     Object.assign(expected, obj);
 
-    const mockCtor = (key: string) => key as any;
-    jest.spyOn(LoginView, "fromJSON").mockImplementation(mockCtor);
-    jest.spyOn(AttachmentView, "fromJSON").mockImplementation(mockCtor);
-    jest.spyOn(FieldView, "fromJSON").mockImplementation(mockCtor);
-    jest.spyOn(PasswordHistoryView, "fromJSON").mockImplementation(mockCtor);
+    const mockFromJson = (key: string) => (key + "fromJSON") as any;
+    jest.spyOn(LoginView, "fromJSON").mockImplementation(mockFromJson);
+    jest.spyOn(AttachmentView, "fromJSON").mockImplementation(mockFromJson);
+    jest.spyOn(FieldView, "fromJSON").mockImplementation(mockFromJson);
+    jest.spyOn(PasswordHistoryView, "fromJSON").mockImplementation(mockFromJson);
 
     const newCipher = CipherView.fromJSON(obj);
 
-    expect(newCipher).toEqual(expected);
+    expect(newCipher).toEqual({
+      ...expected,
+      login: "myLoginfromJSON",
+      attachments: ["attachment1fromJSON", "attachment2fromJSON"],
+      fields: ["field1fromJSON", "field2fromJSON"],
+      passwordHistory: ["ph1fromJSON", "ph2fromJSON", "ph3fromJSON"],
+    });
     expect(newCipher).toBeInstanceOf(CipherView);
   });
 });

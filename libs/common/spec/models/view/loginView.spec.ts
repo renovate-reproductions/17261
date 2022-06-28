@@ -15,17 +15,18 @@ describe("LoginView", () => {
     login.totp = "totpSeed";
     login.autofillOnPageLoad = true;
     login.passwordRevisionDate = new Date();
-    login.uris = [new LoginUriView()];
+    login.uris = ["uri1", "uri2", "uri3"] as any;
 
-    jest
-      .spyOn(LoginUriView.prototype, "toJSON")
-      .mockImplementation(() => ({ mock: "not null value" }));
-    jest.spyOn(LoginUriView, "fromJSON").mockImplementation(() => login.uris[0]);
+    const mockFromJson = (key: string) => (key + "fromJSON") as any;
+    jest.spyOn(LoginUriView, "fromJSON").mockImplementation(mockFromJson);
 
     const stringified = JSON.stringify(login);
     const newLogin = LoginView.fromJSON(JSON.parse(stringified));
 
-    expect(newLogin).toEqual(login);
+    expect(newLogin).toEqual({
+      ...login,
+      uris: ["uri1fromJSON", "uri2fromJSON", "uri3fromJSON"],
+    });
     expect(newLogin).toBeInstanceOf(LoginView);
   });
 });
