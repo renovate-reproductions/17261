@@ -13,6 +13,28 @@ jest.mock("@bitwarden/common/models/view/fieldView");
 jest.mock("@bitwarden/common/models/view/passwordHistoryView");
 
 describe("CipherView", () => {
+  const obj = {
+    id: "myId",
+    organizationId: "myOrgId",
+    folderId: "myFolderId",
+    name: "my Cipher",
+    notes: "lorem ipsum",
+    type: CipherType.Login,
+    favorite: true,
+    organizationUseTotp: true,
+    edit: true,
+    viewPassword: false,
+    localData: { lastUsedDate: "123" },
+    login: "myLogin",
+    attachments: ["attachment1", "attachment2"],
+    fields: ["field1", "field2"],
+    passwordHistory: ["ph1", "ph2", "ph3"],
+    collectionIds: ["collection1", "collection2"],
+    revisionDate: new Date(),
+    deletedDate: new Date(),
+    reprompt: CipherRepromptType.Password,
+  };
+
   beforeEach(() => {
     (LoginView as any).mockClear();
     (AttachmentView as any).mockClear();
@@ -20,38 +42,26 @@ describe("CipherView", () => {
     (PasswordHistoryView as any).mockClear();
   });
 
-  it("serializes and deserializes", () => {
+  it("toJSON() creates object for serialization", () => {
     const cipher = new CipherView();
-    cipher.id = "myId";
-    cipher.organizationId = "myOrgId";
-    cipher.folderId = "myFolderId";
-    cipher.name = "my Cipher";
-    cipher.notes = "lorem ipsum";
-    cipher.type = CipherType.Login;
-    cipher.favorite = true;
-    cipher.organizationUseTotp = true;
-    cipher.edit = true;
-    cipher.viewPassword = false;
-    cipher.localData = { lastUsedDate: "123" };
-    cipher.login = new LoginView();
-    cipher.attachments = [new AttachmentView(), new AttachmentView()];
-    cipher.fields = [new FieldView(), new FieldView()];
-    cipher.passwordHistory = [new PasswordHistoryView(), new PasswordHistoryView()];
-    cipher.collectionIds = ["collection1", "collection2"];
-    cipher.revisionDate = new Date();
-    cipher.deletedDate = new Date();
-    cipher.reprompt = CipherRepromptType.Password;
+    Object.assign(cipher, obj);
 
-    jest.spyOn(LoginView, "fromJSON").mockImplementation(() => cipher.login);
-    jest.spyOn(AttachmentView, "fromJSON").mockImplementation(() => cipher.attachments[0]);
-    jest.spyOn(FieldView, "fromJSON").mockImplementation(() => cipher.fields[0]);
-    jest.spyOn(PasswordHistoryView, "fromJSON").mockImplementation(() => cipher.passwordHistory[0]);
+    expect(cipher.toJSON()).toEqual(obj);
+  });
 
-    const stringified = JSON.stringify(cipher);
+  it("fromJSON() populates from deserialized object", () => {
+    const expected = new CipherView();
+    Object.assign(expected, obj);
 
-    const newCipher = CipherView.fromJSON(JSON.parse(stringified));
+    const mockCtor = (key: string) => key as any;
+    jest.spyOn(LoginView, "fromJSON").mockImplementation(mockCtor);
+    jest.spyOn(AttachmentView, "fromJSON").mockImplementation(mockCtor);
+    jest.spyOn(FieldView, "fromJSON").mockImplementation(mockCtor);
+    jest.spyOn(PasswordHistoryView, "fromJSON").mockImplementation(mockCtor);
 
-    expect(newCipher).toEqual(cipher);
+    const newCipher = CipherView.fromJSON(obj);
+
+    expect(newCipher).toEqual(expected);
     expect(newCipher).toBeInstanceOf(CipherView);
   });
 });

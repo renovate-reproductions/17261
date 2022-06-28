@@ -154,31 +154,31 @@ export class CipherView implements View {
   }
 
   toJSON() {
-    const obj = Utils.copyToNewObject(this, {
+    const propertiesToCopy = {
       attachments: null,
       fields: null,
       passwordHistory: null,
       ...serializedProperties,
-    });
+    };
 
     switch (this.type) {
       case CipherType.Card:
-        obj.card = JSON.stringify(this.card);
+        propertiesToCopy.card = null;
         break;
       case CipherType.Identity:
-        obj.identity = JSON.stringify(this.identity);
+        propertiesToCopy.identity = null;
         break;
       case CipherType.Login:
-        obj.login = JSON.stringify(this.login);
+        propertiesToCopy.login = null;
         break;
       case CipherType.SecureNote:
-        obj.secureNote = JSON.stringify(this.secureNote);
+        propertiesToCopy.secureNote = null;
         break;
       default:
         break;
     }
 
-    return obj;
+    return Utils.copyToNewObject(this, propertiesToCopy);
   }
 
   static fromJSON(obj: any): CipherView {
