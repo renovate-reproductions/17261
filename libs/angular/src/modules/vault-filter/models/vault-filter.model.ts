@@ -4,6 +4,7 @@ import { CipherStatus } from "./cipher-status.model";
 
 export class VaultFilter {
   cipherType?: CipherType;
+  selectedCollection = false; // This is needed because of how the "Unassigned" collection works. It has a null id.
   selectedCollectionId?: string;
   status?: CipherStatus;
   selectedFolder = false; // This is needed because of how the "No Folder" folder works. It has a null id.
@@ -19,6 +20,7 @@ export class VaultFilter {
   resetFilter() {
     this.cipherType = null;
     this.status = null;
+    this.selectedCollection = false;
     this.selectedCollectionId = null;
     this.selectedFolder = false;
     this.selectedFolderId = null;
