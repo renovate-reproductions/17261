@@ -22,9 +22,9 @@ export class OrganizationInformationComponent implements OnInit {
         businessOwned: [false],
       });
     }
-  }
 
-  emitFormValue() {
-    this.valueChange.emit(this.formData);
+    this.formData.valueChanges.subscribe(() => {
+      this.valueChange.emit(this.formData);
+    });
   }
 }

@@ -1,7 +1,7 @@
 <form #form [formGroup]="formData" *ngIf="nameOnly">
   <bit-form-field>
     <bit-label>{{ "organizationName" | i18n }}</bit-label>
-    <input bitInput type="text" formControlName="name" (change)="emitFormValue()" />
+    <input bitInput type="text" formControlName="name" />
   </bit-form-field>
 </form>
 <form #form [formGroup]="formData" *ngIf="!nameOnly">
@@ -9,18 +9,13 @@
   <div class="tw-flex tw-w-full tw-space-x-4">
     <bit-form-field class="tw-w-1/2">
       <bit-label>{{ "organizationName" | i18n }}</bit-label>
-      <input bitInput type="text" formControlName="name" (change)="emitFormValue()" />
+      <input bitInput type="text" formControlName="name" />
     </bit-form-field>
     <bit-form-field class="tw-w-1/2">
       <bit-label>{{ "billingEmail" | i18n }}</bit-label>
-      <input bitInput type="email" formControlName="billingEmail" (change)="emitFormValue()" />
+      <input bitInput type="email" formControlName="billingEmail" />
     </bit-form-field>
   </div>
-  <input
-    type="checkbox"
-    name="OwnedBusiness"
-    formControlName="businessOwned"
-    (change)="emitFormValue()"
-  />
+  <input type="checkbox" name="OwnedBusiness" formControlName="businessOwned" />
   <bit-label for="ownedBusiness" class="tw-mb-3">{{ "accountOwnedBusiness" | i18n }}</bit-label>
 </form>
