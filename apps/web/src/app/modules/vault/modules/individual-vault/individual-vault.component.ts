@@ -217,14 +217,18 @@ export class IndividualVaultComponent implements OnInit, OnDestroy {
       }
       if (
         this.activeFilter.selectedCollection &&
-        this.activeFilter.selectedCollectionId === null &&
+        this.activeFilter.selectedCollectionId == null &&
         cipherPassesFilter
       ) {
         cipherPassesFilter =
           cipher.organizationId != null &&
           (cipher.collectionIds == null || cipher.collectionIds.length === 0);
       }
-      if (this.activeFilter.selectedCollectionId != null && cipherPassesFilter) {
+      if (
+        this.activeFilter.selectedCollection &&
+        this.activeFilter.selectedCollectionId != null &&
+        cipherPassesFilter
+      ) {
         cipherPassesFilter =
           cipher.collectionIds != null &&
           cipher.collectionIds.indexOf(this.activeFilter.selectedCollectionId) > -1;
