@@ -10,8 +10,8 @@ export default {
 const Template: Story<ModalComponent> = (args: ModalComponent) => ({
   props: args,
   template: `
-  <bit-modal>
-  </bit-modal>
+  <button (click)="bitModal.initializeBitModal()">Open modal</button>
+  <bit-modal #bitModal></bit-modal>
   `,
 });
 
