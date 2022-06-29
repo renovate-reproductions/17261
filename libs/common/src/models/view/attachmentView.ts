@@ -33,7 +33,7 @@ export class AttachmentView implements View {
     return 0;
   }
 
-  static fromJSON(obj: any): AttachmentView {
+  static fromJSON(obj: Partial<AttachmentView>): AttachmentView {
     const view = new AttachmentView();
     view.id = obj.id;
     view.url = obj.url;

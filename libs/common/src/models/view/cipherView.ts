@@ -132,8 +132,8 @@ export class CipherView implements View {
     return this.linkedFieldOptions.get(id)?.i18nKey;
   }
 
-  toJSON(): any {
-    const result: any = {
+  toJSON(): Partial<CipherView> {
+    const result: Partial<CipherView> = {
       id: this.id,
       organizationId: this.organizationId,
       folderId: this.folderId,
@@ -176,7 +176,7 @@ export class CipherView implements View {
     return result;
   }
 
-  static fromJSON(obj: any): CipherView {
+  static fromJSON(obj: Partial<CipherView>): CipherView {
     const view = new CipherView();
     view.id = obj.id;
     view.organizationId = obj.organizationId;

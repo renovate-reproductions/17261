@@ -15,7 +15,7 @@ describe("AttachmentView", () => {
       size: "1000",
       sizeName: "kb",
       fileName: "my filename",
-      key: "encKey",
+      key: "encKey" as any,
     };
 
     jest

@@ -26,7 +26,7 @@ export class FieldView implements View {
     return this.value != null ? "••••••••" : null;
   }
 
-  static fromJSON(obj: any): FieldView {
+  static fromJSON(obj: Partial<FieldView>): FieldView {
     const view = new FieldView();
     view.name = obj.name;
     view.value = obj.value;

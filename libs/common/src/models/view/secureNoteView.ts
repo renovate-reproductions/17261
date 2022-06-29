@@ -19,7 +19,7 @@ export class SecureNoteView extends ItemView {
     return null;
   }
 
-  static fromJSON(obj: any): SecureNoteView {
+  static fromJSON(obj: Partial<SecureNoteView>): SecureNoteView {
     const view = new SecureNoteView();
     view.type = obj.type;
     return view;

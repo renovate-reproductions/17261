@@ -52,7 +52,7 @@ describe("CipherView", () => {
   });
 
   it("fromJSON hydrates new view object", () => {
-    const mockFromJson = (key: string) => (key + "fromJSON") as any;
+    const mockFromJson = (key: any) => (key + "fromJSON") as any;
     jest.spyOn(LoginView, "fromJSON").mockImplementation(mockFromJson);
     jest.spyOn(AttachmentView, "fromJSON").mockImplementation(mockFromJson);
     jest.spyOn(FieldView, "fromJSON").mockImplementation(mockFromJson);

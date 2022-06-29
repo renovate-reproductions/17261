@@ -140,7 +140,7 @@ export class IdentityView extends ItemView {
     return addressPart2;
   }
 
-  toJSON() {
+  toJSON(): Partial<IdentityView> {
     // Needed to serialize getters which are not included by JSON.stringify
     return {
       title: this.title,
@@ -164,7 +164,7 @@ export class IdentityView extends ItemView {
     };
   }
 
-  static fromJSON(obj: any): IdentityView {
+  static fromJSON(obj: Partial<IdentityView>): IdentityView {
     const view = new IdentityView();
     view.title = obj.title;
     view.firstName = obj.firstName;

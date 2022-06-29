@@ -22,7 +22,7 @@ describe("LoginView", () => {
 
     jest
       .spyOn(LoginUriView, "fromJSON")
-      .mockImplementation((key: string) => (key + "fromJSON") as any);
+      .mockImplementation((key: any) => (key + "fromJSON") as any);
 
     const login = LoginView.fromJSON(parsed);
 

@@ -125,7 +125,7 @@ export class LoginUriView implements View {
       : this.uri;
   }
 
-  toJSON(): any {
+  toJSON(): Partial<LoginUriView> {
     // Needed to serialize getters which are not included by JSON.stringify
     return {
       match: this.match,
@@ -133,7 +133,7 @@ export class LoginUriView implements View {
     };
   }
 
-  static fromJSON(obj: any): LoginUriView {
+  static fromJSON(obj: Partial<LoginUriView>): LoginUriView {
     const view = new LoginUriView();
     view.match = obj.match;
     view.uri = obj.uri;

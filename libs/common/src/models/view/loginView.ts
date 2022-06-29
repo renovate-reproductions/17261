@@ -61,7 +61,7 @@ export class LoginView extends ItemView {
     return this.uris != null && this.uris.length > 0;
   }
 
-  static fromJSON(obj: any): LoginView {
+  static fromJSON(obj: Partial<LoginView>): LoginView {
     const view = new LoginView();
 
     view.username = obj.username;

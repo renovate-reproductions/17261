@@ -80,7 +80,7 @@ export class CardView extends ItemView {
     return year.length === 2 ? "20" + year : year;
   }
 
-  toJSON() {
+  toJSON(): Partial<CardView> {
     // Needed to serialize getters which are not included by JSON.stringify
     return {
       cardholderName: this.cardholderName,
@@ -92,7 +92,7 @@ export class CardView extends ItemView {
     };
   }
 
-  static fromJSON(obj: any): CardView {
+  static fromJSON(obj: Partial<CardView>): CardView {
     const view = new CardView();
     view.cardholderName = obj.cardholderName;
     view.brand = obj.brand;
