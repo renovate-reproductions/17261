@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
+import { FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 
 import { ApiService } from "@bitwarden/common/abstractions/api.service";
@@ -165,6 +166,12 @@ export class OrganizationPlansComponent implements OnInit {
     }
 
     return plan.seatPrice * Math.abs(this.additionalSeats || 0);
+  }
+
+  orgInfoValueChange(form: FormGroup) {
+    this.name = form.get("name")?.value;
+    this.billingEmail = form.get("billingEmail")?.value;
+    this.ownedBusiness = form.get("businessOwned")?.value;
   }
 
   get subtotal() {
