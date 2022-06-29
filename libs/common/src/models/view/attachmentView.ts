@@ -1,5 +1,3 @@
-import { Utils } from "@bitwarden/common/misc/utils";
-
 import { Attachment } from "../domain/attachment";
 import { SymmetricCryptoKey } from "../domain/symmetricCryptoKey";
 
@@ -36,19 +34,15 @@ export class AttachmentView implements View {
   }
 
   static fromJSON(obj: any): AttachmentView {
-    const view = Utils.copyToNewObject(
-      obj,
-      {
-        id: null,
-        url: null,
-        size: null,
-        sizeName: null,
-        fileName: null,
-      },
-      AttachmentView
-    );
+    const view = new AttachmentView();
+    view.id = obj.id;
+    view.url = obj.url;
+    view.size = obj.size;
+    view.sizeName = obj.sizeName;
+    view.fileName = obj.fileName;
 
     view.key = obj.key == null ? null : SymmetricCryptoKey.fromJSON(obj.key);
+
     return view;
   }
 }

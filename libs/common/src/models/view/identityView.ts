@@ -163,10 +163,49 @@ export class IdentityView extends ItemView {
 
   toJSON() {
     // Needed to serialize getters which are not included by JSON.stringify
-    return Utils.copyToNewObject(this, serializedProperties);
+    return {
+      title: this.title,
+      firstName: this.firstName,
+      middleName: this.middleName,
+      lastName: this.lastName,
+      address1: this.address1,
+      address2: this.address2,
+      address3: this.address3,
+      city: this.city,
+      state: this.state,
+      postalCode: this.postalCode,
+      country: this.country,
+      company: this.company,
+      email: this.email,
+      phone: this.phone,
+      ssn: this.ssn,
+      username: this.username,
+      passportNumber: this.passportNumber,
+      licenseNumber: this.licenseNumber,
+    };
   }
 
   static fromJSON(obj: any): IdentityView {
-    return Utils.copyToNewObject(obj, serializedProperties, IdentityView);
+    const view = new IdentityView();
+    view.title = obj.title;
+    view.firstName = obj.firstName;
+    view.middleName = obj.middleName;
+    view.lastName = obj.lastName;
+    view.address1 = obj.address1;
+    view.address2 = obj.address2;
+    view.address3 = obj.address3;
+    view.city = obj.city;
+    view.state = obj.state;
+    view.postalCode = obj.postalCode;
+    view.country = obj.country;
+    view.company = obj.company;
+    view.email = obj.email;
+    view.phone = obj.phone;
+    view.ssn = obj.ssn;
+    view.username = obj.username;
+    view.passportNumber = obj.passportNumber;
+    view.licenseNumber = obj.licenseNumber;
+
+    return view;
   }
 }

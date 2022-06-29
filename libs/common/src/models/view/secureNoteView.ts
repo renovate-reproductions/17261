@@ -1,5 +1,3 @@
-import { Utils } from "@bitwarden/common/misc/utils";
-
 import { SecureNoteType } from "../../enums/secureNoteType";
 import { SecureNote } from "../domain/secureNote";
 
@@ -22,12 +20,8 @@ export class SecureNoteView extends ItemView {
   }
 
   static fromJSON(obj: any): SecureNoteView {
-    return Utils.copyToNewObject(
-      obj,
-      {
-        type: null,
-      },
-      SecureNoteView
-    );
+    const view = new SecureNoteView();
+    view.type = obj.type;
+    return view;
   }
 }

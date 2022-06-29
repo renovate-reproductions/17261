@@ -1,5 +1,3 @@
-import { Utils } from "@bitwarden/common/misc/utils";
-
 import { CardLinkedId as LinkedId } from "../../enums/linkedIdType";
 import { linkedFieldOption } from "../../misc/linkedFieldOption.decorator";
 
@@ -93,10 +91,25 @@ export class CardView extends ItemView {
 
   toJSON() {
     // Needed to serialize getters which are not included by JSON.stringify
-    return Utils.copyToNewObject(this, serializedProperties);
+    return {
+      cardholderName: this.cardholderName,
+      brand: this.brand,
+      number: this.number,
+      expMonth: this.expMonth,
+      expYear: this.expYear,
+      code: this.code,
+    };
   }
 
   static fromJSON(obj: any): CardView {
-    return Utils.copyToNewObject(obj, serializedProperties, CardView);
+    const view = new CardView();
+    view.cardholderName = obj.cardholderName;
+    view.brand = obj.brand;
+    view.number = obj.number;
+    view.expMonth = obj.expMonth;
+    view.expYear = obj.expYear;
+    view.code = obj.code;
+
+    return view;
   }
 }

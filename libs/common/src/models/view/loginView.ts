@@ -6,15 +6,6 @@ import { Login } from "../domain/login";
 import { ItemView } from "./itemView";
 import { LoginUriView } from "./loginUriView";
 
-const serializedProperties: any = {
-  username: null,
-  password: null,
-  totp: null,
-  autofillOnPageLoad: null,
-  passwordRevisionDate: null,
-  uris: null,
-};
-
 export class LoginView extends ItemView {
   @linkedFieldOption(LinkedId.Username)
   username: string = null;
@@ -71,10 +62,16 @@ export class LoginView extends ItemView {
   }
 
   static fromJSON(obj: any): LoginView {
-    const view = Utils.copyToNewObject(obj, serializedProperties, LoginView);
+    const view = new LoginView();
+
+    view.username = obj.username;
+    view.password = obj.password;
+    view.totp = obj.totp;
+    view.autofillOnPageLoad = obj.autofillOnPageLoad;
     view.passwordRevisionDate =
       obj.passwordRevisionDate == null ? null : new Date(obj.passwordRevisionDate);
     view.uris = obj.uris?.map((uri: any) => LoginUriView.fromJSON(uri));
+
     return view;
   }
 }

@@ -153,36 +153,65 @@ export class CipherView implements View {
     return this.linkedFieldOptions.get(id)?.i18nKey;
   }
 
-  toJSON() {
-    const propertiesToCopy = {
-      attachments: null,
-      fields: null,
-      passwordHistory: null,
-      ...serializedProperties,
+  toJSON(): any {
+    const result: any = {
+      id: this.id,
+      organizationId: this.organizationId,
+      folderId: this.folderId,
+      name: this.name,
+      notes: this.notes,
+      type: this.type,
+      favorite: this.favorite,
+      organizationUseTotp: this.organizationUseTotp,
+      edit: this.edit,
+      viewPassword: this.viewPassword,
+      localData: this.localData,
+      collectionIds: this.collectionIds,
+      reprompt: this.reprompt,
+
+      attachments: this.attachments,
+      fields: this.fields,
+      passwordHistory: this.passwordHistory,
+
+      revisionDate: this.revisionDate,
+      deletedDate: this.deletedDate,
     };
 
     switch (this.type) {
       case CipherType.Card:
-        propertiesToCopy.card = null;
+        result.card = this.card;
         break;
       case CipherType.Identity:
-        propertiesToCopy.identity = null;
+        result.identity = this.identity;
         break;
       case CipherType.Login:
-        propertiesToCopy.login = null;
+        result.login = this.login;
         break;
       case CipherType.SecureNote:
-        propertiesToCopy.secureNote = null;
+        result.secureNote = this.secureNote;
         break;
       default:
         break;
     }
 
-    return Utils.copyToNewObject(this, propertiesToCopy);
+    return result;
   }
 
   static fromJSON(obj: any): CipherView {
-    const view = Utils.copyToNewObject(obj, serializedProperties, CipherView);
+    const view = new CipherView();
+    view.id = obj.id;
+    view.organizationId = obj.organizationId;
+    view.folderId = obj.folderId;
+    view.name = obj.name;
+    view.notes = obj.notes;
+    view.type = obj.type;
+    view.favorite = obj.favorite;
+    view.organizationUseTotp = obj.organizationUseTotp;
+    view.edit = obj.edit;
+    view.viewPassword = obj.viewPassword;
+    view.localData = obj.localData;
+    view.collectionIds = obj.collectionIds;
+    view.reprompt = obj.reprompt;
 
     // Dates
     view.revisionDate = obj.revisionDate == null ? null : new Date(obj.revisionDate);

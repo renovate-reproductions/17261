@@ -1,5 +1,3 @@
-import { Utils } from "@bitwarden/common/misc/utils";
-
 import { FieldType } from "../../enums/fieldType";
 import { LinkedIdType } from "../../enums/linkedIdType";
 import { Field } from "../domain/field";
@@ -29,18 +27,15 @@ export class FieldView implements View {
   }
 
   static fromJSON(obj: any): FieldView {
-    return Utils.copyToNewObject(
-      obj,
-      {
-        name: null,
-        value: null,
-        type: null,
-        newField: null,
-        showValue: null,
-        showCount: null,
-        linkedId: null,
-      },
-      FieldView
-    );
+    const view = new FieldView();
+    view.name = obj.name;
+    view.value = obj.value;
+    view.type = obj.type;
+    view.newField = obj.newField;
+    view.showValue = obj.showValue;
+    view.showCount = obj.showCount;
+    view.linkedId = obj.linkedId;
+
+    return view;
   }
 }

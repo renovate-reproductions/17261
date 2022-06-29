@@ -1,5 +1,3 @@
-import { stringify } from "querystring";
-
 import { UriMatchType } from "../../enums/uriMatchType";
 import { Utils } from "../../misc/utils";
 import { LoginUri } from "../domain/loginUri";
@@ -22,10 +20,7 @@ const CanLaunchWhitelist = [
   "androidapp://",
 ];
 
-const serializedProperties: any = {
-  match: null,
-  uri: null,
-};
+const serializedProperties: any = {};
 
 export class LoginUriView implements View {
   match: UriMatchType = null;
@@ -134,10 +129,16 @@ export class LoginUriView implements View {
 
   toJSON(): any {
     // Needed to serialize getters which are not included by JSON.stringify
-    return Utils.copyToNewObject(this, serializedProperties);
+    return {
+      match: this.match,
+      uri: this.uri,
+    };
   }
 
   static fromJSON(obj: any): LoginUriView {
-    return Utils.copyToNewObject(obj, serializedProperties, LoginUriView);
+    const view = new LoginUriView();
+    view.match = obj.match;
+    view.uri = obj.uri;
+    return view;
   }
 }

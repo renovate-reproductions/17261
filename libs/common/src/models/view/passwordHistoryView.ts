@@ -1,5 +1,3 @@
-import { Utils } from "@bitwarden/common/misc/utils";
-
 import { Password } from "../domain/password";
 
 import { View } from "./view";
@@ -17,16 +15,10 @@ export class PasswordHistoryView implements View {
   }
 
   static fromJSON(obj: any): PasswordHistoryView {
-    const ph = Utils.copyToNewObject(
-      obj,
-      {
-        password: null,
-      },
-      PasswordHistoryView
-    );
+    const view = new PasswordHistoryView();
+    view.password = obj.password;
+    view.lastUsedDate = obj.lastUsedDate == null ? null : new Date(obj.lastUsedDate);
 
-    ph.lastUsedDate = obj.lastUsedDate == null ? null : new Date(obj.lastUsedDate);
-
-    return ph;
+    return view;
   }
 }

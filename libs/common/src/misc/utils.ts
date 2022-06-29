@@ -348,35 +348,6 @@ export class Utils {
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
 
-  /**
-   * Copies properties from a source object to a new object according to a mapping
-   * Same as Utils.copyToObject but will instantiate the new object for you according to a given type
-   */
-  static copyToNewObject<T = Record<string, unknown>>(
-    source: any,
-    map: { [sourcePropName: string]: string },
-    targetType?: new () => T
-  ): T {
-    const target: any = targetType != null ? new targetType() : {};
-    return Utils.copyToObject(source, map, target);
-  }
-
-  /**
-   * Copies properties from a source object to a target object according to a mapping
-   * @param source The source to copy from
-   * @param map The mapping of source property names to target property names (target names are optional)
-   * @param target The target to copy to
-   */
-  static copyToObject(source: any, map: { [sourcePropName: string]: string }, target: any): any {
-    Object.keys(map).forEach((sourcePropName) => {
-      const targetPropName = map[sourcePropName] ?? sourcePropName;
-      const value = source[sourcePropName];
-      target[targetPropName] = value;
-    });
-
-    return target;
-  }
-
   private static validIpAddress(ipString: string): boolean {
     const ipRegex =
       /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
