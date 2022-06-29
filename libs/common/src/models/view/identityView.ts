@@ -4,27 +4,6 @@ import { Utils } from "../../misc/utils";
 
 import { ItemView } from "./itemView";
 
-const serializedProperties: any = {
-  title: null,
-  firstName: null,
-  middleName: null,
-  lastName: null,
-  address1: null,
-  address2: null,
-  address3: null,
-  city: null,
-  state: null,
-  postalCode: null,
-  country: null,
-  company: null,
-  email: null,
-  phone: null,
-  ssn: null,
-  username: null,
-  passportNumber: null,
-  licenseNumber: null,
-};
-
 export class IdentityView extends ItemView {
   @linkedFieldOption(LinkedId.Title)
   title: string = null;

@@ -1,31 +1,43 @@
 import { IdentityView } from "@bitwarden/common/models/view/identityView";
 
+const testValues = {
+  title: "Mr",
+  firstName: "First",
+  middleName: "Middle",
+  lastName: "Last",
+  address1: "123",
+  address2: "Fake St",
+  address3: "Business Park",
+  city: "Sydney",
+  state: "NSW",
+  postalCode: "2000",
+  country: "Australia",
+  company: "Bitwarden",
+  email: "example@ex.com",
+  phone: "1234",
+  ssn: "09876",
+  username: "myUsername0",
+  passportNumber: "A12387",
+  licenseNumber: "asdf",
+};
+
 describe("IdentityView", () => {
-  it("serializes and deserializes", () => {
+  it("toJSON creates object for serialization", () => {
     const identity = new IdentityView();
-    identity.title = "Mr";
-    identity.firstName = "First";
-    identity.middleName = "Middle";
-    identity.lastName = "Last";
-    identity.address1 = "123";
-    identity.address2 = "Fake St";
-    identity.address3 = "Business Park";
-    identity.city = "Sydney";
-    identity.state = "NSW";
-    identity.postalCode = "2000";
-    identity.country = "Australia";
-    identity.company = "Bitwarden";
-    identity.email = "example@ex.com";
-    identity.phone = "1234";
-    identity.ssn = "09876";
-    identity.username = "myUsername0";
-    identity.passportNumber = "A12387";
-    identity.licenseNumber = "asdf";
+    Object.assign(identity, testValues);
 
-    const stringified = JSON.stringify(identity);
-    const newIdentity = IdentityView.fromJSON(JSON.parse(stringified));
+    const actual = identity.toJSON();
 
-    expect(newIdentity).toEqual(identity);
-    expect(newIdentity).toBeInstanceOf(IdentityView);
+    expect(actual).toEqual(testValues);
+  });
+
+  it("fromJSON hydrates new view object", () => {
+    const actual = IdentityView.fromJSON(testValues);
+
+    const expected = new IdentityView();
+    Object.assign(expected, testValues);
+
+    expect(actual).toEqual(expected);
+    expect(actual).toBeInstanceOf(IdentityView);
   });
 });

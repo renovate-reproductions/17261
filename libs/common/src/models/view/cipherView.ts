@@ -1,5 +1,3 @@
-import { Utils } from "@bitwarden/common/misc/utils";
-
 import { CipherRepromptType } from "../../enums/cipherRepromptType";
 import { CipherType } from "../../enums/cipherType";
 import { LinkedIdType } from "../../enums/linkedIdType";
@@ -13,25 +11,6 @@ import { LoginView } from "./loginView";
 import { PasswordHistoryView } from "./passwordHistoryView";
 import { SecureNoteView } from "./secureNoteView";
 import { View } from "./view";
-
-const serializedProperties: any = {
-  id: null,
-  organizationId: null,
-  folderId: null,
-  name: null,
-  notes: null,
-  type: null,
-  favorite: null,
-  organizationUseTotp: null,
-  edit: null,
-  viewPassword: null,
-  localData: null,
-  collectionIds: null,
-  reprompt: null,
-
-  revisionDate: null,
-  deletedDate: null,
-};
 
 export class CipherView implements View {
   id: string = null;

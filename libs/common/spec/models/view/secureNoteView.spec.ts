@@ -2,14 +2,15 @@ import { SecureNoteType } from "@bitwarden/common/enums/secureNoteType";
 import { SecureNoteView } from "@bitwarden/common/models/view/secureNoteView";
 
 describe("SecureNoteView", () => {
-  it("serializes and deserializes", () => {
-    const secureNote = new SecureNoteView();
-    secureNote.type = SecureNoteType.Generic;
+  it("fromJSON hydrates new view object", () => {
+    const actual = SecureNoteView.fromJSON({
+      type: SecureNoteType.Generic,
+    });
 
-    const stringified = JSON.stringify(secureNote);
-    const newSecureNote = SecureNoteView.fromJSON(JSON.parse(stringified));
+    const expected = new SecureNoteView();
+    expected.type = SecureNoteType.Generic;
 
-    expect(newSecureNote).toEqual(secureNote);
-    expect(newSecureNote).toBeInstanceOf(SecureNoteView);
+    expect(actual).toEqual(expected);
+    expect(actual).toBeInstanceOf(SecureNoteView);
   });
 });

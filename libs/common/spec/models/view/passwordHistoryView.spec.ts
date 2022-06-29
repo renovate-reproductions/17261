@@ -1,15 +1,19 @@
 import { PasswordHistoryView } from "@bitwarden/common/models/view/passwordHistoryView";
 
 describe("PasswordHistoryView", () => {
-  it("serializes and deserializes", () => {
-    const ph = new PasswordHistoryView();
-    ph.lastUsedDate = new Date();
-    ph.password = "mySecretPass";
+  it("fromJSON hydrates new view object", () => {
+    const testValues = {
+      lastUsedDate: new Date(),
+      password: "mySecretPass",
+    };
 
-    const stringified = JSON.stringify(ph);
-    const newPh = PasswordHistoryView.fromJSON(JSON.parse(stringified));
+    const parsed = JSON.parse(JSON.stringify(testValues));
+    const actual = PasswordHistoryView.fromJSON(parsed);
 
-    expect(newPh).toEqual(ph);
-    expect(newPh).toBeInstanceOf(PasswordHistoryView);
+    const expected = new PasswordHistoryView();
+    Object.assign(expected, testValues);
+
+    expect(actual).toEqual(expected);
+    expect(actual).toBeInstanceOf(PasswordHistoryView);
   });
 });

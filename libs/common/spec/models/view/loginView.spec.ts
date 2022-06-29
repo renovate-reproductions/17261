@@ -3,30 +3,35 @@ import { LoginView } from "@bitwarden/common/models/view/loginView";
 
 jest.mock("@bitwarden/common/models/view/loginUriView");
 
+const testValues = {
+  username: "myUsername",
+  password: "myPassword",
+  totp: "totpSeed",
+  autofillOnPageLoad: true,
+  uris: ["uri1", "uri2", "uri3"],
+  passwordRevisionDate: new Date(),
+};
+
 describe("LoginView", () => {
   beforeEach(() => {
     (LoginUriView as any).mockClear();
   });
 
-  it("serializes and deserializes", () => {
-    const login = new LoginView();
-    login.username = "myUsername";
-    login.password = "myPassword";
-    login.totp = "totpSeed";
-    login.autofillOnPageLoad = true;
-    login.passwordRevisionDate = new Date();
-    login.uris = ["uri1", "uri2", "uri3"] as any;
+  it("fromJSON hydrates new view object", () => {
+    const parsedFromJson = {
+      ...testValues,
+      passwordRevisionDate: testValues.passwordRevisionDate.toISOString(),
+    };
+    jest
+      .spyOn(LoginUriView, "fromJSON")
+      .mockImplementation((key: string) => (key + "fromJSON") as any);
 
-    const mockFromJson = (key: string) => (key + "fromJSON") as any;
-    jest.spyOn(LoginUriView, "fromJSON").mockImplementation(mockFromJson);
+    const login = LoginView.fromJSON(parsedFromJson);
 
-    const stringified = JSON.stringify(login);
-    const newLogin = LoginView.fromJSON(JSON.parse(stringified));
-
-    expect(newLogin).toEqual({
-      ...login,
+    expect(login).toEqual({
+      ...testValues,
       uris: ["uri1fromJSON", "uri2fromJSON", "uri3fromJSON"],
     });
-    expect(newLogin).toBeInstanceOf(LoginView);
+    expect(login).toBeInstanceOf(LoginView);
   });
 });

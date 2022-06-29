@@ -20,8 +20,6 @@ const CanLaunchWhitelist = [
   "androidapp://",
 ];
 
-const serializedProperties: any = {};
-
 export class LoginUriView implements View {
   match: UriMatchType = null;
 

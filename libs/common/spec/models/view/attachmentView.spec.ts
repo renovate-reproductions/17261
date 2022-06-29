@@ -8,28 +8,26 @@ describe("AttachmentView", () => {
     (SymmetricCryptoKey as any).mockClear();
   });
 
-  it("serializes and deserializes", () => {
-    const attachment = new AttachmentView();
-    attachment.id = "1234";
-    attachment.url = "http://example.com";
-    attachment.size = "1000";
-    attachment.sizeName = "kb";
-    attachment.fileName = "my filename";
-    attachment.key = "encKey" as any;
+  it("fromJSON hydrates new view object", () => {
+    const testValues = {
+      id: "1234",
+      url: "http://example.com",
+      size: "1000",
+      sizeName: "kb",
+      fileName: "my filename",
+      key: "encKey",
+    };
 
     jest
       .spyOn(SymmetricCryptoKey, "fromJSON")
       .mockImplementation((key: string) => (key + "fromJSON") as any);
 
-    const stringify = JSON.stringify(attachment);
+    const actual = AttachmentView.fromJSON(testValues);
 
-    const newAttachment = AttachmentView.fromJSON(JSON.parse(stringify));
-    expect(newAttachment).toEqual({
-      ...attachment,
-      key: "encKeyfromJSON",
-    });
-    expect(newAttachment).toBeInstanceOf(AttachmentView);
+    const expected = new AttachmentView();
+    Object.assign(expected, testValues, { key: "encKeyfromJSON" });
 
-    expect(SymmetricCryptoKey.fromJSON).toHaveBeenCalledTimes(1);
+    expect(actual).toEqual(expected);
+    expect(actual).toBeInstanceOf(AttachmentView);
   });
 });

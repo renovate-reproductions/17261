@@ -3,15 +3,6 @@ import { linkedFieldOption } from "../../misc/linkedFieldOption.decorator";
 
 import { ItemView } from "./itemView";
 
-const serializedProperties: any = {
-  cardholderName: null,
-  brand: null,
-  number: null,
-  expMonth: null,
-  expYear: null,
-  code: null,
-};
-
 export class CardView extends ItemView {
   @linkedFieldOption(LinkedId.CardholderName)
   cardholderName: string = null;

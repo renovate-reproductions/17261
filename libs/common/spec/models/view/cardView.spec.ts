@@ -1,19 +1,30 @@
 import { CardView } from "@bitwarden/common/models/view/cardView";
 
+const testValues = {
+  cardholderName: "my cardholder name",
+  expMonth: "08",
+  expYear: "2030",
+  code: "123",
+  brand: "ExampleCard Co",
+  number: "1234 5678 9101",
+};
+
 describe("CardView", () => {
-  it("serializes and deserializes", () => {
+  it("toJSON creates object for serialization", () => {
     const card = new CardView();
-    card.cardholderName = "my cardholder name";
-    card.expMonth = "08";
-    card.expYear = "2030";
-    card.code = "123";
-    card.brand = "ExampleCard Co";
-    card.number = "1234 5678 9101";
+    Object.assign(card, testValues);
 
-    const stringify = JSON.stringify(card);
-    const newCard = CardView.fromJSON(JSON.parse(stringify));
+    const actual = card.toJSON();
 
-    expect(newCard).toEqual(card);
-    expect(newCard).toBeInstanceOf(CardView);
+    expect(actual).toEqual(testValues);
+  });
+
+  it("fromJSON hydrates new view object", () => {
+    const actual = CardView.fromJSON(testValues);
+
+    const expected = new CardView();
+    Object.assign(expected, testValues);
+
+    expect(actual).toEqual(expected);
   });
 });
