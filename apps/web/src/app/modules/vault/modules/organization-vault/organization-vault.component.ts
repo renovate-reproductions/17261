@@ -187,7 +187,20 @@ export class OrganizationVaultComponent implements OnInit, OnDestroy {
       ) {
         cipherPassesFilter = cipher.folderId === this.activeFilter.selectedFolderId;
       }
-      if (this.activeFilter.selectedCollectionId != null && cipherPassesFilter) {
+      if (
+        this.activeFilter.selectedCollection &&
+        this.activeFilter.selectedCollectionId == null &&
+        cipherPassesFilter
+      ) {
+        cipherPassesFilter =
+          cipher.organizationId != null &&
+          (cipher.collectionIds == null || cipher.collectionIds.length === 0);
+      }
+      if (
+        this.activeFilter.selectedCollection &&
+        this.activeFilter.selectedCollectionId != null &&
+        cipherPassesFilter
+      ) {
         cipherPassesFilter =
           cipher.collectionIds != null &&
           cipher.collectionIds.indexOf(this.activeFilter.selectedCollectionId) > -1;
