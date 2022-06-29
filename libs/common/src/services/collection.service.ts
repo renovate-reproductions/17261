@@ -86,6 +86,11 @@ export class CollectionService implements CollectionServiceAbstraction {
 
     const collections = await this.getAll();
     decryptedCollections = await this.decryptMany(collections);
+
+    const noneCollection = new CollectionView();
+    noneCollection.name = this.i18nService.t("unassigned");
+    decryptedCollections.push(noneCollection);
+
     await this.stateService.setDecryptedCollections(decryptedCollections);
     return decryptedCollections;
   }
