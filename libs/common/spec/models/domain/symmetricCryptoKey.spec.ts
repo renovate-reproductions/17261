@@ -67,13 +67,20 @@ describe("SymmetricCryptoKey", () => {
     });
   });
 
-  it("serializes and deserializes", () => {
+  it("toJSON creates object for serialization", () => {
     const key = new SymmetricCryptoKey(makeStaticByteArray(64).buffer);
-    const serialized = JSON.stringify(key);
+    const actual = key.toJSON();
 
-    const newKey = SymmetricCryptoKey.fromJSON(JSON.parse(serialized));
+    const expected = { keyB64: key.keyB64 };
 
-    expect(newKey).toEqual(key);
-    expect(newKey).toBeInstanceOf(SymmetricCryptoKey);
+    expect(actual).toEqual(expected);
+  });
+
+  it("fromJSON hydrates new object", () => {
+    const expected = new SymmetricCryptoKey(makeStaticByteArray(64).buffer);
+    const actual = SymmetricCryptoKey.fromJSON({ keyB64: expected.keyB64 });
+
+    expect(actual).toEqual(expected);
+    expect(actual).toBeInstanceOf(SymmetricCryptoKey);
   });
 });

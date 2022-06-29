@@ -18,15 +18,13 @@ describe("LoginView", () => {
   });
 
   it("fromJSON hydrates new view object", () => {
-    const parsedFromJson = {
-      ...testValues,
-      passwordRevisionDate: testValues.passwordRevisionDate.toISOString(),
-    };
+    const parsed = JSON.parse(JSON.stringify(testValues));
+
     jest
       .spyOn(LoginUriView, "fromJSON")
       .mockImplementation((key: string) => (key + "fromJSON") as any);
 
-    const login = LoginView.fromJSON(parsedFromJson);
+    const login = LoginView.fromJSON(parsed);
 
     expect(login).toEqual({
       ...testValues,

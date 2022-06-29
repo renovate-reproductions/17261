@@ -46,7 +46,9 @@ describe("CipherView", () => {
     const cipher = new CipherView();
     Object.assign(cipher, testValues);
 
-    expect(cipher.toJSON()).toEqual(testValues);
+    const actual = cipher.toJSON();
+
+    expect(actual).toEqual(testValues);
   });
 
   it("fromJSON hydrates new view object", () => {
@@ -56,8 +58,8 @@ describe("CipherView", () => {
     jest.spyOn(FieldView, "fromJSON").mockImplementation(mockFromJson);
     jest.spyOn(PasswordHistoryView, "fromJSON").mockImplementation(mockFromJson);
 
-    const parsedObject = JSON.parse(JSON.stringify(testValues));
-    const actual = CipherView.fromJSON(parsedObject);
+    const parsed = JSON.parse(JSON.stringify(testValues));
+    const actual = CipherView.fromJSON(parsed);
 
     const expected = new CipherView();
     Object.assign(expected, testValues, {
