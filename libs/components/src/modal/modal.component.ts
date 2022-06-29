@@ -21,22 +21,20 @@ export class ModalComponent {
     }
   }
 
-  constructor(private renderer: Renderer2) {
-    this.renderer.listen("window", "click", (e: Event) => {
-      if (
-        e.target !== this.bitModalInvoke.nativeElement &&
-        this.showModal &&
-        e.target !== this.bitModal.nativeElement &&
-        !this.bitModal.nativeElement.contains(e.target)
-      ) {
-        console.log("Closing modal clicked outside the popup");
-        this.toggleModal();
-      }
-    });
+  @HostListener("document:click", ["$event"])
+  clickOut(e: Event) {
+    if (
+      e.target !== this.bitModalInvoke.nativeElement &&
+      this.showModal &&
+      e.target !== this.bitModal.nativeElement &&
+      !this.bitModal.nativeElement.contains(e.target)
+    ) {
+      console.log("Closing modal clicked outside the popup");
+      this.toggleModal();
+    }
   }
 
   showModal = false;
-
   toggleModal() {
     this.showModal = !this.showModal;
   }
