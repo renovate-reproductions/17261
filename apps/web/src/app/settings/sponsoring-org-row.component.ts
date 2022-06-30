@@ -23,12 +23,18 @@ export class SponsoringOrgRowComponent implements OnInit {
   revokeSponsorshipPromise: Promise<any>;
   resendEmailPromise: Promise<any>;
 
+  private locale = "";
+
   constructor(
     private apiService: ApiService,
     private i18nService: I18nService,
     private logService: LogService,
     private platformUtilsService: PlatformUtilsService
-  ) {}
+  ) {
+    this.i18nService.locale.subscribe({
+      next: (newLocale) => (this.locale = newLocale),
+    });
+  }
 
   ngOnInit(): void {
     this.setStatus(
@@ -98,7 +104,7 @@ export class SponsoringOrgRowComponent implements OnInit {
       // They want to delete but there is a valid until date which means there is an active sponsorship
       this.statusMessage = this.i18nService.t(
         "revokeWhenExpired",
-        formatDate(validUntil, "MM/dd/yyyy", this.i18nService.locale)
+        formatDate(validUntil, "MM/dd/yyyy", this.locale)
       );
       this.statusClass = "text-danger";
     } else if (toDelete) {

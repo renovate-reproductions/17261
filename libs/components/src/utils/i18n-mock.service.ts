@@ -1,7 +1,9 @@
+import { Subject } from "rxjs";
+
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 
 export class I18nMockService implements I18nService {
-  locale: string;
+  locale: Subject<string>;
   supportedTranslationLocales: string[];
   translationLocale: string;
   collator: Intl.Collator;

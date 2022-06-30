@@ -80,7 +80,9 @@ export class AppComponent implements OnDestroy, OnInit {
   ) {}
 
   ngOnInit() {
-    this.document.documentElement.lang = this.i18nService.locale;
+    this.i18nService.locale.subscribe({
+      next: (newLocale) => (this.document.documentElement.lang = newLocale),
+    });
 
     this.ngZone.runOutsideAngular(() => {
       window.onmousemove = () => this.recordActivity();

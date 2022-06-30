@@ -1,7 +1,9 @@
+import { Subject } from "rxjs";
+
 import { I18nService as I18nServiceAbstraction } from "../abstractions/i18n.service";
 
 export class I18nService implements I18nServiceAbstraction {
-  locale: string;
+  locale: Subject<string>;
   // First locale is the default (English)
   supportedTranslationLocales: string[] = ["en"];
   translationLocale: string;
@@ -74,6 +76,7 @@ export class I18nService implements I18nServiceAbstraction {
     protected getLocalesJson: (formattedLocale: string) => Promise<any>
   ) {
     this.systemLanguage = systemLanguage.replace("_", "-");
+    this.locale = new Subject<string>();
   }
 
   async init(locale?: string) {
@@ -85,10 +88,14 @@ export class I18nService implements I18nServiceAbstraction {
     }
 
     this.inited = true;
-    this.locale = this.translationLocale = locale != null ? locale : this.systemLanguage;
+    this.translationLocale = locale != null ? locale : this.systemLanguage;
+    this.locale.next(this.translationLocale);
 
     try {
-      this.collator = new Intl.Collator(this.locale, { numeric: true, sensitivity: "base" });
+      this.collator = new Intl.Collator(this.translationLocale, {
+        numeric: true,
+        sensitivity: "base",
+      });
     } catch {
       this.collator = null;
     }
