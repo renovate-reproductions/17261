@@ -22,14 +22,12 @@ export class SearchService implements SearchServiceAbstraction {
     private logService: LogService,
     private i18nService: I18nService
   ) {
-    this.i18nService.locale.subscribe({
-      next: (newLocale) => {
-        if (["zh-CN", "zh-TW", "ja", "ko", "vi"].indexOf(newLocale) !== -1) {
-          this.searchableMinLength = 1;
-        } else {
-          this.searchableMinLength = this.defaultSearchableMinLength;
-        }
-      },
+    this.i18nService.locale$.subscribe((locale) => {
+      if (["zh-CN", "zh-TW", "ja", "ko", "vi"].indexOf(locale) !== -1) {
+        this.searchableMinLength = 1;
+      } else {
+        this.searchableMinLength = this.defaultSearchableMinLength;
+      }
     });
 
     //register lunr pipeline function

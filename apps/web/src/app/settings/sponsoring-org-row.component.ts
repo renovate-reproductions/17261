@@ -1,5 +1,6 @@
 import { formatDate } from "@angular/common";
 import { Component, EventEmitter, Input, Output, OnInit } from "@angular/core";
+import { Subject, takeUntil } from "rxjs";
 
 import { ApiService } from "@bitwarden/common/abstractions/api.service";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
@@ -24,6 +25,7 @@ export class SponsoringOrgRowComponent implements OnInit {
   resendEmailPromise: Promise<any>;
 
   private locale = "";
+  private destroy$ = new Subject<void>();
 
   constructor(
     private apiService: ApiService,
@@ -31,8 +33,8 @@ export class SponsoringOrgRowComponent implements OnInit {
     private logService: LogService,
     private platformUtilsService: PlatformUtilsService
   ) {
-    this.i18nService.locale.subscribe({
-      next: (newLocale) => (this.locale = newLocale),
+    this.i18nService.locale$.pipe(takeUntil(this.destroy$)).subscribe((locale) => {
+      this.locale = locale;
     });
   }
 
@@ -43,6 +45,11 @@ export class SponsoringOrgRowComponent implements OnInit {
       this.sponsoringOrg.familySponsorshipValidUntil,
       this.sponsoringOrg.familySponsorshipLastSyncDate
     );
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.unsubscribe();
   }
 
   async revokeSponsorship() {
