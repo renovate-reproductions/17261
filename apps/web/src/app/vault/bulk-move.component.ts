@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { firstValueFrom } from "rxjs";
 
 import { CipherService } from "@bitwarden/common/abstractions/cipher.service";
 import { FolderService } from "@bitwarden/common/abstractions/folder.service";
@@ -26,7 +27,7 @@ export class BulkMoveComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.folders = await this.folderService.getAllDecrypted();
+    this.folders = await firstValueFrom(this.folderService.folderViews$);
     this.folderId = this.folders[0].id;
   }
 

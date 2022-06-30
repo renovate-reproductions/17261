@@ -56,14 +56,6 @@ export class FolderService implements FolderServiceAbstraction {
     return folders.find((folder) => folder.id === id);
   }
 
-  async getAll(): Promise<Folder[]> {
-    return this._folders.getValue();
-  }
-
-  async getAllDecrypted(): Promise<FolderView[]> {
-    return this._folderViews.getValue();
-  }
-
   async saveWithServer(folder: Folder): Promise<any> {
     const request = new FolderRequest(folder);
 

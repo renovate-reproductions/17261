@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { firstValueFrom } from "rxjs";
 
 import { CipherService } from "@bitwarden/common/abstractions/cipher.service";
 import { CollectionService } from "@bitwarden/common/abstractions/collection.service";
@@ -41,7 +42,7 @@ export class VaultFilterService {
   }
 
   async buildFolders(organizationId?: string): Promise<DynamicTreeNode<FolderView>> {
-    const storedFolders = await this.folderService.getAllDecrypted();
+    const storedFolders = await firstValueFrom(this.folderService.folderViews$);
     let folders: FolderView[];
     if (organizationId != null) {
       const ciphers = await this.cipherService.getAllDecrypted();
