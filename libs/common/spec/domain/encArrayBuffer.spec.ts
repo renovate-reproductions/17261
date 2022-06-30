@@ -19,12 +19,16 @@ describe("encArrayBuffer", () => {
       array.set(mac, 1 + iv.byteLength);
       array.set(cipherText, 1 + iv.byteLength + mac.byteLength);
 
+      // Note: comparing 2 ArrayBuffers will always pass, need to wrap in Uint8Arrays
       const actual = new EncArrayBuffer(array.buffer);
+      const actualIv = new Uint8Array(actual.ivBytes);
+      const actualMac = new Uint8Array(actual.macBytes);
+      const actualCipherText = new Uint8Array(actual.ctBytes);
 
       expect(actual.encType).toEqual(encType);
-      expect(actual.ivBytes).toEqual(iv.buffer);
-      expect(actual.macBytes).toEqual(mac.buffer);
-      expect(actual.ctBytes).toEqual(cipherText.buffer);
+      expect(actualIv).toEqual(iv);
+      expect(actualMac).toEqual(mac);
+      expect(actualCipherText).toEqual(cipherText);
     });
 
     it("with AesCbc256_B64", () => {
@@ -37,11 +41,14 @@ describe("encArrayBuffer", () => {
       array.set(iv, 1);
       array.set(cipherText, 1 + iv.byteLength);
 
+      // Note: comparing 2 ArrayBuffers will always pass, need to wrap in Uint8Arrays
       const actual = new EncArrayBuffer(array.buffer);
+      const actualIv = new Uint8Array(actual.ivBytes);
+      const actualCipherText = new Uint8Array(actual.ctBytes);
 
       expect(actual.encType).toEqual(encType);
-      expect(actual.ivBytes).toEqual(iv.buffer);
-      expect(actual.ctBytes).toEqual(cipherText.buffer);
+      expect(actualIv).toEqual(iv);
+      expect(actualCipherText).toEqual(cipherText);
       expect(actual.macBytes).toBeNull();
     });
   });
