@@ -3,9 +3,9 @@ import { EncryptionType } from "@bitwarden/common/enums/encryptionType";
 export class EncArrayBuffer {
   encType: EncryptionType = null;
 
-  private _ctBytes: ArrayBuffer = null;
-  private _ivBytes: ArrayBuffer = null;
-  private _macBytes: ArrayBuffer = null;
+  ctBytes: ArrayBuffer = null;
+  ivBytes: ArrayBuffer = null;
+  macBytes: ArrayBuffer = null;
 
   constructor(public buffer: ArrayBuffer) {
     const encBytes = new Uint8Array(buffer);
@@ -20,9 +20,9 @@ export class EncArrayBuffer {
           return null;
         }
 
-        this._ivBytes = encBytes.slice(1, 17).buffer;
-        this._macBytes = encBytes.slice(17, 49).buffer;
-        this._ctBytes = encBytes.slice(49).buffer;
+        this.ivBytes = encBytes.slice(1, 17).buffer;
+        this.macBytes = encBytes.slice(17, 49).buffer;
+        this.ctBytes = encBytes.slice(49).buffer;
         break;
       case EncryptionType.AesCbc256_B64:
         if (encBytes.length <= 17) {
@@ -30,23 +30,11 @@ export class EncArrayBuffer {
           return null;
         }
 
-        this._ivBytes = encBytes.slice(1, 17).buffer;
-        this._ctBytes = encBytes.slice(17).buffer;
+        this.ivBytes = encBytes.slice(1, 17).buffer;
+        this.ctBytes = encBytes.slice(17).buffer;
         break;
       default:
         return null;
     }
-  }
-
-  get ivBytes() {
-    return this._ivBytes == null ? null : new Uint8Array(this._ivBytes);
-  }
-
-  get macBytes() {
-    return this._macBytes == null ? null : new Uint8Array(this._macBytes);
-  }
-
-  get ctBytes() {
-    return this._ctBytes == null ? null : new Uint8Array(this._ctBytes);
   }
 }

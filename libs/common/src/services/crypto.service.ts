@@ -506,6 +506,10 @@ export class CryptoService implements CryptoServiceAbstraction {
   }
 
   /**
+   * ENCRYPT METHODS
+   */
+
+  /**
    * @deprecated June 22 2022: This method has been moved to encryptService.
    * All callers should use this service to grab the relevant key and use encryptService for encryption instead.
    * This method will be removed once all existing code has been refactored to use encryptService.
@@ -532,6 +536,10 @@ export class CryptoService implements CryptoServiceAbstraction {
     const encBytes = await this.cryptoFunctionService.rsaEncrypt(data, publicKey, "sha1");
     return new EncString(EncryptionType.Rsa2048_OaepSha1_B64, Utils.fromBufferToB64(encBytes));
   }
+
+  /**
+   * DECRYPT METHODS
+   */
 
   async rsaDecrypt(encValue: string, privateKeyValue?: ArrayBuffer): Promise<ArrayBuffer> {
     const headerPieces = encValue.split(".");

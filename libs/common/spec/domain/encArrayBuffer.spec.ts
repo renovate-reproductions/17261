@@ -22,9 +22,9 @@ describe("encArrayBuffer", () => {
       const actual = new EncArrayBuffer(array.buffer);
 
       expect(actual.encType).toEqual(encType);
-      expect(actual.ivBytes).toEqual(iv);
-      expect(actual.macBytes).toEqual(mac);
-      expect(actual.ctBytes).toEqual(cipherText);
+      expect(actual.ivBytes).toEqual(iv.buffer);
+      expect(actual.macBytes).toEqual(mac.buffer);
+      expect(actual.ctBytes).toEqual(cipherText.buffer);
     });
 
     it("with AesCbc256_B64", () => {
@@ -40,8 +40,8 @@ describe("encArrayBuffer", () => {
       const actual = new EncArrayBuffer(array.buffer);
 
       expect(actual.encType).toEqual(encType);
-      expect(actual.ivBytes).toEqual(iv);
-      expect(actual.ctBytes).toEqual(cipherText);
+      expect(actual.ivBytes).toEqual(iv.buffer);
+      expect(actual.ctBytes).toEqual(cipherText.buffer);
       expect(actual.macBytes).toBeNull();
     });
   });
