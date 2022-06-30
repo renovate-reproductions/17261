@@ -570,6 +570,10 @@ jobs:
           $package | Add-Member -MemberType NoteProperty -Name buildVersion -Value "$env:BUILD_NUMBER"
           $package | ConvertTo-Json -Depth 32 | Set-Content -Path electron-builder.json
 
+      - name: Install Node dependencies
+        run: npm ci
+        working-directory: ./
+
       - name: Cache Native Module
         uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09 # v3.0.2
         id: cache
@@ -582,10 +586,6 @@ jobs:
         working-directory: apps/desktop/desktop_native
         run: |
           npm run build:cross-platform
-
-      - name: Install Node dependencies
-        run: npm ci
-        working-directory: ./
 
       - name: Build application (dev)
         run: npm run build
@@ -715,6 +715,10 @@ jobs:
           $package | Add-Member -MemberType NoteProperty -Name buildVersion -Value "$env:BUILD_NUMBER"
           $package | ConvertTo-Json -Depth 32 | Set-Content -Path electron-builder.json
 
+      - name: Install Node dependencies
+        run: npm ci
+        working-directory: ./
+
       - name: Cache Native Module
         uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09 # v3.0.2
         id: cache
@@ -727,10 +731,6 @@ jobs:
         working-directory: apps/desktop/desktop_native
         run: |
           npm run build:cross-platform
-
-      - name: Install Node dependencies
-        run: npm ci
-        working-directory: ./
 
       - name: Build
         if: steps.build-cache.outputs.cache-hit != 'true'
@@ -939,6 +939,10 @@ jobs:
           $package | Add-Member -MemberType NoteProperty -Name buildVersion -Value "$env:BUILD_NUMBER"
           $package | ConvertTo-Json -Depth 32 | Set-Content -Path electron-builder.json
 
+      - name: Install Node dependencies
+        run: npm ci
+        working-directory: ./
+
       - name: Cache Native Module
         uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09 # v3.0.2
         id: cache
@@ -951,10 +955,6 @@ jobs:
         working-directory: apps/desktop/desktop_native
         run: |
           npm run build:cross-platform
-
-      - name: Install Node dependencies
-        run: npm ci
-        working-directory: ./
 
       - name: Build
         if: steps.build-cache.outputs.cache-hit != 'true'
@@ -1150,6 +1150,10 @@ jobs:
           $package | Add-Member -MemberType NoteProperty -Name buildVersion -Value "$env:BUILD_NUMBER"
           $package | ConvertTo-Json -Depth 32 | Set-Content -Path electron-builder.json
 
+      - name: Install Node dependencies
+        run: npm ci
+        working-directory: ./
+
       - name: Cache Native Module
         uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09 # v3.0.2
         id: cache
@@ -1162,10 +1166,6 @@ jobs:
         working-directory: apps/desktop/desktop_native
         run: |
           npm run build:cross-platform
-
-      - name: Install Node dependencies
-        run: npm ci
-        working-directory: ./
 
       - name: Build
         if: steps.build-cache.outputs.cache-hit != 'true'
