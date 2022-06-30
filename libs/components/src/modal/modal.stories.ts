@@ -1,45 +1,33 @@
-import { Meta, Story } from "@storybook/angular";
+import { CommonModule } from "@angular/common";
+import { Meta, Story, moduleMetadata } from "@storybook/angular";
 
-import { ModalComponent } from "./modal.component";
+import { ModalBodyComponent } from "./modal-body.component";
+import { ModalContainerComponent } from "./modal-container.component";
+import { ModalTitleComponent } from "./modal-title.component";
 
 export default {
   title: "Component Library/Modal",
-  component: ModalComponent,
+  component: ModalContainerComponent,
+  decorators: [
+    moduleMetadata({
+      declarations: [ModalContainerComponent, ModalBodyComponent, ModalTitleComponent],
+      imports: [CommonModule],
+    }),
+  ],
 } as Meta;
 
-const Template: Story<ModalComponent> = (args: ModalComponent) => ({
+const Template: Story<ModalContainerComponent> = (args: ModalContainerComponent) => ({
   props: args,
   template: `
-  <button (click)="bitModal.initializeBitModal()">Open modal</button>
-  <bit-modal #bitModal>
-  <!--Header-->
-  <div class="tw-flex tw-items-start tw-justify-between tw-p-5">
-    <h3 class="tw-text-main tw-text-3xl tw-font-semibold">Modal Title</h3>
-    <button
-      class="tw-p-1 tw-ml-auto tw-bg-transparent tw-border-0 tw-text-main tw-float-right tw-text-3xl tw-leading-none tw-font-semibold tw-outline-none focus:tw-outline-none"
-      (click)="bitModal.closeBitModal()"
-    >
-      <span
-        class="tw-bg-transparent tw-text-main tw-h-6 tw-w-6 tw-text-2xl tw-outline-none focus:tw-outline-none"
-      >
-        ×
-      </span>
-    </button>
-  </div>
+  <bit-modal-container>
 
-  <!--Body-->
-  <div class="tw-relative tw-p-6 tw-flex-auto">
-    <p class="tw-my-4 tw-text-main tw-text-lg tw-leading-relaxed">
-      Modal body goes here.
-    </p>
-  </div>
-
-  <!--Footer-->
-  <div class="tw-bg-background-alt tw-flex tw-items-center tw-justify-left tw-p-6">
-    <button (click)="bitModal.closeBitModal()">Save</button>
-    <button (click)="bitModal.closeBitModal()">Cancel</button>
-  </div>
-  </bit-modal>
+    <bit-modal-title>
+     <p>Modal Title</p>
+    </bit-modal-title>
+    <bit-modal-body>
+      Modal body text goes here.
+    </bit-modal-body>
+  </bit-modal-container>
   `,
 });
 
