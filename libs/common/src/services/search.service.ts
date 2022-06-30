@@ -24,7 +24,7 @@ export class SearchService implements SearchServiceAbstraction {
   ) {
     this.i18nService.locale.subscribe({
       next: (newLocale) => {
-        if (["zh-CN", "zh-TW"].indexOf(newLocale) !== -1) {
+        if (["zh-CN", "zh-TW", "ja", "ko", "vi"].indexOf(newLocale) !== -1) {
           this.searchableMinLength = 1;
         } else {
           this.searchableMinLength = this.defaultSearchableMinLength;
