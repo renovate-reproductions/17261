@@ -214,7 +214,6 @@ export const LOG_MAC_FAILURES = new InjectionToken<string>("LOG_MAC_FAILURES");
       deps: [
         CryptoServiceAbstraction,
         ApiServiceAbstraction,
-        I18nServiceAbstraction,
         CipherServiceAbstraction,
         StateServiceAbstraction,
       ],
