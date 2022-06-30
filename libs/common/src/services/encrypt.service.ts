@@ -6,6 +6,7 @@ import { EncryptedObject } from "@bitwarden/common/models/domain/encryptedObject
 import { SymmetricCryptoKey } from "@bitwarden/common/models/domain/symmetricCryptoKey";
 
 import { AbstractEncryptService } from "../abstractions/abstractEncrypt.service";
+import { EncArrayBuffer } from "../models/domain/encArrayBuffer";
 
 export class EncryptService implements AbstractEncryptService {
   constructor(
@@ -16,7 +17,7 @@ export class EncryptService implements AbstractEncryptService {
 
   async encrypt(plainValue: string | ArrayBuffer, key: SymmetricCryptoKey): Promise<EncString> {
     if (key == null) {
-      throw new Error("no encryption key provided.");
+      throw new Error("No encryption key provided.");
     }
 
     if (plainValue == null) {
@@ -35,6 +36,28 @@ export class EncryptService implements AbstractEncryptService {
     const data = Utils.fromBufferToB64(encObj.data);
     const mac = encObj.mac != null ? Utils.fromBufferToB64(encObj.mac) : null;
     return new EncString(encObj.key.encType, data, iv, mac);
+  }
+
+  async encryptToBytes(plainValue: ArrayBuffer, key: SymmetricCryptoKey): Promise<EncArrayBuffer> {
+    if (key == null) {
+      throw new Error("No encryption key provided.");
+    }
+
+    const encValue = await this.aesEncrypt(plainValue, key);
+    let macLen = 0;
+    if (encValue.mac != null) {
+      macLen = encValue.mac.byteLength;
+    }
+
+    const encBytes = new Uint8Array(1 + encValue.iv.byteLength + macLen + encValue.data.byteLength);
+    encBytes.set([encValue.key.encType]);
+    encBytes.set(new Uint8Array(encValue.iv), 1);
+    if (encValue.mac != null) {
+      encBytes.set(new Uint8Array(encValue.mac), 1 + encValue.iv.byteLength);
+    }
+
+    encBytes.set(new Uint8Array(encValue.data), 1 + encValue.iv.byteLength + macLen);
+    return new EncArrayBuffer(encBytes.buffer);
   }
 
   async decryptToUtf8(encString: EncString, key: SymmetricCryptoKey): Promise<string> {

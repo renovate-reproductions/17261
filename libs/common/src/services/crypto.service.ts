@@ -517,21 +517,8 @@ export class CryptoService implements CryptoServiceAbstraction {
   }
 
   async encryptToBytes(plainValue: ArrayBuffer, key?: SymmetricCryptoKey): Promise<EncArrayBuffer> {
-    const encValue = await this.aesEncrypt(plainValue, key);
-    let macLen = 0;
-    if (encValue.mac != null) {
-      macLen = encValue.mac.byteLength;
-    }
-
-    const encBytes = new Uint8Array(1 + encValue.iv.byteLength + macLen + encValue.data.byteLength);
-    encBytes.set([encValue.key.encType]);
-    encBytes.set(new Uint8Array(encValue.iv), 1);
-    if (encValue.mac != null) {
-      encBytes.set(new Uint8Array(encValue.mac), 1 + encValue.iv.byteLength);
-    }
-
-    encBytes.set(new Uint8Array(encValue.data), 1 + encValue.iv.byteLength + macLen);
-    return new EncArrayBuffer(encBytes.buffer);
+    key = await this.getKeyForEncryption(key);
+    return this.encryptService.encryptToBytes(plainValue, key);
   }
 
   async rsaEncrypt(data: ArrayBuffer, publicKey?: ArrayBuffer): Promise<EncString> {
@@ -742,26 +729,6 @@ export class CryptoService implements CryptoServiceAbstraction {
     return keySuffix === KeySuffixOptions.Auto
       ? await this.stateService.getCryptoMasterKeyAuto({ userId: userId })
       : await this.stateService.getCryptoMasterKeyBiometric({ userId: userId });
-  }
-
-  /**
-   * @deprecated June 22 2022: This method has been moved to encryptService.
-   * All callers should use encryptService instead. This method will be removed once all existing code has been refactored to use encryptService.
-   */
-  private async aesEncrypt(data: ArrayBuffer, key: SymmetricCryptoKey): Promise<EncryptedObject> {
-    const obj = new EncryptedObject();
-    obj.key = await this.getKeyForEncryption(key);
-    obj.iv = await this.cryptoFunctionService.randomBytes(16);
-    obj.data = await this.cryptoFunctionService.aesEncrypt(data, obj.iv, obj.key.encKey);
-
-    if (obj.key.macKey != null) {
-      const macData = new Uint8Array(obj.iv.byteLength + obj.data.byteLength);
-      macData.set(new Uint8Array(obj.iv), 0);
-      macData.set(new Uint8Array(obj.data), obj.iv.byteLength);
-      obj.mac = await this.cryptoFunctionService.hmac(macData.buffer, obj.key.macKey, "sha256");
-    }
-
-    return obj;
   }
 
   private async aesDecryptToBytes(
