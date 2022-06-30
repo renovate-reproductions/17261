@@ -47,7 +47,10 @@ export class VaultFilter {
       if (this.cipherType != null && cipherPassesFilter) {
         cipherPassesFilter = cipher.type === this.cipherType;
       }
-      if (this.selectedFolder != null && this.selectedFolderId != "none" && cipherPassesFilter) {
+      if (this.selectedFolder && this.selectedFolderId == null && cipherPassesFilter) {
+        cipherPassesFilter = cipher.folderId == null;
+      }
+      if (this.selectedFolder && this.selectedFolderId != null && cipherPassesFilter) {
         cipherPassesFilter = cipher.folderId === this.selectedFolderId;
       }
       if (this.selectedCollection && this.selectedCollectionId == null && cipherPassesFilter) {
@@ -57,8 +60,7 @@ export class VaultFilter {
       }
       if (this.selectedCollection && this.selectedCollectionId != null && cipherPassesFilter) {
         cipherPassesFilter =
-          cipher.collectionIds != null &&
-          cipher.collectionIds.indexOf(this.selectedCollectionId) > -1;
+          cipher.collectionIds != null && cipher.collectionIds.includes(this.selectedCollectionId);
       }
       if (this.selectedOrganizationId != null && cipherPassesFilter) {
         cipherPassesFilter = cipher.organizationId === this.selectedOrganizationId;
