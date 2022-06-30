@@ -40,8 +40,6 @@ export class FolderService implements FolderServiceAbstraction {
   }
 
   async clearCache(userId?: string): Promise<void> {
-    await this.stateService.setDecryptedFolders(null, { userId: userId });
-
     this._folderViews.next([]);
   }
 
@@ -98,14 +96,12 @@ export class FolderService implements FolderServiceAbstraction {
 
     await this.updateObservables(folders);
 
-    await this.stateService.setDecryptedFolders(null);
     await this.stateService.setEncryptedFolders(folders);
   }
 
   async replace(foldersMap: { [id: string]: FolderData }): Promise<any> {
     await this.updateObservables(foldersMap);
 
-    await this.stateService.setDecryptedFolders(null);
     await this.stateService.setEncryptedFolders(foldersMap);
   }
 
@@ -113,7 +109,6 @@ export class FolderService implements FolderServiceAbstraction {
     this._folders.next([]);
     this._folderViews.next([]);
 
-    await this.stateService.setDecryptedFolders(null, { userId: userId });
     await this.stateService.setEncryptedFolders(null, { userId: userId });
   }
 
@@ -136,7 +131,6 @@ export class FolderService implements FolderServiceAbstraction {
 
     await this.updateObservables(folders);
 
-    await this.stateService.setDecryptedFolders(null);
     await this.stateService.setEncryptedFolders(folders);
 
     // Items in a deleted folder are re-assigned to "No Folder"
