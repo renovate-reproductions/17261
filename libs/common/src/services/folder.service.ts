@@ -5,7 +5,9 @@ import { BroadcasterService } from "../abstractions/broadcaster.service";
 import { CipherService } from "../abstractions/cipher.service";
 import { CryptoService } from "../abstractions/crypto.service";
 import { FolderService as FolderServiceAbstraction } from "../abstractions/folder.service";
+import { I18nService } from "../abstractions/i18n.service";
 import { StateService } from "../abstractions/state.service";
+import { Utils } from "../misc/utils";
 import { CipherData } from "../models/data/cipherData";
 import { FolderData } from "../models/data/folderData";
 import { Folder } from "../models/domain/folder";
@@ -26,6 +28,7 @@ export class FolderService implements FolderServiceAbstraction {
   constructor(
     private cryptoService: CryptoService,
     private apiService: ApiService,
+    private i18nService: I18nService,
     private cipherService: CipherService,
     private stateService: StateService,
     private broadcasterService: BroadcasterService
@@ -162,6 +165,12 @@ export class FolderService implements FolderServiceAbstraction {
 
     const decryptFolderPromises = folders.map((f) => f.decrypt());
     const decryptedFolders = await Promise.all(decryptFolderPromises);
+
+    decryptedFolders.sort(Utils.getSortFunction(this.i18nService, "name"));
+
+    const noneFolder = new FolderView();
+    noneFolder.name = this.i18nService.t("noneFolder");
+    decryptedFolders.push(noneFolder);
 
     this._folders.next(folders);
     this._folderViews.next(decryptedFolders);

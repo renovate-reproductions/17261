@@ -55,7 +55,7 @@ export class VaultFilterService {
       } else {
         folders = storedFolders;
       }
-      const nestedFolders = await this.getAllNested(folders);
+      const nestedFolders = await this.getAllFoldersNested(folders);
       return new DynamicTreeNode<FolderView>({
         fullList: folders,
         nestedList: nestedFolders,
@@ -90,7 +90,7 @@ export class VaultFilterService {
     return await this.policyService.policyAppliesToUser(PolicyType.PersonalOwnership);
   }
 
-  protected async getAllNested(folders?: FolderView[]): Promise<TreeNode<FolderView>[]> {
+  protected async getAllFoldersNested(folders?: FolderView[]): Promise<TreeNode<FolderView>[]> {
     const nodes: TreeNode<FolderView>[] = [];
     folders.forEach((f) => {
       const folderCopy = new FolderView();
