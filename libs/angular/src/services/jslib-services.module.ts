@@ -216,6 +216,7 @@ export const LOG_MAC_FAILURES = new InjectionToken<string>("LOG_MAC_FAILURES");
         ApiServiceAbstraction,
         CipherServiceAbstraction,
         StateServiceAbstraction,
+        BroadcasterServiceAbstraction,
       ],
     },
     { provide: LogService, useFactory: () => new ConsoleLogService(false) },
