@@ -4,7 +4,7 @@ import { SymmetricCryptoKey } from "../../models/domain/symmetricCryptoKey";
 import { TreeNode } from "../../models/domain/treeNode";
 import { FolderView } from "../../models/view/folderView";
 
-export abstract class FolderService {
+export abstract class FolderStateService {
   clearCache: (userId?: string) => Promise<void>;
   encrypt: (model: FolderView, key?: SymmetricCryptoKey) => Promise<Folder>;
   get: (id: string) => Promise<Folder>;

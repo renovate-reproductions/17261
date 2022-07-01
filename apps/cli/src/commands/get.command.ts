@@ -3,7 +3,7 @@ import { AuditService } from "@bitwarden/common/abstractions/audit.service";
 import { CipherService } from "@bitwarden/common/abstractions/cipher.service";
 import { CollectionService } from "@bitwarden/common/abstractions/collection.service";
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
-import { FolderService } from "@bitwarden/common/abstractions/folder/folder.service";
+import { FolderStateService } from "@bitwarden/common/abstractions/folder/folder-state.service.abstraction";
 import { OrganizationService } from "@bitwarden/common/abstractions/organization.service";
 import { SearchService } from "@bitwarden/common/abstractions/search.service";
 import { StateService } from "@bitwarden/common/abstractions/state.service";
@@ -45,7 +45,7 @@ import { DownloadCommand } from "./download.command";
 export class GetCommand extends DownloadCommand {
   constructor(
     private cipherService: CipherService,
-    private folderService: FolderService,
+    private folderStateService: FolderStateService,
     private collectionService: CollectionService,
     private totpService: TotpService,
     private auditService: AuditService,

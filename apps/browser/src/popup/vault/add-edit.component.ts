@@ -8,7 +8,7 @@ import { AuditService } from "@bitwarden/common/abstractions/audit.service";
 import { CipherService } from "@bitwarden/common/abstractions/cipher.service";
 import { CollectionService } from "@bitwarden/common/abstractions/collection.service";
 import { EventService } from "@bitwarden/common/abstractions/event.service";
-import { FolderService } from "@bitwarden/common/abstractions/folder/folder.service";
+import { FolderStateService } from "@bitwarden/common/abstractions/folder/folder-state.service.abstraction";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { LogService } from "@bitwarden/common/abstractions/log.service";
 import { MessagingService } from "@bitwarden/common/abstractions/messaging.service";
@@ -35,7 +35,7 @@ export class AddEditComponent extends BaseAddEditComponent {
 
   constructor(
     cipherService: CipherService,
-    folderService: FolderService,
+    folderStateService: FolderStateService,
     i18nService: I18nService,
     platformUtilsService: PlatformUtilsService,
     auditService: AuditService,

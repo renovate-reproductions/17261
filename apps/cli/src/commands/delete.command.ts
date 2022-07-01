@@ -1,7 +1,7 @@
 import { ApiService } from "@bitwarden/common/abstractions/api.service";
 import { CipherService } from "@bitwarden/common/abstractions/cipher.service";
+import { FolderStateService } from "@bitwarden/common/abstractions/folder/folder-state.service.abstraction";
 import { FolderProviderAbstraction } from "@bitwarden/common/abstractions/folder/folder.provider.abstraction";
-import { FolderService } from "@bitwarden/common/abstractions/folder/folder.service";
 import { StateService } from "@bitwarden/common/abstractions/state.service";
 import { Utils } from "@bitwarden/common/misc/utils";
 import { Response } from "@bitwarden/node/cli/models/response";
@@ -11,7 +11,7 @@ import { CliUtils } from "src/utils";
 export class DeleteCommand {
   constructor(
     private cipherService: CipherService,
-    private folderService: FolderService,
+    private folderStateService: FolderStateService,
     private stateService: StateService,
     private apiService: ApiService,
     private folderProvider: FolderProviderAbstraction

@@ -2,7 +2,7 @@ import { AuthService } from "../abstractions/auth.service";
 import { CipherService } from "../abstractions/cipher.service";
 import { CollectionService } from "../abstractions/collection.service";
 import { CryptoService } from "../abstractions/crypto.service";
-import { FolderService } from "../abstractions/folder/folder.service";
+import { FolderStateService } from "../abstractions/folder/folder-state.service.abstraction";
 import { KeyConnectorService } from "../abstractions/keyConnector.service";
 import { MessagingService } from "../abstractions/messaging.service";
 import { PlatformUtilsService } from "../abstractions/platformUtils.service";
@@ -19,7 +19,7 @@ export class VaultTimeoutService implements VaultTimeoutServiceAbstraction {
 
   constructor(
     private cipherService: CipherService,
-    private folderService: FolderService,
+    private folderService: FolderStateService,
     private collectionService: CollectionService,
     private cryptoService: CryptoService,
     protected platformUtilsService: PlatformUtilsService,

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 
-import { FolderService } from "@bitwarden/common/abstractions/folder/folder.service";
+import { FolderStateService } from "@bitwarden/common/abstractions/folder/folder-state.service.abstraction";
 import { FolderView } from "@bitwarden/common/models/view/folderView";
 
 @Component({
@@ -11,7 +11,7 @@ import { FolderView } from "@bitwarden/common/models/view/folderView";
 export class FoldersComponent implements OnInit {
   folders: FolderView[];
 
-  constructor(private folderService: FolderService, private router: Router) {}
+  constructor(private folderStateService: FolderStateService, private router: Router) {}
 
   async ngOnInit() {
     this.folders = await this.folderService.getAllDecrypted();

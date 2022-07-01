@@ -4,7 +4,7 @@ import { ApiService } from "@bitwarden/common/abstractions/api.service";
 import { CipherService } from "@bitwarden/common/abstractions/cipher.service";
 import { CollectionService } from "@bitwarden/common/abstractions/collection.service";
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
-import { FolderService } from "@bitwarden/common/abstractions/folder/folder.service";
+import { FolderStateService } from "@bitwarden/common/abstractions/folder/folder-state.service.abstraction";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { PlatformUtilsService } from "@bitwarden/common/abstractions/platformUtils.service";
 import { BitwardenPasswordProtectedImporter } from "@bitwarden/common/importers/bitwardenPasswordProtectedImporter";
@@ -15,7 +15,7 @@ import { ImportService } from "@bitwarden/common/services/import.service";
 describe("ImportService", () => {
   let importService: ImportService;
   let cipherService: SubstituteOf<CipherService>;
-  let folderService: SubstituteOf<FolderService>;
+  let folderStateService: SubstituteOf<FolderStateService>;
   let apiService: SubstituteOf<ApiService>;
   let i18nService: SubstituteOf<I18nService>;
   let collectionService: SubstituteOf<CollectionService>;
@@ -24,7 +24,7 @@ describe("ImportService", () => {
 
   beforeEach(() => {
     cipherService = Substitute.for<CipherService>();
-    folderService = Substitute.for<FolderService>();
+    folderStateService = Substitute.for<FolderStateService>();
     apiService = Substitute.for<ApiService>();
     i18nService = Substitute.for<I18nService>();
     collectionService = Substitute.for<CollectionService>();
@@ -33,7 +33,7 @@ describe("ImportService", () => {
 
     importService = new ImportService(
       cipherService,
-      folderService,
+      folderStateService,
       apiService,
       i18nService,
       collectionService,

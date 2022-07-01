@@ -6,7 +6,7 @@ import { VaultFilterService as BaseVaultFilterService } from "@bitwarden/angular
 import { ApiService } from "@bitwarden/common/abstractions/api.service";
 import { CipherService } from "@bitwarden/common/abstractions/cipher.service";
 import { CollectionService } from "@bitwarden/common/abstractions/collection.service";
-import { FolderService } from "@bitwarden/common/abstractions/folder/folder.service";
+import { FolderStateService } from "@bitwarden/common/abstractions/folder/folder-state.service.abstraction";
 import { OrganizationService } from "@bitwarden/common/abstractions/organization.service";
 import { PolicyService } from "@bitwarden/common/abstractions/policy.service";
 import { StateService } from "@bitwarden/common/abstractions/state.service";
@@ -23,7 +23,7 @@ export class VaultFilterService extends BaseVaultFilterService {
   constructor(
     stateService: StateService,
     organizationService: OrganizationService,
-    folderService: FolderService,
+    folderStateService: FolderStateService,
     cipherService: CipherService,
     collectionService: CollectionService,
     policyService: PolicyService,
@@ -32,7 +32,7 @@ export class VaultFilterService extends BaseVaultFilterService {
     super(
       stateService,
       organizationService,
-      folderService,
+      folderStateService,
       cipherService,
       collectionService,
       policyService

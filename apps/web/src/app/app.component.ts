@@ -12,7 +12,7 @@ import { CipherService } from "@bitwarden/common/abstractions/cipher.service";
 import { CollectionService } from "@bitwarden/common/abstractions/collection.service";
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
 import { EventService } from "@bitwarden/common/abstractions/event.service";
-import { FolderService } from "@bitwarden/common/abstractions/folder/folder.service";
+import { FolderStateService } from "@bitwarden/common/abstractions/folder/folder-state.service.abstraction";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { KeyConnectorService } from "@bitwarden/common/abstractions/keyConnector.service";
 import { NotificationsService } from "@bitwarden/common/abstractions/notifications.service";
@@ -54,7 +54,7 @@ export class AppComponent implements OnDestroy, OnInit {
     @Inject(DOCUMENT) private document: Document,
     private broadcasterService: BroadcasterService,
     private tokenService: TokenService,
-    private folderService: FolderService,
+    private folderStateService: FolderStateService,
     private settingsService: SettingsService,
     private syncService: SyncService,
     private passwordGenerationService: PasswordGenerationService,
@@ -224,7 +224,7 @@ export class AppComponent implements OnDestroy, OnInit {
       this.cryptoService.clearKeys(),
       this.settingsService.clear(userId),
       this.cipherService.clear(userId),
-      this.folderService.clear(userId),
+      this.folderStateService.clear(userId),
       this.collectionService.clear(userId),
       this.policyService.clear(userId),
       this.passwordGenerationService.clear(),

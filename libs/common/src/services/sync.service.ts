@@ -2,7 +2,7 @@ import { ApiService } from "../abstractions/api.service";
 import { CipherService } from "../abstractions/cipher.service";
 import { CollectionService } from "../abstractions/collection.service";
 import { CryptoService } from "../abstractions/crypto.service";
-import { FolderService } from "../abstractions/folder/folder.service";
+import { FolderStateService } from "../abstractions/folder/folder-state.service.abstraction";
 import { KeyConnectorService } from "../abstractions/keyConnector.service";
 import { LogService } from "../abstractions/log.service";
 import { MessagingService } from "../abstractions/messaging.service";
@@ -40,7 +40,7 @@ export class SyncService implements SyncServiceAbstraction {
   constructor(
     private apiService: ApiService,
     private settingsService: SettingsService,
-    private folderService: FolderService,
+    private folderStateService: FolderStateService,
     private cipherService: CipherService,
     private cryptoService: CryptoService,
     private collectionService: CollectionService,
@@ -122,14 +122,14 @@ export class SyncService implements SyncServiceAbstraction {
     this.syncStarted();
     if (await this.stateService.getIsAuthenticated()) {
       try {
-        const localFolder = await this.folderService.get(notification.id);
+        const localFolder = await this.folderStateService.get(notification.id);
         if (
           (!isEdit && localFolder == null) ||
           (isEdit && localFolder != null && localFolder.revisionDate < notification.revisionDate)
         ) {
           const remoteFolder = await this.apiService.getFolder(notification.id);
           if (remoteFolder != null) {
-            await this.folderService.upsert(new FolderData(remoteFolder));
+            await this.folderStateService.upsert(new FolderData(remoteFolder));
             this.messagingService.send("syncedUpsertedFolder", { folderId: notification.id });
             return this.syncCompleted(true);
           }
@@ -144,7 +144,7 @@ export class SyncService implements SyncServiceAbstraction {
   async syncDeleteFolder(notification: SyncFolderNotification): Promise<boolean> {
     this.syncStarted();
     if (await this.stateService.getIsAuthenticated()) {
-      await this.folderService.delete(notification.id);
+      await this.folderStateService.delete(notification.id);
       this.messagingService.send("syncedDeletedFolder", { folderId: notification.id });
       this.syncCompleted(true);
       return true;
@@ -342,7 +342,7 @@ export class SyncService implements SyncServiceAbstraction {
     response.forEach((f) => {
       folders[f.id] = new FolderData(f);
     });
-    return await this.folderService.replace(folders);
+    return await this.folderStateService.replace(folders);
   }
 
   private async syncCollections(response: CollectionDetailsResponse[]) {

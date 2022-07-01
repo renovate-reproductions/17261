@@ -16,8 +16,8 @@ import { EnvironmentService as EnvironmentServiceAbstraction } from "@bitwarden/
 import { EventService as EventServiceAbstraction } from "@bitwarden/common/abstractions/event.service";
 import { ExportService as ExportServiceAbstraction } from "@bitwarden/common/abstractions/export.service";
 import { FileUploadService as FileUploadServiceAbstraction } from "@bitwarden/common/abstractions/fileUpload.service";
-import { FolderProviderAbstraction } from "@bitwarden/common/abstractions/folder/folder.provider.abstraction";
-import { FolderService as FolderServiceAbstraction } from "@bitwarden/common/abstractions/folder/folder.service";
+import { FolderStateService as FolderStateServiceAbstraction } from "@bitwarden/common/abstractions/folder/folder-state.service.abstraction";
+import { FolderServiceAbstraction } from "@bitwarden/common/abstractions/folder/folder.service.abstraction";
 import { I18nService as I18nServiceAbstraction } from "@bitwarden/common/abstractions/i18n.service";
 import { KeyConnectorService as KeyConnectorServiceAbstraction } from "@bitwarden/common/abstractions/keyConnector.service";
 import { LogService } from "@bitwarden/common/abstractions/log.service";
@@ -58,7 +58,7 @@ import { EnvironmentService } from "@bitwarden/common/services/environment.servi
 import { EventService } from "@bitwarden/common/services/event.service";
 import { ExportService } from "@bitwarden/common/services/export.service";
 import { FileUploadService } from "@bitwarden/common/services/fileUpload.service";
-import { FolderProvider } from "@bitwarden/common/services/folder/folder.provider";
+import { FolderStateService } from "@bitwarden/common/services/folder/folder-state.service";
 import { FolderService } from "@bitwarden/common/services/folder/folder.service";
 import { KeyConnectorService } from "@bitwarden/common/services/keyConnector.service";
 import { NotificationsService } from "@bitwarden/common/services/notifications.service";
@@ -211,8 +211,8 @@ export const LOG_MAC_FAILURES = new InjectionToken<string>("LOG_MAC_FAILURES");
       ],
     },
     {
-      provide: FolderServiceAbstraction,
-      useClass: FolderService,
+      provide: FolderStateServiceAbstraction,
+      useClass: FolderStateService,
       deps: [
         CryptoServiceAbstraction,
         I18nServiceAbstraction,
@@ -221,9 +221,9 @@ export const LOG_MAC_FAILURES = new InjectionToken<string>("LOG_MAC_FAILURES");
       ],
     },
     {
-      provide: FolderProviderAbstraction,
-      useClass: FolderProvider,
-      deps: [FolderServiceAbstraction, ApiServiceAbstraction],
+      provide: FolderServiceAbstraction,
+      useClass: FolderService,
+      deps: [FolderStateServiceAbstraction, ApiServiceAbstraction],
     },
     { provide: LogService, useFactory: () => new ConsoleLogService(false) },
     {
@@ -285,7 +285,7 @@ export const LOG_MAC_FAILURES = new InjectionToken<string>("LOG_MAC_FAILURES");
       deps: [
         ApiServiceAbstraction,
         SettingsServiceAbstraction,
-        FolderServiceAbstraction,
+        FolderStateServiceAbstraction,
         CipherServiceAbstraction,
         CryptoServiceAbstraction,
         CollectionServiceAbstraction,
@@ -311,7 +311,7 @@ export const LOG_MAC_FAILURES = new InjectionToken<string>("LOG_MAC_FAILURES");
       useClass: VaultTimeoutService,
       deps: [
         CipherServiceAbstraction,
-        FolderServiceAbstraction,
+        FolderStateServiceAbstraction,
         CollectionServiceAbstraction,
         CryptoServiceAbstraction,
         PlatformUtilsServiceAbstraction,
@@ -348,7 +348,7 @@ export const LOG_MAC_FAILURES = new InjectionToken<string>("LOG_MAC_FAILURES");
       provide: ExportServiceAbstraction,
       useClass: ExportService,
       deps: [
-        FolderServiceAbstraction,
+        FolderStateServiceAbstraction,
         CipherServiceAbstraction,
         ApiServiceAbstraction,
         CryptoServiceAbstraction,

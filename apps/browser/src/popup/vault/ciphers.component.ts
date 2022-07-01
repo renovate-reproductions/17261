@@ -8,7 +8,7 @@ import { VaultFilter } from "@bitwarden/angular/modules/vault-filter/models/vaul
 import { BroadcasterService } from "@bitwarden/common/abstractions/broadcaster.service";
 import { CipherService } from "@bitwarden/common/abstractions/cipher.service";
 import { CollectionService } from "@bitwarden/common/abstractions/collection.service";
-import { FolderService } from "@bitwarden/common/abstractions/folder/folder.service";
+import { FolderStateService } from "@bitwarden/common/abstractions/folder/folder-state.service.abstraction";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { OrganizationService } from "@bitwarden/common/abstractions/organization.service";
 import { PlatformUtilsService } from "@bitwarden/common/abstractions/platformUtils.service";
@@ -64,7 +64,7 @@ export class CiphersComponent extends BaseCiphersComponent implements OnInit, On
     private stateService: StateService,
     private popupUtils: PopupUtilsService,
     private i18nService: I18nService,
-    private folderService: FolderService,
+    private folderStateService: FolderStateService,
     private collectionService: CollectionService,
     private platformUtilsService: PlatformUtilsService,
     private cipherService: CipherService,

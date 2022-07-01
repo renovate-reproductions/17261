@@ -10,7 +10,7 @@ import { EnvironmentService as EnvironmentServiceAbstraction } from "@bitwarden/
 import { EventService as EventServiceAbstraction } from "@bitwarden/common/abstractions/event.service";
 import { ExportService as ExportServiceAbstraction } from "@bitwarden/common/abstractions/export.service";
 import { FileUploadService as FileUploadServiceAbstraction } from "@bitwarden/common/abstractions/fileUpload.service";
-import { FolderService as FolderServiceAbstraction } from "@bitwarden/common/abstractions/folder/folder.service";
+import { FolderStateService as FolderStateServiceAbstraction } from "@bitwarden/common/abstractions/folder/folder-state.service.abstraction";
 import { I18nService as I18nServiceAbstraction } from "@bitwarden/common/abstractions/i18n.service";
 import { KeyConnectorService as KeyConnectorServiceAbstraction } from "@bitwarden/common/abstractions/keyConnector.service";
 import { LogService as LogServiceAbstraction } from "@bitwarden/common/abstractions/log.service";
@@ -52,7 +52,7 @@ import { EnvironmentService } from "@bitwarden/common/services/environment.servi
 import { EventService } from "@bitwarden/common/services/event.service";
 import { ExportService } from "@bitwarden/common/services/export.service";
 import { FileUploadService } from "@bitwarden/common/services/fileUpload.service";
-import { FolderService } from "@bitwarden/common/services/folder/folder.service";
+import { FolderStateService } from "@bitwarden/common/services/folder/folder-state.service";
 import { KeyConnectorService } from "@bitwarden/common/services/keyConnector.service";
 import { MemoryStorageService } from "@bitwarden/common/services/memoryStorage.service";
 import { NotificationsService } from "@bitwarden/common/services/notifications.service";
@@ -118,7 +118,7 @@ export default class MainBackground {
   environmentService: EnvironmentServiceAbstraction;
   settingsService: SettingsServiceAbstraction;
   cipherService: CipherServiceAbstraction;
-  folderService: FolderServiceAbstraction;
+  folderStateService: FolderStateServiceAbstraction;
   collectionService: CollectionServiceAbstraction;
   vaultTimeoutService: VaultTimeoutServiceAbstraction;
   syncService: SyncServiceAbstraction;
@@ -264,9 +264,8 @@ export default class MainBackground {
       this.logService,
       this.stateService
     );
-    this.folderService = new FolderService(
+    this.folderStateService = new FolderStateService(
       this.cryptoService,
-      this.apiService,
       this.i18nService,
       this.cipherService,
       this.stateService
@@ -304,7 +303,7 @@ export default class MainBackground {
     this.vaultFilterService = new VaultFilterService(
       this.stateService,
       this.organizationService,
-      this.folderService,
+      this.folderStateService,
       this.cipherService,
       this.collectionService,
       this.policyService
@@ -338,7 +337,7 @@ export default class MainBackground {
 
     this.vaultTimeoutService = new VaultTimeoutService(
       this.cipherService,
-      this.folderService,
+      this.folderStateService,
       this.collectionService,
       this.cryptoService,
       this.platformUtilsService,
@@ -356,7 +355,7 @@ export default class MainBackground {
     this.syncService = new SyncService(
       this.apiService,
       this.settingsService,
-      this.folderService,
+      this.folderStateService,
       this.cipherService,
       this.cryptoService,
       this.collectionService,
@@ -393,7 +392,7 @@ export default class MainBackground {
     this.containerService = new ContainerService(this.cryptoService);
     this.auditService = new AuditService(this.cryptoFunctionService, this.apiService);
     this.exportService = new ExportService(
-      this.folderService,
+      this.folderStateService,
       this.cipherService,
       this.apiService,
       this.cryptoService,
@@ -477,7 +476,7 @@ export default class MainBackground {
       this.cipherService,
       this.authService,
       this.policyService,
-      this.folderService,
+      this.folderStateService,
       this.stateService
     );
 
@@ -606,7 +605,7 @@ export default class MainBackground {
       this.cryptoService.clearKeys(userId),
       this.settingsService.clear(userId),
       this.cipherService.clear(userId),
-      this.folderService.clear(userId),
+      this.folderStateService.clear(userId),
       this.collectionService.clear(userId),
       this.policyService.clear(userId),
       this.passwordGenerationService.clear(userId),

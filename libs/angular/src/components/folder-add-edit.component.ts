@@ -1,7 +1,7 @@
 import { Directive, EventEmitter, Input, OnInit, Output } from "@angular/core";
 
-import { FolderProviderAbstraction } from "@bitwarden/common/abstractions/folder/folder.provider.abstraction";
-import { FolderService } from "@bitwarden/common/abstractions/folder/folder.service";
+import { FolderStateService } from "@bitwarden/common/abstractions/folder/folder-state.service.abstraction";
+import { FolderServiceAbstraction } from "@bitwarden/common/abstractions/folder/folder.service.abstraction";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { LogService } from "@bitwarden/common/abstractions/log.service";
 import { PlatformUtilsService } from "@bitwarden/common/abstractions/platformUtils.service";
@@ -20,8 +20,8 @@ export class FolderAddEditComponent implements OnInit {
   deletePromise: Promise<any>;
 
   constructor(
-    protected folderService: FolderService,
-    protected folderProvider: FolderProviderAbstraction,
+    protected folderStateService: FolderStateService,
+    protected folderService: FolderServiceAbstraction,
     protected i18nService: I18nService,
     protected platformUtilsService: PlatformUtilsService,
     private logService: LogService
@@ -42,8 +42,8 @@ export class FolderAddEditComponent implements OnInit {
     }
 
     try {
-      const folder = await this.folderService.encrypt(this.folder);
-      this.formPromise = this.folderProvider.save(folder);
+      const folder = await this.folderStateService.encrypt(this.folder);
+      this.formPromise = this.folderService.save(folder);
       await this.formPromise;
       this.platformUtilsService.showToast(
         "success",
@@ -72,7 +72,7 @@ export class FolderAddEditComponent implements OnInit {
     }
 
     try {
-      this.deletePromise = this.folderProvider.delete(this.folder.id);
+      this.deletePromise = this.folderService.delete(this.folder.id);
       await this.deletePromise;
       this.platformUtilsService.showToast("success", null, this.i18nService.t("deletedFolder"));
       this.onDeletedFolder.emit(this.folder);
@@ -89,7 +89,7 @@ export class FolderAddEditComponent implements OnInit {
     if (this.editMode) {
       this.editMode = true;
       this.title = this.i18nService.t("editFolder");
-      const folder = await this.folderService.get(this.folderId);
+      const folder = await this.folderStateService.get(this.folderId);
       this.folder = await folder.decrypt();
     } else {
       this.title = this.i18nService.t("addFolder");

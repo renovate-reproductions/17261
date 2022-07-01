@@ -4,7 +4,7 @@ import * as path from "path";
 import { ApiService } from "@bitwarden/common/abstractions/api.service";
 import { CipherService } from "@bitwarden/common/abstractions/cipher.service";
 import { CryptoService } from "@bitwarden/common/abstractions/crypto.service";
-import { FolderService } from "@bitwarden/common/abstractions/folder/folder.service";
+import { FolderStateService } from "@bitwarden/common/abstractions/folder/folder-state.service.abstraction";
 import { StateService } from "@bitwarden/common/abstractions/state.service";
 import { Utils } from "@bitwarden/common/misc/utils";
 import { CipherExport } from "@bitwarden/common/models/export/cipherExport";
@@ -23,7 +23,7 @@ import { CliUtils } from "../utils";
 export class CreateCommand {
   constructor(
     private cipherService: CipherService,
-    private folderService: FolderService,
+    private folderStateService: FolderStateService,
     private stateService: StateService,
     private cryptoService: CryptoService,
     private apiService: ApiService
