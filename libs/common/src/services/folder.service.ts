@@ -34,6 +34,10 @@ export class FolderService implements FolderServiceAbstraction {
     private broadcasterService: BroadcasterService
   ) {
     this.stateService.activeAccount.subscribe(async (activeAccount) => {
+      if ((Utils.global as any).bitwardenContainerService == null) {
+        return;
+      }
+
       if (activeAccount == null) {
         return;
       }
