@@ -101,4 +101,9 @@ export class VaultFilterService {
     });
     return nodes;
   }
+
+  async getFolderNested(id: string): Promise<TreeNode<FolderView>> {
+    const folders = await this.getAllFoldersNested();
+    return ServiceUtils.getTreeNodeObject(folders, id) as TreeNode<FolderView>;
+  }
 }
