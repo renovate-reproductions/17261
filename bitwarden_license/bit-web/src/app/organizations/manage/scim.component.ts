@@ -57,7 +57,7 @@ export class ScimComponent implements OnInit {
       );
     }
     this.existingConnectionId = connection?.id;
-    if (connection != null && connection.config.enabled) {
+    if (connection != null && connection.config?.enabled) {
       this.showScimSettings = true;
       this.enabled.setValue(true);
       this.endpointUrl = connection.config.serviceUrl;
@@ -80,6 +80,7 @@ export class ScimComponent implements OnInit {
     }
     const apiKeyRequest = new OrganizationApiKeyRequest();
     apiKeyRequest.type = OrganizationApiKeyType.Scim;
+    apiKeyRequest.masterPasswordHash = "N/A";
     const apiKeyResponse = await this.apiService.postOrganizationApiKey(
       this.organizationId,
       apiKeyRequest
@@ -94,6 +95,7 @@ export class ScimComponent implements OnInit {
   async rotateScimKey() {
     const request = new OrganizationApiKeyRequest();
     request.type = OrganizationApiKeyType.Scim;
+    request.masterPasswordHash = "N/A";
     this.formPromise = this.apiService.postOrganizationRotateApiKey(this.organizationId, request);
 
     try {
