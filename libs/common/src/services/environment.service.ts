@@ -19,6 +19,7 @@ export class EnvironmentService implements EnvironmentServiceAbstraction {
   private notificationsUrl: string;
   private eventsUrl: string;
   private keyConnectorUrl: string;
+  private scimUrl: string;
 
   constructor(private stateService: StateService) {
     this.stateService.activeAccount.subscribe(async () => {
@@ -111,6 +112,18 @@ export class EnvironmentService implements EnvironmentServiceAbstraction {
     return this.keyConnectorUrl;
   }
 
+  getScimUrl() {
+    if (this.scimUrl != null) {
+      return this.scimUrl;
+    }
+
+    if (this.baseUrl) {
+      return this.baseUrl + "/scim";
+    }
+
+    return "https://scim.bitwarden.com";
+  }
+
   async setUrlsFromStorage(): Promise<void> {
     const urls: any = await this.stateService.getEnvironmentUrls();
     const envUrls = new EnvironmentUrls();
@@ -123,6 +136,7 @@ export class EnvironmentService implements EnvironmentServiceAbstraction {
     this.notificationsUrl = urls.notifications;
     this.eventsUrl = envUrls.events = urls.events;
     this.keyConnectorUrl = urls.keyConnector;
+    this.scimUrl = urls.scim;
   }
 
   async setUrls(urls: Urls): Promise<Urls> {
@@ -134,6 +148,7 @@ export class EnvironmentService implements EnvironmentServiceAbstraction {
     urls.notifications = this.formatUrl(urls.notifications);
     urls.events = this.formatUrl(urls.events);
     urls.keyConnector = this.formatUrl(urls.keyConnector);
+    urls.scim = this.formatUrl(urls.scim);
 
     await this.stateService.setEnvironmentUrls({
       base: urls.base,
@@ -144,6 +159,7 @@ export class EnvironmentService implements EnvironmentServiceAbstraction {
       notifications: urls.notifications,
       events: urls.events,
       keyConnector: urls.keyConnector,
+      scim: urls.scim,
     });
 
     this.baseUrl = urls.base;
@@ -154,6 +170,7 @@ export class EnvironmentService implements EnvironmentServiceAbstraction {
     this.notificationsUrl = urls.notifications;
     this.eventsUrl = urls.events;
     this.keyConnectorUrl = urls.keyConnector;
+    this.scimUrl = urls.scim;
 
     this.urlsSubject.next(urls);
 
@@ -170,6 +187,7 @@ export class EnvironmentService implements EnvironmentServiceAbstraction {
       notifications: this.notificationsUrl,
       events: this.eventsUrl,
       keyConnector: this.keyConnectorUrl,
+      scim: this.scimUrl,
     };
   }
 

@@ -7,4 +7,5 @@ export class EnvironmentUrls {
   events: string = null;
   webVault: string = null;
   keyConnector: string = null;
+  scim: string = null;
 }

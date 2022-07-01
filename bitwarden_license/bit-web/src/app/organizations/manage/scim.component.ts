@@ -1,14 +1,20 @@
 import { Component, OnInit } from "@angular/core";
+import { FormControl } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 
 import { ApiService } from "@bitwarden/common/abstractions/api.service";
+import { EnvironmentService } from "@bitwarden/common/abstractions/environment.service";
 import { I18nService } from "@bitwarden/common/abstractions/i18n.service";
 import { OrganizationService } from "@bitwarden/common/abstractions/organization.service";
 import { PlatformUtilsService } from "@bitwarden/common/abstractions/platformUtils.service";
 import { OrganizationApiKeyType } from "@bitwarden/common/enums/organizationApiKeyType";
 import { OrganizationConnectionType } from "@bitwarden/common/enums/organizationConnectionType";
 import { ScimConfigApi } from "@bitwarden/common/models/api/scimConfigApi";
-import { Organization } from "@bitwarden/common/models/domain/organization";
+import { OrganizationApiKeyRequest } from "@bitwarden/common/models/request/organizationApiKeyRequest";
+import { OrganizationConnectionRequest } from "@bitwarden/common/models/request/organizationConnectionRequest";
+import { ScimConfigRequest } from "@bitwarden/common/models/request/scimConfigRequest";
+import { ApiKeyResponse } from "@bitwarden/common/models/response/apiKeyResponse";
+import { OrganizationConnectionResponse } from "@bitwarden/common/models/response/organizationConnectionResponse";
 
 @Component({
   selector: "app-org-manage-scim",
@@ -17,44 +23,115 @@ import { Organization } from "@bitwarden/common/models/domain/organization";
 export class ScimComponent implements OnInit {
   loading = true;
   organizationId: string;
-  organization: Organization;
+  existingConnectionId: string;
   formPromise: Promise<any>;
+  enabled = new FormControl(false);
+  showScimSettings = false;
 
   endpointUrl: string;
+  clientSecret: string;
 
   constructor(
     private route: ActivatedRoute,
     private apiService: ApiService,
     private platformUtilsService: PlatformUtilsService,
     private i18nService: I18nService,
-    private organizationService: OrganizationService
+    private organizationService: OrganizationService,
+    private environmentService: EnvironmentService
   ) {}
 
   async ngOnInit() {
     this.route.parent.parent.params.subscribe(async (params) => {
       this.organizationId = params.organizationId;
-      await this.load();
+      await this.load(null);
     });
   }
 
-  async load() {
-    this.organization = await this.organizationService.get(this.organizationId);
-    //TODO: Load the SCIM configuration (connection) and API Key
-    this.endpointUrl = "https://example.com/callback/scim";
+  async load(response: OrganizationConnectionResponse<ScimConfigApi>) {
+    let connection = response;
+    if (connection === null) {
+      connection = await this.apiService.getOrganizationConnection(
+        this.organizationId,
+        OrganizationConnectionType.Scim,
+        ScimConfigApi
+      );
+    }
+    this.existingConnectionId = connection?.id;
+    if (connection != null && connection.config.enabled) {
+      this.showScimSettings = true;
+      this.enabled.setValue(true);
+      this.endpointUrl = connection.config.serviceUrl;
+      if (this.endpointUrl === null) {
+        const scimBaseUrl = this.environmentService.getScimUrl();
+        this.endpointUrl = `${scimBaseUrl}/v2/${this.organizationId}/`;
+      }
+      await this.loadApiKey(null);
+    } else {
+      this.showScimSettings = false;
+      this.enabled.setValue(false);
+    }
     this.loading = false;
   }
 
-  async submit() {
-    //this.validateForm();
+  async loadApiKey(response: ApiKeyResponse) {
+    if (response !== null) {
+      this.clientSecret = response.apiKey;
+      return;
+    }
+    const apiKeyRequest = new OrganizationApiKeyRequest();
+    apiKeyRequest.type = OrganizationApiKeyType.Scim;
+    const apiKeyResponse = await this.apiService.postOrganizationApiKey(
+      this.organizationId,
+      apiKeyRequest
+    );
+    this.clientSecret = apiKeyResponse.apiKey;
+  }
 
-    //TODO: POST data update to server and update display
-    //this.formPromise = POST;
+  async copyScimUrl() {
+    this.platformUtilsService.copyToClipboard(this.endpointUrl);
+  }
+
+  async rotateScimKey() {
+    const request = new OrganizationApiKeyRequest();
+    request.type = OrganizationApiKeyType.Scim;
+    this.formPromise = this.apiService.postOrganizationRotateApiKey(this.organizationId, request);
 
     try {
-      //const response = await this.formPromise;
-      //this.populateForm(response);
-      this.platformUtilsService.showToast("success", null, this.i18nService.t("scimSettingsSaved"));
+      const response = await this.formPromise;
+      await this.loadApiKey(response);
+      this.platformUtilsService.showToast("success", null, this.i18nService.t("scimApiKeyRotated"));
     } catch {
+      // Logged by appApiAction, do nothing
+    }
+
+    this.formPromise = null;
+  }
+
+  async copyScimKey() {
+    this.platformUtilsService.copyToClipboard(this.clientSecret);
+  }
+
+  async submit() {
+    try {
+      const request = new OrganizationConnectionRequest(
+        this.organizationId,
+        OrganizationConnectionType.Scim,
+        true,
+        new ScimConfigRequest(this.enabled.value, this.endpointUrl)
+      );
+      if (this.existingConnectionId == null) {
+        this.formPromise = this.apiService.createOrganizationConnection(request, ScimConfigApi);
+      } else {
+        this.formPromise = this.apiService.updateOrganizationConnection(
+          request,
+          ScimConfigApi,
+          this.existingConnectionId
+        );
+      }
+      const response = (await this.formPromise) as OrganizationConnectionResponse<ScimConfigApi>;
+      this.load(response);
+      this.platformUtilsService.showToast("success", null, this.i18nService.t("scimSettingsSaved"));
+    } catch (e) {
       // Logged by appApiAction, do nothing
     }
 
