@@ -56,7 +56,7 @@ export class ServeCommand {
   constructor(protected main: Main) {
     this.getCommand = new GetCommand(
       this.main.cipherService,
-      this.main.folderService,
+      this.main.folderStateService,
       this.main.collectionService,
       this.main.totpService,
       this.main.auditService,
@@ -68,7 +68,7 @@ export class ServeCommand {
     );
     this.listCommand = new ListCommand(
       this.main.cipherService,
-      this.main.folderService,
+      this.main.folderStateService,
       this.main.collectionService,
       this.main.organizationService,
       this.main.searchService,
@@ -76,16 +76,18 @@ export class ServeCommand {
     );
     this.createCommand = new CreateCommand(
       this.main.cipherService,
-      this.main.folderService,
+      this.main.folderStateService,
       this.main.stateService,
       this.main.cryptoService,
-      this.main.apiService
+      this.main.apiService,
+      this.main.folderService
     );
     this.editCommand = new EditCommand(
       this.main.cipherService,
-      this.main.folderService,
+      this.main.folderStateService,
       this.main.cryptoService,
-      this.main.apiService
+      this.main.apiService,
+      this.main.folderService
     );
     this.generateCommand = new GenerateCommand(
       this.main.passwordGenerationService,
@@ -100,9 +102,10 @@ export class ServeCommand {
     );
     this.deleteCommand = new DeleteCommand(
       this.main.cipherService,
-      this.main.folderService,
+      this.main.folderStateService,
       this.main.stateService,
-      this.main.apiService
+      this.main.apiService,
+      this.main.folderService
     );
     this.confirmCommand = new ConfirmCommand(this.main.apiService, this.main.cryptoService);
     this.restoreCommand = new RestoreCommand(this.main.cipherService);

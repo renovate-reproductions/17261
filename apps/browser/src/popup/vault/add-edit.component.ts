@@ -54,7 +54,7 @@ export class AddEditComponent extends BaseAddEditComponent {
   ) {
     super(
       cipherService,
-      folderService,
+      folderStateService,
       i18nService,
       platformUtilsService,
       auditService,

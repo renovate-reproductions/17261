@@ -470,7 +470,7 @@ export class AppComponent implements OnInit {
       this.cryptoService.clearKeys(userBeingLoggedOut),
       this.settingsService.clear(userBeingLoggedOut),
       this.cipherService.clear(userBeingLoggedOut),
-      this.folderService.clear(userBeingLoggedOut),
+      this.folderStateService.clear(userBeingLoggedOut),
       this.collectionService.clear(userBeingLoggedOut),
       this.passwordGenerationService.clear(userBeingLoggedOut),
       this.vaultTimeoutService.clear(userBeingLoggedOut),

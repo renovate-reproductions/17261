@@ -353,12 +353,12 @@ export class GetCommand extends DownloadCommand {
   private async getFolder(id: string) {
     let decFolder: FolderView = null;
     if (Utils.isGuid(id)) {
-      const folder = await this.folderService.get(id);
+      const folder = await this.folderStateService.get(id);
       if (folder != null) {
         decFolder = await folder.decrypt();
       }
     } else if (id.trim() !== "") {
-      let folders = await this.folderService.getAllDecrypted();
+      let folders = await this.folderStateService.getAllDecrypted();
       folders = CliUtils.searchFolders(folders, id);
       if (folders.length > 1) {
         return Response.multipleResults(folders.map((f) => f.id));

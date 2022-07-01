@@ -45,7 +45,7 @@ export class AddEditComponent extends BaseAddEditComponent implements OnChanges,
   ) {
     super(
       cipherService,
-      folderService,
+      folderStateService,
       i18nService,
       platformUtilsService,
       auditService,

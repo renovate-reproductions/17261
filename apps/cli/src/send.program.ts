@@ -144,7 +144,7 @@ export class SendProgram extends Program {
       .action(async (object) => {
         const cmd = new GetCommand(
           this.main.cipherService,
-          this.main.folderService,
+          this.main.folderStateService,
           this.main.collectionService,
           this.main.totpService,
           this.main.auditService,

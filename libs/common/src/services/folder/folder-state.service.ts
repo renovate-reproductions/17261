@@ -97,6 +97,11 @@ export class FolderStateService implements FolderServiceAbstraction {
     return nodes;
   }
 
+  async getNested(id: string): Promise<TreeNode<FolderView>> {
+    const folders = await this.getAllNested();
+    return ServiceUtils.getTreeNodeObject(folders, id) as TreeNode<FolderView>;
+  }
+
   async upsert(folder: FolderData | FolderData[]): Promise<any> {
     let folders = await this.stateService.getEncryptedFolders();
     if (folders == null) {

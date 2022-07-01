@@ -21,6 +21,7 @@ import { EncryptService } from "@bitwarden/common/services/encrypt.service";
 import { EnvironmentService } from "@bitwarden/common/services/environment.service";
 import { ExportService } from "@bitwarden/common/services/export.service";
 import { FileUploadService } from "@bitwarden/common/services/fileUpload.service";
+import { FolderStateService } from "@bitwarden/common/services/folder/folder-state.service";
 import { FolderService } from "@bitwarden/common/services/folder/folder.service";
 import { ImportService } from "@bitwarden/common/services/import.service";
 import { KeyConnectorService } from "@bitwarden/common/services/keyConnector.service";
@@ -73,7 +74,7 @@ export class Main {
   environmentService: EnvironmentService;
   settingsService: SettingsService;
   cipherService: CipherService;
-  folderService: FolderService;
+  folderStateService: FolderStateService;
   collectionService: CollectionService;
   vaultTimeoutService: VaultTimeoutService;
   syncService: SyncService;
@@ -101,6 +102,7 @@ export class Main {
   organizationService: OrganizationService;
   providerService: ProviderService;
   twoFactorService: TwoFactorService;
+  folderService: FolderService;
 
   constructor() {
     let p = null;
@@ -195,13 +197,14 @@ export class Main {
       this.stateService
     );
 
-    this.folderService = new FolderService(
+    this.folderStateService = new FolderStateService(
       this.cryptoService,
-      this.apiService,
       this.i18nService,
       this.cipherService,
       this.stateService
     );
+
+    this.folderService = new FolderService(this.folderStateService, this.apiService);
 
     this.collectionService = new CollectionService(
       this.cryptoService,
@@ -263,7 +266,7 @@ export class Main {
 
     this.vaultTimeoutService = new VaultTimeoutService(
       this.cipherService,
-      this.folderService,
+      this.folderStateService,
       this.collectionService,
       this.cryptoService,
       this.platformUtilsService,
@@ -281,7 +284,7 @@ export class Main {
     this.syncService = new SyncService(
       this.apiService,
       this.settingsService,
-      this.folderService,
+      this.folderStateService,
       this.cipherService,
       this.cryptoService,
       this.collectionService,
@@ -306,7 +309,7 @@ export class Main {
 
     this.importService = new ImportService(
       this.cipherService,
-      this.folderService,
+      this.folderStateService,
       this.apiService,
       this.i18nService,
       this.collectionService,
@@ -314,7 +317,7 @@ export class Main {
       this.cryptoService
     );
     this.exportService = new ExportService(
-      this.folderService,
+      this.folderStateService,
       this.cipherService,
       this.apiService,
       this.cryptoService,
@@ -356,7 +359,7 @@ export class Main {
       this.cryptoService.clearKeys(),
       this.settingsService.clear(userId),
       this.cipherService.clear(userId),
-      this.folderService.clear(userId),
+      this.folderStateService.clear(userId),
       this.collectionService.clear(userId),
       this.policyService.clear(userId),
       this.passwordGenerationService.clear(),

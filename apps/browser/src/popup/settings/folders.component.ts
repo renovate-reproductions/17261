@@ -14,7 +14,7 @@ export class FoldersComponent implements OnInit {
   constructor(private folderStateService: FolderStateService, private router: Router) {}
 
   async ngOnInit() {
-    this.folders = await this.folderService.getAllDecrypted();
+    this.folders = await this.folderStateService.getAllDecrypted();
     // Remove "No Folder"
     if (this.folders.length > 0) {
       this.folders = this.folders.slice(0, this.folders.length - 1);
