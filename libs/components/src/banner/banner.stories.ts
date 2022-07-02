@@ -1,12 +1,18 @@
 import { Meta, Story } from "@storybook/angular";
 
 import { BannerComponent } from "./banner.component";
+import bannerdocs from "./bannerdocs.mdx";
 
 export default {
   title: "Component Library/Banner",
   component: BannerComponent,
   args: {
     bannerType: "warning",
+  },
+  parameters: {
+    docs: {
+      page: bannerdocs,
+    },
   },
 } as Meta;
 
