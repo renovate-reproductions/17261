@@ -1151,15 +1151,15 @@
   "languageDesc": {
     "message": "Vaihda verkkoholvissa käytettävää kieltä."
   },
-  "disableIcons": {
-    "message": "Älä näytä sivustokuvakkeita"
+  "enableFavicon": {
+    "message": "Näytä verkkosivustojen kuvakkeet"
   },
-  "disableIconsDesc": {
-    "message": "Kirjautumistietojen vieressä näytettävät sivustojen kuvakkeet helpottavat kohteiden tunnistusta."
+  "faviconDesc": {
+    "message": "Näytä tunnistettava kuva jokaiselle kirjautumistiedolle."
   },
   "enableGravatars": {
-    "message": "Käytä Gravatareja",
-    "description": "'Gravatar' is the name of a service. See www.gravatar.com"
+    "message": "Näytä Gravatarit",
+    "description": "Use avatar images loaded from gravatar.com."
   },
   "enableGravatarsDesc": {
     "message": "Käytä avatar-profiilikuvia Gravatar.com-palvelusta."
@@ -1238,6 +1238,9 @@
   "enabled": {
     "message": "Käytössä"
   },
+  "activate": {
+    "message": "Aktivoi"
+  },
   "premium": {
     "message": "Premium",
     "description": "Premium Membership"
@@ -1262,6 +1265,9 @@
   },
   "disable": {
     "message": "Poista käytöstä"
+  },
+  "deactivate": {
+    "message": "Deaktivoi"
   },
   "twoStepLoginProviderEnabled": {
     "message": "Tämä kaksivaiheisen kirjautumisen todentaja on käytössä tililläsi."
@@ -2226,6 +2232,12 @@
   "removeUserConfirmation": {
     "message": "Haluatko varmasti poistaa käyttäjän?"
   },
+  "deactivateUserConfirmation": {
+    "message": "Jäsenellä ei ole enää organisaation käyttöoikeutta, mutta hän voi edelleen käyttää henkilökohtaista hoviaan."
+  },
+  "activateUserConfirmation": {
+    "message": "Haluatko varmasti aktivoida käyttäjän ja myöntää hänelle käyttöoikeuden organisaatioon?"
+  },
   "removeUserConfirmationKeyConnector": {
     "message": "Varoitus! Tämä käyttäjä tarvitsee salauksensa hallintaan Key Connectoria. Käyttäjän poistaminen organisaatiostasi poistaa heidän tilinsä käytöstä pysvästi. Toimenpide on pysyvä, eikä sen peruminen ole mahdollista. Haluatko jatkaa?"
   },
@@ -2564,6 +2576,42 @@
   },
   "removedUserId": {
     "message": "Käyttäjä $ID$ poistettu.",
+    "placeholders": {
+      "id": {
+        "content": "$1",
+        "example": "John Smith"
+      }
+    }
+  },
+  "deactivatedUserId": {
+    "message": "Käyttäjä $ID$ on deaktivoitu.",
+    "placeholders": {
+      "id": {
+        "content": "$1",
+        "example": "John Smith"
+      }
+    }
+  },
+  "activatedUserId": {
+    "message": "Käyttäjä $ID$ on aktivoitu.",
+    "placeholders": {
+      "id": {
+        "content": "$1",
+        "example": "John Smith"
+      }
+    }
+  },
+  "deactivateUserId": {
+    "message": "Deaktivoidaanko käyttäjä $ID$?",
+    "placeholders": {
+      "id": {
+        "content": "$1",
+        "example": "John Smith"
+      }
+    }
+  },
+  "activateUserId": {
+    "message": "Aktivoidaanko käyttäjä $ID$?",
     "placeholders": {
       "id": {
         "content": "$1",
@@ -3127,7 +3175,7 @@
     "message": "Holvin aikakatkaisu"
   },
   "vaultTimeoutDesc": {
-    "message": "Valitse milloin holvin aikakatkaisu tapahtuu ja suorita valittu toiminto."
+    "message": "Määritä milloin holvin aikakatkaisutoiminto suoritetaan."
   },
   "oneMinute": {
     "message": "1 minuutti"
@@ -3148,7 +3196,7 @@
     "message": "4 tuntia"
   },
   "onRefresh": {
-    "message": "Selaimen sivun päivityksen yhteydessä"
+    "message": "Selaimen sivupäivityksen yhteydessä"
   },
   "dateUpdated": {
     "message": "Päivitetty",
@@ -3355,13 +3403,13 @@
     "message": "Käyttäjän asetus"
   },
   "vaultTimeoutAction": {
-    "message": "Holvin aikakatkaisun toiminto"
+    "message": "Holvin aikakatkaisutoiminto"
   },
   "vaultTimeoutActionLockDesc": {
-    "message": "Lukittu holvi vaatii pääsalasanan syötön sen käyttämiseksi."
+    "message": "Holvisi käyttö edellyttää pääsalasanaa tai muuta avaustapaa."
   },
   "vaultTimeoutActionLogOutDesc": {
-    "message": "Uloskirjattu holvi vaatii uuden todennuksen sen käyttämiseksi."
+    "message": "Holvisi käyttö edellyttää uutta todennusta."
   },
   "lock": {
     "message": "Lukitse",
@@ -3453,7 +3501,7 @@
     "message": "Uloskirjautuminen estää pääsyn holviisi ja vaatii ajan umpeuduttua todennuksen internet-yhteyden välityksellä. Haluatko varmasti käyttää tätä asetusta?"
   },
   "vaultTimeoutLogOutConfirmationTitle": {
-    "message": "Aikakatkaisun toiminnon vahvistus"
+    "message": "Aikakatkaisutoiminnon vahvistus"
   },
   "hidePasswords": {
     "message": "Piilota salasanat"
@@ -3617,6 +3665,9 @@
   },
   "disabled": {
     "message": "Poistettu käytöstä"
+  },
+  "deactivated": {
+    "message": "Deaktivoitu"
   },
   "sendLink": {
     "message": "Send-linkki",
@@ -4217,7 +4268,13 @@
     "message": "Toiminto ei koske valittuja käyttäjiä."
   },
   "removeUsersWarning": {
-    "message": "Haluatko varmasti poistaa poistaa seuraavat käyttäjät? Toiminto saattaa kestää muutamia sekunteja, eikä sen keskeytys tai peruminen ole mahdollista."
+    "message": "Haluatko varmasti poistaa seuraavat käyttäjät? Toiminto saattaa kestää muutamia sekunteja, eikä sen keskeytys tai peruminen ole mahdollista."
+  },
+  "deactivateUsersWarning": {
+    "message": "Haluatko varmasti deaktivoida seuraavat käyttäjät? Heillä ei enää ole organisaation käyttöoikeutta, mutta he voivat edelleen käyttää henkilökohtaisia holvejaan. Toiminto saattaa kestää muutamia sekunteja, eikä sen keskeytys tai peruminen ole mahdollista."
+  },
+  "activateUsersWarning": {
+    "message": "Haluatko varmasti aktivoida seuraavat käyttäjät ja myöntää heille käyttöoikeuden organisaatioon? Toiminto saattaa kestää muutamia sekunteja, eikä sitä ole mahdollista keskeyttää tai perua."
   },
   "theme": {
     "message": "Teema"
@@ -4249,6 +4306,12 @@
   "bulkRemovedMessage": {
     "message": "Poistettu onnistuneesti."
   },
+  "bulkDeactivatedMessage": {
+    "message": "Deaktivointi onnistui"
+  },
+  "bulkActivatedMessage": {
+    "message": "Aktivointi onnistui"
+  },
   "bulkFilteredMessage": {
     "message": "Ohitettu, ei koske tätä toimintoa."
   },
@@ -4257,6 +4320,12 @@
   },
   "removeUsers": {
     "message": "Poista käyttäjiä"
+  },
+  "deactivateUsers": {
+    "message": "Deaktivoi käyttäjät"
+  },
+  "activateUsers": {
+    "message": "Aktivoi käyttäjät"
   },
   "error": {
     "message": "Virhe"
@@ -4398,13 +4467,13 @@
     "message": "Holvin aikakatkaisu"
   },
   "maximumVaultTimeoutDesc": {
-    "message": "Määritä holvin aikakatkaisun enimmäisviive kaikille käyttäjille."
+    "message": "Määritä holvin aikakatkaisun enimmäisaika kaikille käyttäjille."
   },
   "maximumVaultTimeoutLabel": {
-    "message": "Holvin aikakatkaisun enimmäisviive"
+    "message": "Holvin aikakatkaisun enimmäisaika"
   },
   "invalidMaximumVaultTimeout": {
-    "message": "Virheellinen holvin aikakatkaisun enimmäisviive."
+    "message": "Virheellinen holvin aikakatkaisun enimmäisaika."
   },
   "hours": {
     "message": "Tuntia"
@@ -4413,7 +4482,7 @@
     "message": "Minuuttia"
   },
   "vaultTimeoutPolicyInEffect": {
-    "message": "Organisaatiosi käytännöt vaikuttavat holvisi aikakatkaisuun. Suurin sallittu viive on $HOURS$ tunti(a) ja $MINUTES$ minuutti(a)",
+    "message": "Organisaatiosi käytännöt vaikuttavat holvisi aikakatkaisuun. Suurin sallittu aika on $HOURS$ tunti(a) ja $MINUTES$ minuutti(a)",
     "placeholders": {
       "hours": {
         "content": "$1",
@@ -4426,16 +4495,16 @@
     }
   },
   "customVaultTimeout": {
-    "message": "Mukautettu holvin aikakatkaisuviive"
+    "message": "Mukautettu holvin aikakatkaisu"
   },
   "vaultTimeoutToLarge": {
-    "message": "Holvisi aikakatkaisuviive ylittää organisaatiosi asettamat rajoitukset."
+    "message": "Holvisi aikakatkaisu ylittää organisaatiosi asettamat rajoitukset."
   },
   "vaultCustomTimeoutMinimum": {
-    "message": "Lyhin omavalintainen aikakatkaisuaika on 1 minuutti."
+    "message": "Mukautetun aikakatkaisun vähimmäisaika on 1 minuutti."
   },
   "vaultTimeoutRangeError": {
-    "message": "Holvin aikakatkaisuaika ei ole sallitun alueen sisällä."
+    "message": "Holvin aikakatkaisu ei ole sallitun alueen sisällä."
   },
   "disablePersonalVaultExport": {
     "message": "Poista henkilökohtaisen holvin vienti käytöstä"
@@ -4708,7 +4777,7 @@
     "message": "Virheellinen todennuskoodi"
   },
   "convertOrganizationEncryptionDesc": {
-    "message": "$ORGANIZATION$ käyttää kertakirjautumista (SSO) itse ylläpitämänsä avainpalvelimen kanssa. Organisaation jäsenet eivät enää tarvitse pääsalasanaa kirjautumiseen.",
+    "message": "$ORGANIZATION$ käyttää kertakirjautumista (SSO) itse ylläpidetyllä avainpalvelimella. Organisaation jäsenet eivät enää tarvitse pääsalasanaa kirjautumiseen.",
     "placeholders": {
       "organization": {
         "content": "$1",
@@ -4834,7 +4903,7 @@
     "message": "Uudista tunniste"
   },
   "rotateBillingSyncTokenWarning": {
-    "message": "Jos jatkat, on itse ylläpitämäsi palvelimen laskutuksen synkronointi määritettävä uudelleen."
+    "message": "Jos jatkat, tulee itse ylläpitämäsi palvelimen laskutuksen synkronointi määrittää uudelleen."
   },
   "rotateBillingSyncTokenTitle": {
     "message": "Laskutuksen synkronointitunnisteen uudistus mitätöi edellisen tunnisteen."
@@ -4843,7 +4912,7 @@
     "message": "Itse ylläpidetty"
   },
   "selfHostingEnterpriseOrganizationSectionCopy": {
-    "message": "Määrittääksesi organisaatiosi itse ylläpitämällesi palvelimelle, on lisenssitiedostosi tallennettava sinne. Sinun on määritettävä laskutuksen synkronointi, jotta ilmaiset Perheille-tilaukset ja edistyneet laskutusominaisuudet ovat itse ylläpitämäsi organisaation käytettävissä."
+    "message": "Määrittääksesi organisaation omalle palvelimellesi, tulee lisenssitiedosto tallentaa sinne. Sinun on määritettävä laskutuksen synkronointi, jotta ilmaiset Perheille-tilaukset ja edistyneet laskutusominaisuudet ovat itse ylläpitämäsi organisaation käytettävissä."
   },
   "billingSyncApiKeyRotated": {
     "message": "Tunniste uudistettiin."
@@ -4852,19 +4921,19 @@
     "message": "Laskutuksen synkronointi"
   },
   "billingSyncDesc": {
-    "message": "Laskutuksen synkronointi mahdollistaa jäsenille ilmaiset Perheille-tilaukset ja edistyneet laskutusominaisuudet liittämällä itse ylläpitämäsi Bitwarden-palvelimen Bitwardenin pilvipalvelimeen."
+    "message": "Laskutuksen synkronointi mahdollistaa jäsenille ilmaiset Perheille-tilaukset ja edistyneet laskutusominaisuudet liittämällä itse ylläpitämäsi Bitwarden-palvelin Bitwardenin pilvipalvelimeen."
   },
   "billingSyncKeyDesc": {
-    "message": "Tämän lomakkeen täyttöön tarvitaan laskutuksen synkronointitunniste pilviorganisaatiosi tilausasetuksista."
+    "message": "Lomakkeen täyttö edellyttää laskutuksen synkronointitunnisteen pilviorganisaatiosi tilausasetuksista."
   },
   "billingSyncKey": {
     "message": "Laskutuksen synkronointitunniste"
   },
   "active": {
-    "message": "Käytössä"
+    "message": "Aktiivinen"
   },
   "inactive": {
-    "message": "Ei käytössä"
+    "message": "Ei aktivoitu"
   },
   "sentAwaitingSync": {
     "message": "Lähetetty (odottaa synkronointia)"
@@ -5083,7 +5152,7 @@
     "message": "Käytä laitetodennusta"
   },
   "deviceVerificationDesc": {
-    "message": "Kun käytössä, todennuskoodit lähetetään sähköpostitse, kun yritetään kirjautua tuntemattomasta laitteesta"
+    "message": "Kun käytössä, lähetetään todennuskoodit sähköpostitse, kun kirjaudutaan tuntemattomasta laitteesta"
   },
   "updatedDeviceVerification": {
     "message": "Laitetodennus päivitettiin"

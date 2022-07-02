@@ -6,3 +6,4 @@ export * from "./form-field";
 export * from "./menu";
 export * from "./utils/i18n-mock.service";
 export * from "./tabs";
+export * from "./submit-button";
