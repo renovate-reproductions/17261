@@ -1,5 +1,6 @@
-<ng-template #linkRef>
+<ng-container [ngSwitch]="disabled">
   <a
+    *ngSwitchCase="false"
     role="tab"
     [class]="baseClassList"
     [routerLink]="route"
@@ -7,21 +8,19 @@
     #rla="routerLinkActive"
     [attr.aria-selected]="rla.isActive"
   >
-    <ng-container [ngTemplateOutlet]="contentRef"></ng-container>
+    <ng-container [ngTemplateOutlet]="content"></ng-container>
   </a>
-</ng-template>
-<ng-template #btnRef>
   <button
+    *ngSwitchCase="true"
     type="button"
     role="tab"
     [class]="baseClassList"
-    [disabled]="disabled"
-    [attr.aria-disabled]="disabled"
+    disabled
+    aria-disabled="true"
   >
-    <ng-container [ngTemplateOutlet]="contentRef"></ng-container>
+    <ng-container [ngTemplateOutlet]="content"></ng-container>
   </button>
-</ng-template>
-<ng-template #contentRef>
+</ng-container>
+<ng-template #content>
   <ng-content></ng-content>
 </ng-template>
-<ng-container [ngTemplateOutlet]="disabled ? btnRef : linkRef"></ng-container>

@@ -5,8 +5,11 @@ import { Component, Input } from "@angular/core";
   templateUrl: "./tab-item.component.html",
 })
 export class TabItemComponent {
-  @Input() route: string; // ['/route']
-  @Input() disabled = false;
+  @Input()
+  route: string; // ['/route']
+
+  @Input()
+  disabled = false;
 
   get baseClassList(): string {
     return [
@@ -29,7 +32,7 @@ export class TabItemComponent {
       "tw-box-border",
       "tw-text-main",
       "hover:tw-underline",
-      "focus:tw-underline",
+      "hover:tw-text-main",
       "focus:tw-outline-none",
       "focus:tw-ring-2",
       "focus:tw-ring-primary-700",
@@ -49,10 +52,9 @@ export class TabItemComponent {
       "tw-border-b-transparent",
       "tw-text-primary-500",
       "hover:tw-border-t-primary-700",
-      "hover:tw-text-primary-700",
+      "hover:!tw-text-primary-700",
       "focus:tw-border-t-primary-700",
       "focus:tw-text-primary-700",
-      "focus:tw-underline",
     ].join(" ");
   }
 }

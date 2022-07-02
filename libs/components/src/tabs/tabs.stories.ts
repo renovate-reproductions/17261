@@ -1,13 +1,34 @@
 import { CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
 import { RouterTestingModule } from "@angular/router/testing";
 import { Meta, moduleMetadata, Story } from "@storybook/angular";
 
-import { ActiveDummyComponent } from "./dummy-components/active-dummy.component";
-import { DisabledDummyComponent } from "./dummy-components/disabled-dummy.component";
-import { ItemTwoDummyComponent } from "./dummy-components/item-2-dummy.component";
-import { ItemThreeDummyComponent } from "./dummy-components/item-3-dummy.component";
 import { TabGroupComponent } from "./tab-group.component";
 import { TabItemComponent } from "./tab-item.component";
+
+@Component({
+  selector: "bit-tab-active-dummy",
+  template: "Router - Active selected",
+})
+class ActiveDummyComponent {}
+
+@Component({
+  selector: "bit-tab-item-2-dummy",
+  template: "Router - Item 2 selected",
+})
+class ItemTwoDummyComponent {}
+
+@Component({
+  selector: "bit-tab-item-3-dummy",
+  template: "Router - Item 3 selected",
+})
+class ItemThreeDummyComponent {}
+
+@Component({
+  selector: "bit-tab-disabled-dummy",
+  template: "Router - Disabled selected",
+})
+class DisabledDummyComponent {}
 
 export default {
   title: "Component Library/Tabs",
@@ -25,6 +46,7 @@ export default {
       imports: [
         CommonModule,
         RouterTestingModule.withRoutes([
+          { path: "", redirectTo: "active", pathMatch: "full" },
           { path: "active", component: ActiveDummyComponent },
           { path: "item-2", component: ItemTwoDummyComponent },
           { path: "item-3", component: ItemThreeDummyComponent },
@@ -36,7 +58,7 @@ export default {
   parameters: {
     design: {
       type: "figma",
-      url: "https://www.figma.com/file/Zt3YSeb6E6lebAffrNLa0h/branch/f32LSg3jaegICkMu7rPARm/Web-Vault-Components-(Bootstrap)?node-id=1881%3A18454",
+      url: "https://www.figma.com/file/Zt3YSeb6E6lebAffrNLa0h/Tailwind-Component-Library?node-id=1881%3A17922",
     },
   },
 } as Meta;
@@ -50,7 +72,9 @@ const TabGroupTemplate: Story<TabGroupComponent> = (args: TabGroupComponent) => 
       <bit-tab-item [route]="['item-3']">Item 3</bit-tab-item>
       <bit-tab-item [route]="['disabled']" [disabled]="true">Disabled</bit-tab-item>
     </bit-tab-group>
-    <router-outlet></router-outlet>
+    <div class="tw-bg-transparent tw-text-semibold tw-text-center !tw-text-main tw-py-10">
+      <router-outlet></router-outlet>
+    </div>
   `,
 });
 
