@@ -297,6 +297,9 @@ jobs:
         run: npm run dist:safari
         working-directory: apps/browser
 
+      - name: Run tests
+        run: npm run test
+
       - name: Zip Safari build artifact
         run: |
           cd apps/browser/dist
