@@ -196,6 +196,9 @@ jobs:
           rustup target add x86_64-unknown-linux-musl
           npm run build:cross-platform
 
+      - name: Run tests
+        run: npm run test
+
       - name: Build application
         run: npm run dist:lin
 
@@ -316,6 +319,9 @@ jobs:
         with:
           path: apps/desktop/desktop_native/*.node
           key: rust-${{ runner.os }}-${{ hashFiles('apps/desktop/desktop_native/**/*') }}
+
+      - name: Run tests
+        run: npm run test
 
       - name: Build Native Module
         if: steps.cache.outputs.cache-hit != 'true'
@@ -581,6 +587,9 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
         working-directory: ./
+
+      - name: Run tests
+        run: npm run test
 
       - name: Cache Native Module
         uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09 # v3.0.2

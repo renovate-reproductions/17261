@@ -138,10 +138,11 @@ jobs:
         run: npm ci
         working-directory: ./
 
-      - name: Build & Test
-        run: |
-          npm run dist
-          npm run test
+      - name: Build
+        run: npm run dist
+
+      - name: Test
+        run: npm run test
 
       - name: Gulp
         run: gulp ci
