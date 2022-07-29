@@ -3,7 +3,6 @@
   "extends": [
     "config:base",
     "schedule:monthly",
-    ":maintainLockFilesMonthly",
-    ":preserveSemverRanges"
+    ":maintainLockFilesMonthly"
   ]
 }
