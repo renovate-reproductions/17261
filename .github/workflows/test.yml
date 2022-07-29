@@ -40,7 +40,6 @@ jobs:
 
       - name: Install Node dependencies
         run: npm ci
-        working-directory: ./
 
       - name: Run tests
         run: npm run test
