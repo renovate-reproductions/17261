@@ -4,6 +4,6 @@
     "config:base",
     "schedule:monthly",
     ":maintainLockFilesMonthly",
-    ":preserveSemverRanges"
+    "config:semverAllMonthly"
   ]
 }
