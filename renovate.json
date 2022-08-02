@@ -6,14 +6,5 @@
     ":maintainLockFilesMonthly",
     ":preserveSemverRanges",
     ":rebaseStalePrs"
-  ],
-  "packageRules": [
-    {
-      "matchDepTypes": [
-        "action"
-      ],
-      "groupName": "github actions",
-      "groupSlug": "github-actions"
-    }
   ]
 }
