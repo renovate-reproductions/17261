@@ -5,7 +5,22 @@
     "schedule:monthly",
     ":maintainLockFilesMonthly",
     ":preserveSemverRanges",
-    ":rebaseStalePrs",
-    "group:all"
+    ":rebaseStalePrs"
+  ],
+  "docker": {
+    "enabled": false
+  },
+  "docker-compose": {
+    "enabled": false
+  },
+  "packageRules": [
+    {
+      "matchDepTypes": [
+        "action"
+      ],
+      "groupName": "github actions",
+      "groupSlug": "github-actions",
+      "pinDigests": true
+    }
   ]
 }
