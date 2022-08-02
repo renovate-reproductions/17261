@@ -19,8 +19,7 @@
         "action"
       ],
       "groupName": "github actions",
-      "groupSlug": "github-actions",
-      "pinDigests": true
+      "groupSlug": "github-actions"
     }
   ]
 }
