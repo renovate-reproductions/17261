@@ -7,12 +7,6 @@
     ":preserveSemverRanges",
     ":rebaseStalePrs"
   ],
-  "docker": {
-    "enabled": false
-  },
-  "docker-compose": {
-    "enabled": false
-  },
   "packageRules": [
     {
       "matchDepTypes": [
