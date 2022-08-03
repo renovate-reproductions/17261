@@ -13,12 +13,11 @@
   "enabledManagers": [
     "npm",
     "nvm",
-    "nodeenv",
     "github-actions"
   ],
   "packageRules": [
     {
-        "matchManagers": ["npm", "nvm", "nodeenv"],
+        "matchManagers": ["npm", "nvm"],
         "groupName": "npm",
         "groupSlug": "npm",
         "separateMajorMinor": false
