@@ -17,7 +17,7 @@
     },
     {
       "matchManagers": ["github-actions"],
-      "description": "All Github maintained actions"
+      "description": "All Github maintained actions",
       "groupName": "Github maintained actions",
       "groupSlug": "github-actions" 
     }
