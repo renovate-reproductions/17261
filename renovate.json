@@ -5,6 +5,7 @@
     "schedule:monthly",
     ":maintainLockFilesMonthly",
     ":preserveSemverRanges",
-    ":rebaseStalePrs"
+    ":rebaseStalePrs",
+    ":disableDependencyDashboard"
   ]
 }
