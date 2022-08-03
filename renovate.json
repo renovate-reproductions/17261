@@ -10,7 +10,7 @@
   ],
   "packageRules": [
     {
-        "matchDatasources": ["npm"],
+        "matchManagers": ["npm"],
         "groupName": "npm",
         "groupSlug": "npm",
         "separateMajorMinor": false
