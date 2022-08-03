@@ -1,19 +1,24 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "schedule": [
-    "before 2pm"
+    "before 3pm"
   ],
   "extends": [
     "config:base",
     "schedule:monthly",
     ":maintainLockFilesMonthly",
     ":preserveSemverRanges",
-    ":rebaseStalePrs",
-    ":disableDependencyDashboard"
+    ":rebaseStalePrs"
+  ],
+  "enabledManagers": [
+    "npm",
+    "nvm",
+    "nodeenv",
+    "github-actions"
   ],
   "packageRules": [
     {
-        "matchManagers": ["npm"],
+        "matchManagers": ["npm", "nvm", "nodeenv"],
         "groupName": "npm",
         "groupSlug": "npm",
         "separateMajorMinor": false
