@@ -12,8 +12,7 @@
   ],
   "enabledManagers": [
     "npm",
-    "nvm",
-    "github-actions"
+    "nvm"
   ],
   "packageRules": [
     {
@@ -21,12 +20,6 @@
         "groupName": "npm",
         "groupSlug": "npm",
         "separateMajorMinor": false
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "description": "All Github maintained actions",
-      "groupName": "Github maintained actions",
-      "groupSlug": "github-actions" 
     }
   ]
 }
