@@ -11,12 +11,11 @@
     ":rebaseStalePrs"
   ],
   "enabledManagers": [
-    "npm",
-    "nvm"
+    "npm"
   ],
   "packageRules": [
     {
-        "matchManagers": ["npm", "nvm"],
+        "matchManagers": ["npm"],
         "groupName": "npm",
         "groupSlug": "npm",
         "separateMajorMinor": false
