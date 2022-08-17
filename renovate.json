@@ -1,7 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "schedule": [
-    "before 3pm"
+    "before 12pm",
+    "before 1pm",
+    "before 2pm",
+    "before 3pm",
+    "before 4pm",
+    "before 5pm"
   ],
   "extends": [
     "config:base",
