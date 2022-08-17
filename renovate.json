@@ -3,9 +3,13 @@
   "schedule": [
     "before 12pm",
     "before 1pm",
+    "after 1pm",
     "before 2pm",
+    "after 2pm",
     "before 3pm",
+    "after 3pm",
     "before 4pm",
+    "after 4pm",
     "before 5pm"
   ],
   "extends": [
