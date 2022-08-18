@@ -29,12 +29,12 @@
   "enabledManagers": [
     "npm"
   ],
+  "separateMajorMinor": false,
   "packageRules": [
     {
         "matchManagers": ["npm"],
-        "groupName": "npm",
-        "groupSlug": "npm",
-        "separateMajorMinor": false
+        "matchUpdateTypes": ["major", "minor", "patch"],
+        "groupName": "npm"
     }
   ]
 }
